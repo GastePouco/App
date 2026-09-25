@@ -60,7 +60,8 @@ sequenceDiagram
 
 ### DF, medido com uma nota real (25/09/2026)
 
-- O endereço do QR é `http://www.fazenda.df.gov.br/nfce/qrcode?p=<chave>|<versão>|<ambiente>|<id>|<hash>`. Ele redireciona para `ww1.receita.fazenda.df.gov.br/DecVisualizador/…`, que é página de servidor e dá para ler.
+- O QR das notas do DF aponta para `http://dec.fazenda.df.gov.br/ConsultarNFCe.aspx?p=<chave>|<versão>|<ambiente>|<idCSC>|<hash>`, e esse host **redireciona** para `ww1.receita.fazenda.df.gov.br/DecVisualizador/…`. Os dois precisam estar em `hostsPermitidos`, e o buscador segue os redirecionamentos **na mão**, conferindo o host de cada parada: `redirect: 'follow'` saltaria sozinho e anularia a conferência inicial.
+- O parâmetro `p` tem de vir **inteiro**. Com `<chave>|3|1` só, o portal responde "103 - Identificador de CSC inexistente" e cai na página de captcha. É o erro que aparece quando o QR foi copiado pela metade.
 - **Com só os 44 dígitos não funciona**: o portal confere o hash que vai dentro do QR e responde "Hash QR Code inválido" (código 100).
 - A consulta por chave do Portal de Serviços (`ww1.receita.fazenda.df.gov.br/documentosfiscais/consultar`) é uma aplicação Angular atrás do desafio da Cloudflare. Não é página para ler.
 - Existe uma rota por chave no visualizador — `ww1.receita.fazenda.df.gov.br/DecVisualizador/Nfce/Captcha?Chave=<44 dígitos>` — e ela é literalmente uma página de captcha (Cloudflare Turnstile), com um formulário que só avança com o token. O captcha está ali de propósito, para impedir leitura automatizada: **não é para contornar**. É a confirmação de que, no DF, o caminho legítimo do aplicativo é o QR.

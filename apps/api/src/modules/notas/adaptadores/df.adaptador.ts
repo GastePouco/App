@@ -34,6 +34,9 @@ export class AdaptadorDoDf implements AdaptadorDeNfce {
    * alcança.
    */
   readonly hostsPermitidos = [
+    // O QR das notas do DF aponta para cá, e este host redireciona para o
+    // visualizador em ww1 — medido com uma nota real.
+    'dec.fazenda.df.gov.br',
     'www.fazenda.df.gov.br',
     'fazenda.df.gov.br',
     'ww1.receita.fazenda.df.gov.br',
