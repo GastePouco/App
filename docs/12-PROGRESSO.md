@@ -545,3 +545,29 @@ de qualquer requisição — `endsWith` deixaria passar
 **Ainda pendente**: o parser continua sem validação contra HTML real. Falta a
 URL completa do QR de uma nota (a que tem o hash), para salvar a página em
 `apps/api/test/fixtures/nfce/df/` — sem o CPF do consumidor.
+
+
+## Fase 3 — SP entra, e o parser finalmente tem prova (25/09/2026)
+
+O aplicativo anterior lia São Paulo em produção, e o repositório dele guardava o
+que faltava aqui: o **texto capturado de uma nota real** (Zaffari, 29/08/2026,
+66 itens, R$ 1.901,57), conferido contra a página da SEFAZ-SP em 11/09/2026.
+
+Com isso, `AdaptadorDeSp` entrou e o parser passou a ser testado contra dado de
+nota de verdade: 66 itens, total certo, 0,6379 kg de carne moída a R$ 65,90
+fechando em R$ 42,04, loja, CNPJ e data. **Em duas versões da página**: com as
+classes do site e sem classe nenhuma. A segunda é a que vale — prova que a
+leitura sobrevive à SEFAZ trocar o HTML, porque aí só restam os rótulos que a
+pessoa lê na tela.
+
+O que é real e o que foi reconstruído está escrito em
+`test/fixtures/nfce/sp/montar.mjs`: os números são da nota, o HTML em volta foi
+remontado com as classes do layout, e o CPF virou `000.000.000-00` — o campo
+fica porque o parser precisa detectar que ele existia.
+
+SP tem o mesmo desenho do DF: `/qrcode?p=…` sem captcha, consulta por chave com
+reCAPTCHA. Ou seja, **o QR é o caminho nas duas UFs**, e a chave digitada é
+fallback que depende do estado — o adaptador por UF existe justamente para isso.
+
+**Continua pendente**: HTML real do DF. O de SP é reconstruído a partir de dados
+reais; o do DF nem isso temos.

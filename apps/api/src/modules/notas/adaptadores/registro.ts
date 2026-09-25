@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { AdaptadorDeNfce } from './adaptador.js';
 import { AdaptadorDoDf } from './df.adaptador.js';
+import { AdaptadorDeSp } from './sp.adaptador.js';
 
 /**
  * Adaptadores por código IBGE da UF, lido dos 2 primeiros dígitos da chave.
@@ -10,14 +11,15 @@ import { AdaptadorDoDf } from './df.adaptador.js';
  * estourar — a pessoa precisa saber que a nota dela é válida e o app é que
  * ainda não lê aquele estado.
  *
- * Ordem de chegada em docs/06: DF, depois GO, SP, MG, RJ, PR, RS.
+ * Ordem de chegada: DF e SP (onde há mais nota para testar), depois GO, MG,
+ * RJ, PR, RS.
  */
 @Injectable()
 export class RegistroDeAdaptadores {
   private readonly porUf = new Map<string, AdaptadorDeNfce>();
 
-  constructor(adaptadorDoDf: AdaptadorDoDf) {
-    for (const adaptador of [adaptadorDoDf]) {
+  constructor(adaptadorDoDf: AdaptadorDoDf, adaptadorDeSp: AdaptadorDeSp) {
+    for (const adaptador of [adaptadorDoDf, adaptadorDeSp]) {
       this.porUf.set(adaptador.codigoDaUf, adaptador);
     }
   }

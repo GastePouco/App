@@ -51,7 +51,7 @@ sequenceDiagram
 ## Adaptadores por estado
 
 - Interface `NfceAdapter { uf: string; canHandle(url): boolean; fetch(key, url): Promise<ParsedReceipt> }`.
-- Comece pelo **DF** (os exemplos das telas são em Brasília) e depois GO, SP, MG, RJ, PR, RS. Registre cada adaptador num mapa por código IBGE.
+- **DF** (os exemplos das telas são em Brasília) e **SP** (onde há mais nota para testar, e onde o aplicativo anterior já lia em produção) primeiro; depois GO, MG, RJ, PR, RS. Registre cada adaptador num mapa por código IBGE.
 - Cada adaptador tem testes com HTML real salvo em `apps/api/test/fixtures/nfce/<uf>/*.html` (remova CPF do consumidor dos fixtures).
 - A página pública varia por estado e muda sem aviso: o parser deve ser tolerante (procurar por rótulos de texto, não por posição) e registrar `PARSE_FAILED` com o HTML guardado em storage para correção.
 - Alguns portais pedem captcha na consulta pela chave digitada. Nesse caso a nota fica `NEEDS_QR` e o app pede: "Não conseguimos abrir essa nota pela chave. Tente ler o QR code."
@@ -111,3 +111,18 @@ type ParsedReceipt = {
 | `NEEDS_QR` | "Não conseguimos abrir essa nota pela chave. Tente ler o QR code." |
 | `PORTAL_UNAVAILABLE` | "O site da Secretaria da Fazenda está fora do ar. Guardamos sua nota e vamos tentar de novo sozinhos." |
 | `PARSE_FAILED` | "Não conseguimos ler os itens dessa nota. Nossa equipe vai olhar e te avisar." |
+
+### SP, medido com a mesma régua (25/09/2026)
+
+- `https://www.nfce.fazenda.sp.gov.br/qrcode?p=…` redireciona para
+  `ConsultaQRCode.aspx` e **não tem captcha**. É o caminho do aplicativo.
+- A consulta pública por chave (`ConsultaPublica.aspx`) **tem reCAPTCHA**. Mesma
+  conclusão do DF: chave digitada vira `NEEDS_QR` sem visitar o portal.
+- O parser está validado contra uma nota real de SP (Zaffari, 29/08/2026, 66
+  itens, R$ 1.901,57), em duas versões da página: com as classes do site e **sem
+  classe nenhuma**. A segunda é a que prova que a leitura sobrevive a uma
+  mudança de HTML, porque só restam os rótulos visíveis.
+- O que é real no fixture e o que foi reconstruído está escrito em
+  `apps/api/test/fixtures/nfce/sp/montar.mjs`. O CPF do consumidor foi
+  substituído por `000.000.000-00`; o campo continua lá porque o parser precisa
+  detectar que existia.

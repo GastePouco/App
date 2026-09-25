@@ -7,6 +7,7 @@ import { BuscadorService } from './buscador.service.js';
 import { ProdutosService } from './produtos.service.js';
 import { RegistroDeAdaptadores } from './adaptadores/registro.js';
 import { AdaptadorDoDf } from './adaptadores/df.adaptador.js';
+import { AdaptadorDeSp } from './adaptadores/sp.adaptador.js';
 
 @Module({
   imports: [BullModule.registerQueue({ name: FILA_DE_NOTAS })],
@@ -18,6 +19,7 @@ import { AdaptadorDoDf } from './adaptadores/df.adaptador.js';
     ProdutosService,
     RegistroDeAdaptadores,
     AdaptadorDoDf,
+    AdaptadorDeSp,
   ],
   exports: [NotasService, ProdutosService],
 })
