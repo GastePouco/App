@@ -15,6 +15,13 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+/// Papel no sistema. O admin ve dado de outras pessoas, entao toda acao dele
+/// fica registrada em AdminLog.
+enum UserRole {
+  USER
+  ADMIN
+}
+
 enum AccountStatus {
   ACTIVE
   PAUSED
@@ -93,6 +100,7 @@ model User {
   invitedById      String?
   invitedBy        User?         @relation("Invites", fields: [invitedById], references: [id])
   invitees         User[]        @relation("Invites")
+  role             UserRole      @default(USER)
   status           AccountStatus @default(ACTIVE)
   pausedUntil      DateTime?
   deletionAt       DateTime?
@@ -435,6 +443,27 @@ model Partner {
   contact   String?
   active    Boolean  @default(true)
   offers    Offer[]
+}
+
+/// Trilha das acoes administrativas.
+///
+/// Quem entra no CRM ve oferta, produto e nota de outras pessoas. Sem registro,
+/// "quem apagou isso?" nao tem resposta — e a resposta e obrigacao, nao luxo
+/// (docs/09-SEGURANCA-LGPD.md).
+///
+/// `adminId` e coluna solta, **sem chave estrangeira**, de proposito: a trilha
+/// tem de sobreviver ao encerramento da conta de quem administrou. Com FK, ou a
+/// exclusao da conta falharia, ou levaria o registro junto — e uma trilha que
+/// some quando o responsavel sai nao serve para nada.
+model AdminLog {
+  id        String   @id @default(cuid())
+  adminId   String
+  action    String   // offer.create, offer.update, offer.delete, partner.create
+  target    String?  // id do que foi mexido
+  details   Json?
+  createdAt DateTime @default(now())
+
+  @@index([adminId, createdAt])
 }
 
 model Offer {

@@ -382,6 +382,27 @@ async function main(): Promise<void> {
 
   // --- Camila
   const senhaHash = await argon2.hash('Economia2026', { type: argon2.argon2id });
+
+  // Conta de operação, para o painel administrativo. Sem região, de propósito:
+  // admin não entra no ranking nem na base de preços — ele opera o sistema, não
+  // participa dele.
+  await prisma.user.create({
+    data: {
+      email: 'admin@gastemenos.com.br',
+      emailVerifiedAt: data(2026, 1, 8),
+      passwordHash: senhaHash,
+      name: 'Operação GasteMenos',
+      rankingName: 'Operação',
+      role: 'ADMIN',
+      inviteCode: 'ADMIN001',
+      createdAt: data(2026, 1, 8),
+      accounts: {
+        create: { provider: 'PASSWORD', providerAccountId: 'admin@gastemenos.com.br' },
+      },
+      preferences: { create: {} },
+    },
+  });
+
   const pontosTotais = pontosParaChegarAoNivel(12) + 460; // nível 12, 460 no nível
 
   const camila = await prisma.user.create({
@@ -900,6 +921,7 @@ async function main(): Promise<void> {
   /* eslint-disable no-console */
   console.log('Seed pronto.');
   console.log(`  Camila Alves — camila.alves@email.com / Economia2026`);
+  console.log(`  Admin        — admin@gastemenos.com.br / Economia2026`);
   console.log(`  Nível 12 · ${pontosTotais} pontos · 5 semanas de sequência`);
   console.log(`  ${deSetembro.length} notas em setembro · R$ ${(totalDeSetembro / 100).toFixed(2)}`);
   console.log(`  Trimestre R$ ${(trimestre / 100).toFixed(2)} · Ano R$ ${(ano / 100).toFixed(2)}`);

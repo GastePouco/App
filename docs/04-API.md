@@ -118,4 +118,19 @@ Senha: mínimo 8 caracteres, um número e uma letra maiúscula; hash com Argon2i
 
 ## Admin (papel `ADMIN`)
 
-`/admin/partners`, `/admin/offers` (CRUD), `/admin/products/:id` (corrigir nome/categoria), `/admin/receipts/failed` (notas com `PARSE_FAILED`).
+Papel em `User.role`, lido do banco **a cada requisição** — tirar alguém do admin vale na hora, não em 15 minutos. `JwtGuarda` diz quem é, `AdminGuarda` diz se pode, e toda alteração vai para `AdminLog` (quem, o quê, quando).
+
+| Método | Rota | Observação |
+| --- | --- | --- |
+| GET | `/admin/partners` | |
+| POST | `/admin/partners` | `{ name, cnpj?, active? }` |
+| GET | `/admin/offers` | com impressões, cliques e confirmações |
+| POST | `/admin/offers` | **não existe campo `sponsored`**: com `partnerId`, a oferta nasce patrocinada |
+| PATCH | `/admin/offers/:id` | |
+| DELETE | `/admin/offers/:id` | |
+| GET | `/admin/receipts/failed` | sem chave de acesso e sem quem leu |
+| GET | `/admin/receipts/:id/page` | página guardada, sem CPF, 30 dias; a leitura fica registrada |
+
+Ainda planejado: `/admin/products/:id` (corrigir nome e categoria), usuários e métricas — ver o CRM em `12-PROGRESSO.md`.
+
+Promover alguém: `npx tsx prisma/promover-admin.mts <e-mail>`. Não há conta de admin plantada em produção.

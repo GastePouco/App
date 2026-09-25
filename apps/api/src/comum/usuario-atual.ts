@@ -3,6 +3,8 @@ import { createParamDecorator, type ExecutionContext } from '@nestjs/common';
 export interface UsuarioAutenticado {
   id: string;
   email: string;
+  /** `ADMIN` só existe no CRM; toda ação dele fica registrada em `AdminLog`. */
+  papel: 'USER' | 'ADMIN';
 }
 
 /** `@UsuarioAtual() usuario: UsuarioAutenticado` no controller. */

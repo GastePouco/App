@@ -571,3 +571,41 @@ fallback que depende do estado — o adaptador por UF existe justamente para iss
 
 **Continua pendente**: HTML real do DF. O de SP é reconstruído a partir de dados
 reais; o do DF nem isso temos.
+
+
+## Pontas soltas da fase 5 — executado (25/09/2026)
+
+Duas coisas ficaram para trás quando a fase 5 foi dada como concluída, e as duas
+apareceram ao conversar sobre o CRM.
+
+**O admin de ofertas patrocinadas não existia.** O aceite da fase pedia; foram
+entregues o selo, o limite de uma paga por página e o `sponsored` em toda
+resposta — mas as ofertas vinham só do seed. Agora existem `/admin/offers` e
+`/admin/partners`.
+
+O DTO de criar oferta **não tem campo `sponsored`**, de propósito: com
+`partnerId`, a oferta nasce patrocinada. Deixar isso como caixinha para marcar é
+exatamente como um selo obrigatório deixa de ser marcado na prática.
+
+**A página da nota que falhava era descartada.** `docs/06` já mandava guardar, e
+o campo `rawStorageKey` estava no schema desde o começo, vazio. Sem ele, a SEFAZ
+muda o HTML, a leitura quebra e a prova do formato novo some junto com a
+requisição. Agora a página é guardada quando a falha é `PARSE_FAILED` — **com o
+CPF do consumidor removido antes de gravar**, e apagada em 30 dias pelo expurgo
+diário. Depuração não é desculpa para guardar CPF.
+
+### Fundação do CRM, que veio junto
+
+- `User.role` (USER/ADMIN), lido do banco **a cada requisição**: tirar alguém do
+  admin vale na hora, não em 15 minutos.
+- `AdminGuarda` depois do `JwtGuarda` — um diz quem é, o outro diz se pode.
+- `AdminLog`: toda ação com quem, o quê e quando. **Sem chave estrangeira** para
+  a conta, e isso é decisão, não esquecimento: com FK, encerrar a conta de um
+  admin ou falharia ou levaria a trilha junto. Trilha que some quando o
+  responsável sai não responde "quem apagou isso?".
+- `prisma/promover-admin.mts`: em produção ninguém nasce admin. A pessoa se
+  cadastra pelo app e alguém com acesso ao banco promove aquele e-mail — assim
+  não existe senha de admin conhecida de antemão dentro do repositório.
+
+145 testes na API. O CRM completo (produtos, usuários, métricas e as telas) vem
+depois da fase 9.

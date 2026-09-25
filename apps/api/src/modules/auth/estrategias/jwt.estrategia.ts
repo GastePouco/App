@@ -26,7 +26,7 @@ export class JwtEstrategia extends PassportStrategy(Strategy, 'jwt') {
   async validate(payload: { sub: string; email: string }): Promise<UsuarioAutenticado> {
     const usuario = await this.prisma.user.findUnique({
       where: { id: payload.sub },
-      select: { id: true, email: true, status: true, pausedUntil: true },
+      select: { id: true, email: true, status: true, pausedUntil: true, role: true },
     });
 
     if (!usuario) throw new UnauthorizedException(erro('SESSION_EXPIRED'));
@@ -36,6 +36,8 @@ export class JwtEstrategia extends PassportStrategy(Strategy, 'jwt') {
       throw new UnauthorizedException(erro('ACCOUNT_PAUSED'));
     }
 
-    return { id: usuario.id, email: usuario.email };
+    // O papel vem do banco a cada requisição, não do token: tirar alguém do
+    // admin tem de valer na hora, não em 15 minutos.
+    return { id: usuario.id, email: usuario.email, papel: usuario.role };
   }
 }

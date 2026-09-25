@@ -15,6 +15,7 @@ import { GastosModule } from './modules/gastos/gastos.module.js';
 import { PrecosModule } from './modules/precos/precos.module.js';
 import { ListaModule } from './modules/lista/lista.module.js';
 import { OfertasModule } from './modules/ofertas/ofertas.module.js';
+import { AdminModule } from './modules/admin/admin.module.js';
 import { PrivacidadeModule } from './modules/privacidade/privacidade.module.js';
 import { NotificacoesModule } from './modules/notificacoes/notificacoes.module.js';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -54,6 +55,7 @@ import { configuracao } from './comum/configuracao.js';
     ListaModule,
     OfertasModule,
     PrivacidadeModule,
+    AdminModule,
     NotificacoesModule,
     // Atalhos de teste. Fora de produção, e o próprio controller confere de novo.
     ...(configuracao.ehProducao ? [] : [DevModule]),

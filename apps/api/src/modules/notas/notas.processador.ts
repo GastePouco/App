@@ -58,6 +58,9 @@ export class NotasProcessador extends WorkerHost {
       return;
     }
 
+    // Guardada para acompanhar a falha de interpretação até o registro.
+    let paginaBuscada: string | undefined;
+
     try {
       // A URL do QR é preferida: ela já vem com o hash assinado pelo emissor,
       // que é o que o portal confere. A consulta pela chave digitada nem sempre
@@ -80,6 +83,7 @@ export class NotasProcessador extends WorkerHost {
         adaptador.uf,
         adaptador.hostsPermitidos,
       );
+      paginaBuscada = html;
 
       const lida = adaptador.interpretar(html, chave);
       await this.notas.concluir(notaId, lida);
@@ -87,7 +91,7 @@ export class NotasProcessador extends WorkerHost {
       this.logger.log(`Nota ${notaId} lida: ${lida.items.length} itens.`);
     } catch (falha) {
       if (falha instanceof ErroDeLeitura) {
-        await this.notas.marcarFalha(notaId, falha);
+        await this.notas.marcarFalha(notaId, falha, paginaBuscada);
 
         // Portal fora do ar volta para a fila; HTML ilegível não.
         if (falha.motivo === 'PORTAL_UNAVAILABLE') throw falha;
@@ -98,7 +102,7 @@ export class NotasProcessador extends WorkerHost {
         `Falha inesperada na nota ${notaId}`,
         falha instanceof Error ? falha.stack : String(falha),
       );
-      await this.notas.marcarFalha(notaId, new ErroDeLeitura('PARSE_FAILED'));
+      await this.notas.marcarFalha(notaId, new ErroDeLeitura('PARSE_FAILED'), paginaBuscada);
     }
   }
 }

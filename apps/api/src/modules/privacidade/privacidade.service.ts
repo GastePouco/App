@@ -353,6 +353,31 @@ export class PrivacidadeService {
     return vencidas.length;
   }
 
+  /**
+   * Apaga a página guardada das notas que falharam, passados 30 dias.
+   *
+   * O prazo está em docs/09-SEGURANCA-LGPD.md: HTML bruto da nota só fica 30
+   * dias, para depuração. Guardar "por via das dúvidas" é como um arquivo de
+   * depuração vira um acervo de compras de gente que nunca soube que ele
+   * existia.
+   */
+  async limparPaginasDeDepuracao(): Promise<number> {
+    const antigas = await this.prisma.receipt.findMany({
+      where: { rawStorageKey: { not: null }, createdAt: { lte: emDias(-30) } },
+      select: { id: true, rawStorageKey: true },
+    });
+
+    for (const nota of antigas) {
+      if (nota.rawStorageKey) await this.armazenamento.apagar(nota.rawStorageKey);
+      await this.prisma.receipt.update({
+        where: { id: nota.id },
+        data: { rawStorageKey: null },
+      });
+    }
+
+    return antigas.length;
+  }
+
   // ---------------------------------------------------------------- pausa
 
   /**

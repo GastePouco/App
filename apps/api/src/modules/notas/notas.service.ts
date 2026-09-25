@@ -17,11 +17,24 @@ import { SequenciaService } from '../jogo/sequencia.service.js';
 import { AmigosService } from '../jogo/amigos.service.js';
 import { SelosService } from '../jogo/selos.service.js';
 import { ProdutosService } from './produtos.service.js';
+import { ArmazenamentoService } from '../armazenamento/armazenamento.service.js';
 import { RegistroDeAdaptadores } from './adaptadores/registro.js';
 import { ErroDeLeitura, type NotaLida } from './adaptadores/adaptador.js';
 
 function falha(code: string, status = HttpStatus.BAD_REQUEST): HttpException {
   return new HttpException(erro(code), status);
+}
+
+/**
+ * Tira o CPF do consumidor da página antes de guardá-la.
+ *
+ * Cobre `000.000.000-00` e `00000000000`. Falso positivo aqui não custa nada —
+ * o arquivo existe para alguém olhar o formato do HTML, não os números.
+ */
+export function semCpf(html: string): string {
+  return html
+    .replace(/\d{3}\.\d{3}\.\d{3}-\d{2}/g, '[CPF removido]')
+    .replace(/(CPF[^<>\d]{0,20})\d{11}/gi, '$1[CPF removido]');
 }
 
 export interface ResultadoDaLeitura {
@@ -47,6 +60,7 @@ export class NotasService {
     private readonly sequencia: SequenciaService,
     private readonly amigos: AmigosService,
     private readonly selos: SelosService,
+    private readonly armazenamento: ArmazenamentoService,
   ) {}
 
   /**
@@ -269,10 +283,41 @@ export class NotasService {
   }
 
   /** Marca a falha com o motivo que a tela sabe traduzir. */
-  async marcarFalha(notaId: string, erroDeLeitura: ErroDeLeitura): Promise<void> {
+  /**
+   * Marca a falha e guarda a página, quando há página.
+   *
+   * Sem isso não há o que corrigir: a SEFAZ muda o HTML, a leitura quebra, e a
+   * única prova do formato novo some junto com a requisição. Com ela, quem for
+   * arrumar o parser tem o caso real na mão.
+   *
+   * **O CPF do consumidor sai antes de gravar.** Ele aparece na página, não
+   * entra no banco em lugar nenhum, e não vai virar exceção aqui só porque é
+   * "depuração" (docs/09-SEGURANCA-LGPD.md, "Minimização"). O arquivo é apagado
+   * em 30 dias pelo job de expurgo.
+   */
+  async marcarFalha(notaId: string, erroDeLeitura: ErroDeLeitura, html?: string): Promise<void> {
+    let chaveDoArquivo: string | null = null;
+
+    if (html && erroDeLeitura.motivo === 'PARSE_FAILED') {
+      try {
+        chaveDoArquivo = `notas/${notaId}.html`;
+        await this.armazenamento.guardar(chaveDoArquivo, Buffer.from(semCpf(html)), 'text/html');
+      } catch (falha) {
+        // Guardar é ajuda, não requisito: a nota continua marcada como falha.
+        this.logger.warn(
+          `Não foi possível guardar a página da nota ${notaId}: ${falha instanceof Error ? falha.message : String(falha)}`,
+        );
+        chaveDoArquivo = null;
+      }
+    }
+
     await this.prisma.receipt.update({
       where: { id: notaId },
-      data: { status: erroDeLeitura.motivo, failureReason: erroDeLeitura.motivo },
+      data: {
+        status: erroDeLeitura.motivo,
+        failureReason: erroDeLeitura.motivo,
+        ...(chaveDoArquivo ? { rawStorageKey: chaveDoArquivo } : {}),
+      },
     });
   }
 

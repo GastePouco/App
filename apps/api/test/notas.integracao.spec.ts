@@ -14,6 +14,7 @@ import { ProdutosService } from '../src/modules/notas/produtos.service.js';
 import { RegistroDeAdaptadores } from '../src/modules/notas/adaptadores/registro.js';
 import { AdaptadorDoDf } from '../src/modules/notas/adaptadores/df.adaptador.js';
 import { AdaptadorDeSp } from '../src/modules/notas/adaptadores/sp.adaptador.js';
+import { ArmazenamentoService } from '../src/modules/armazenamento/armazenamento.service.js';
 import { ErroDeLeitura } from '../src/modules/notas/adaptadores/adaptador.js';
 
 /**
@@ -74,6 +75,7 @@ describe('leitura de nota (integração)', () => {
         RegistroDeAdaptadores,
         AdaptadorDoDf,
         AdaptadorDeSp,
+        ArmazenamentoService,
         { provide: PrismaService, useValue: prisma },
       ],
     }).compile();
