@@ -511,3 +511,37 @@ por 10 minutos, apagado na verificação. `SameSite=Lax` é obrigatório aqui:
 O teste fixa também a **quantidade de parâmetros** das funções: o
 `passport-oauth2` escolhe a variante do `store` por `store.length`, então um
 parâmetro a mais muda o contrato em silêncio e só quebra em produção.
+
+
+## Fase 3 — o que a primeira chave real mostrou (25/09/2026)
+
+Uma chave de nota de Brasília, de verdade, derrubou duas suposições.
+
+**O endereço do portal do DF estava errado.** O adaptador apontava para
+`dfe.fazenda.df.gov.br`, host que **não existe** — o DNS nem resolve. Nenhum
+teste pegou, e não pegaria: todos usam HTML salvo, que é justamente o que os
+torna rápidos e determinísticos. Fixture não testa endereço.
+
+**No DF não dá para consultar pela chave digitada.** O endereço do QR
+(`www.fazenda.df.gov.br/nfce/qrcode?p=…`) exige o parâmetro inteiro, com o hash
+que o emissor assina; com os 44 dígitos o portal responde "Hash QR Code
+inválido". E a consulta por chave do Portal de Serviços é uma aplicação Angular
+atrás do desafio da Cloudflare. Agora `urlDaConsulta` devolve `null` nesse caso,
+a nota vira `NEEDS_QR` sem visitar o portal, e a tela avisa **antes** de a
+pessoa digitar 44 números à toa.
+
+### E um furo de segurança que estava lá desde o começo
+
+O processador buscava `qrUrl ?? urlDaConsulta(chave)` — e `qrUrl` vem do celular
+da pessoa, sem conferência nenhuma. QR code é fácil de forjar: um adesivo na
+gôndola bastaria para a nossa API buscar o endereço que o atacante escolhesse.
+E servidor alcança o que a internet não alcança: `169.254.169.254` (metadados da
+nuvem, onde moram credenciais), `127.0.0.1`, qualquer porta da rede interna.
+
+Cada adaptador agora declara `hostsPermitidos`, conferidos por host exato antes
+de qualquer requisição — `endsWith` deixaria passar
+`fazenda.df.gov.br.exemplo.com`. Seis testes em `test/qr-de-fora.spec.ts`.
+
+**Ainda pendente**: o parser continua sem validação contra HTML real. Falta a
+URL completa do QR de uma nota (a que tem o hash), para salvar a página em
+`apps/api/test/fixtures/nfce/df/` — sem o CPF do consumidor.

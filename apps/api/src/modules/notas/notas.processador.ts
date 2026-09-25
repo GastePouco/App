@@ -10,6 +10,39 @@ import { ErroDeLeitura } from './adaptadores/adaptador.js';
 
 export const FILA_DE_NOTAS = 'notas';
 
+/**
+ * Recusa endereço fora da lista do adaptador.
+ *
+ * A URL do QR vem do celular da pessoa, e QR code é fácil de forjar: basta
+ * colar um adesivo na gôndola. Sem esta conferência, o adesivo manda nosso
+ * servidor buscar o endereço que o atacante quiser — e servidor alcança coisa
+ * que a internet não alcança, como o serviço de metadados da nuvem e qualquer
+ * porta da rede interna. É a diferença entre ler uma nota e virar procurador
+ * de quem imprimiu o papel.
+ *
+ * Confere o host inteiro, não o sufixo: `fazenda.df.gov.br.exemplo.com` passaria
+ * num `endsWith` distraído.
+ */
+export function conferirHost(url: string, permitidos: string[], uf: string): void {
+  let endereco: URL;
+  try {
+    endereco = new URL(url);
+  } catch {
+    throw new ErroDeLeitura('PARSE_FAILED', 'Endereço do QR inválido.');
+  }
+
+  if (endereco.protocol !== 'https:' && endereco.protocol !== 'http:') {
+    throw new ErroDeLeitura('PARSE_FAILED', 'Endereço do QR com esquema inesperado.');
+  }
+
+  if (!permitidos.includes(endereco.hostname.toLowerCase())) {
+    throw new ErroDeLeitura(
+      'PARSE_FAILED',
+      `QR aponta para ${endereco.hostname}, que não é o portal de ${uf}.`,
+    );
+  }
+}
+
 export interface TarefaDeLeitura {
   notaId: string;
   chave: string;
@@ -58,9 +91,20 @@ export class NotasProcessador extends WorkerHost {
     }
 
     try {
-      // A URL do QR é preferida: ela já vem assinada pelo portal e costuma
-      // passar sem captcha, ao contrário da consulta pela chave digitada.
-      const url = qrUrl ?? adaptador.urlDaConsulta(chave);
+      // A URL do QR é preferida: ela já vem com o hash assinado pelo emissor,
+      // que é o que o portal confere. A consulta pela chave digitada nem sempre
+      // existe — no DF, não existe.
+      const url = adaptador.urlDaConsulta(chave, qrUrl);
+
+      if (!url) {
+        throw new ErroDeLeitura(
+          'NEEDS_QR',
+          `Em ${adaptador.uf} a consulta pela chave digitada exige verificação humana; o QR passa direto.`,
+        );
+      }
+
+      conferirHost(url, adaptador.hostsPermitidos, adaptador.uf);
+
       const html = await this.buscador.buscar(url, chave, adaptador.uf);
 
       const lida = adaptador.interpretar(html, chave);

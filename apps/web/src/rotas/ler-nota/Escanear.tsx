@@ -191,6 +191,14 @@ export function Escanear(): React.ReactElement {
                 {`${limparChave(chave).length} de 44 números`}
               </p>
 
+              {/* Dito antes de enviar, não depois de falhar: o portal do DF só
+                  abre a nota pelo QR, porque confere um código que viaja dentro
+                  dele e não está nos 44 números. */}
+              <p className="text-caption text-ink-muted">
+                Em notas do Distrito Federal o portal só abre pelo QR code. Se a chave não passar,
+                volte e leia o QR.
+              </p>
+
               <Erro mensagem={erro} />
 
               <Button

@@ -56,6 +56,15 @@ sequenceDiagram
 - A página pública varia por estado e muda sem aviso: o parser deve ser tolerante (procurar por rótulos de texto, não por posição) e registrar `PARSE_FAILED` com o HTML guardado em storage para correção.
 - Alguns portais pedem captcha na consulta pela chave digitada. Nesse caso a nota fica `NEEDS_QR` e o app pede: "Não conseguimos abrir essa nota pela chave. Tente ler o QR code."
 - Respeite os portais: no máximo 1 requisição por segundo por UF, `User-Agent` identificado, retry exponencial (3 tentativas), cache de 24 h por chave.
+- **Só visite os endereços da lista do adaptador** (`hostsPermitidos`). A URL do QR vem do celular da pessoa, e QR é fácil de forjar — um adesivo na gôndola faria o servidor buscar o endereço do atacante, inclusive endereço interno que só ele alcança. A conferência é por host exato, nunca por sufixo.
+
+### DF, medido com uma nota real (25/09/2026)
+
+- O endereço do QR é `http://www.fazenda.df.gov.br/nfce/qrcode?p=<chave>|<versão>|<ambiente>|<id>|<hash>`. Ele redireciona para `ww1.receita.fazenda.df.gov.br/DecVisualizador/…`, que é página de servidor e dá para ler.
+- **Com só os 44 dígitos não funciona**: o portal confere o hash que vai dentro do QR e responde "Hash QR Code inválido" (código 100).
+- A consulta por chave do Portal de Serviços (`ww1.receita.fazenda.df.gov.br/documentosfiscais/consultar`) é uma aplicação Angular atrás do desafio da Cloudflare. Não é página para ler.
+- Consequência: no DF, chave digitada resulta em `NEEDS_QR` **sem visitar o portal**, e a tela de digitar a chave já avisa isso antes de a pessoa enviar.
+- O host `dfe.fazenda.df.gov.br`, que a primeira versão do adaptador usava, **não existe** — nenhum teste pegou porque todos usam HTML salvo.
 
 ## ParsedReceipt
 

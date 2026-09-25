@@ -59,8 +59,24 @@ export interface AdaptadorDeNfce {
   readonly codigoDaUf: string;
   readonly uf: string;
 
-  /** Monta a URL pública quando só temos a chave digitada. */
-  urlDaConsulta(chave: string): string;
+  /**
+   * Endereços que este adaptador pode visitar.
+   *
+   * A URL do QR chega de fora — quem manda é o celular da pessoa. Buscar
+   * qualquer endereço vindo de fora entrega a quem emitiu o QR o poder de fazer
+   * nosso servidor bater onde ele quiser, inclusive dentro da nossa rede. A
+   * lista é conferida antes de qualquer requisição.
+   */
+  readonly hostsPermitidos: string[];
+
+  /**
+   * Endereço a visitar, ou `null` quando não dá para consultar assim.
+   *
+   * `null` não é erro: é o caso do DF, onde a consulta pela chave digitada
+   * exige verificação humana e só o QR passa. O processador traduz isso em
+   * `NEEDS_QR`, que a tela sabe explicar.
+   */
+  urlDaConsulta(chave: string, qrUrl?: string): string | null;
 
   /** Interpreta a página. Recebe o HTML para poder ser testado sem rede. */
   interpretar(html: string, chave: string): NotaLida;

@@ -5,20 +5,43 @@ import { interpretarPagina } from './nfce.parser.js';
 /**
  * Distrito Federal — a primeira UF atendida (docs/06-NFCE-LEITURA.md).
  *
- * O portal do DF usa o modelo padrão da SEFAZ, então a leitura fica toda no
- * parser compartilhado. O que é próprio do DF é só o endereço da consulta.
+ * O portal usa o modelo padrão da SEFAZ, então a leitura fica toda no parser
+ * compartilhado. O que é próprio do DF é o endereço — e uma limitação que só
+ * apareceu com uma nota de verdade na mão:
  *
- * A consulta pela chave digitada às vezes pede captcha; quando isso acontece,
- * o processador marca a nota como `NEEDS_QR` e o app pede o QR code, que passa
- * direto.
+ * **No DF não dá para consultar pela chave digitada.** O endereço do QR
+ * (`www.fazenda.df.gov.br/nfce/qrcode?p=…`) exige o parâmetro inteiro, com o
+ * hash que o emissor assina; mandar só os 44 dígitos devolve "Hash QR Code
+ * inválido". E a consulta por chave do Portal de Serviços é uma aplicação
+ * Angular atrás do desafio da Cloudflare — não é página para ler, é navegador
+ * para usar.
+ *
+ * Então, sem o QR, a resposta certa é `NEEDS_QR`: pedir o QR à pessoa, em vez
+ * de bater no portal para falhar. `urlDaConsulta` devolve `null` para dizer
+ * isso, e quem digitou a chave recebe uma explicação, não um erro genérico.
  */
 @Injectable()
 export class AdaptadorDoDf implements AdaptadorDeNfce {
   readonly codigoDaUf = '53';
   readonly uf = 'DF';
 
-  urlDaConsulta(chave: string): string {
-    return `https://dfe.fazenda.df.gov.br/nfce/consulta?p=${chave}`;
+  /**
+   * Endereços que este adaptador pode visitar.
+   *
+   * A URL do QR vem do celular da pessoa, ou seja, de fora. Sem esta lista, um
+   * QR forjado faria a API buscar qualquer endereço que o atacante escolhesse
+   * — inclusive endereço interno da nossa própria rede, que só o servidor
+   * alcança.
+   */
+  readonly hostsPermitidos = [
+    'www.fazenda.df.gov.br',
+    'fazenda.df.gov.br',
+    'ww1.receita.fazenda.df.gov.br',
+    'receita.fazenda.df.gov.br',
+  ];
+
+  urlDaConsulta(_chave: string, qrUrl?: string): string | null {
+    return qrUrl ?? null;
   }
 
   interpretar(html: string, chave: string): NotaLida {
