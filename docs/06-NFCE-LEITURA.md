@@ -63,6 +63,7 @@ sequenceDiagram
 - O endereço do QR é `http://www.fazenda.df.gov.br/nfce/qrcode?p=<chave>|<versão>|<ambiente>|<id>|<hash>`. Ele redireciona para `ww1.receita.fazenda.df.gov.br/DecVisualizador/…`, que é página de servidor e dá para ler.
 - **Com só os 44 dígitos não funciona**: o portal confere o hash que vai dentro do QR e responde "Hash QR Code inválido" (código 100).
 - A consulta por chave do Portal de Serviços (`ww1.receita.fazenda.df.gov.br/documentosfiscais/consultar`) é uma aplicação Angular atrás do desafio da Cloudflare. Não é página para ler.
+- Existe uma rota por chave no visualizador — `ww1.receita.fazenda.df.gov.br/DecVisualizador/Nfce/Captcha?Chave=<44 dígitos>` — e ela é literalmente uma página de captcha (Cloudflare Turnstile), com um formulário que só avança com o token. O captcha está ali de propósito, para impedir leitura automatizada: **não é para contornar**. É a confirmação de que, no DF, o caminho legítimo do aplicativo é o QR.
 - Consequência: no DF, chave digitada resulta em `NEEDS_QR` **sem visitar o portal**, e a tela de digitar a chave já avisa isso antes de a pessoa enviar.
 - O host `dfe.fazenda.df.gov.br`, que a primeira versão do adaptador usava, **não existe** — nenhum teste pegou porque todos usam HTML salvo.
 
