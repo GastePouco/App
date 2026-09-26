@@ -154,6 +154,43 @@ export async function chamar<T>(caminho: string, opcoes: Opcoes = {}): Promise<T
   return corpo as T;
 }
 
+/**
+ * Baixa um arquivo da API **com o token**, e entrega como download.
+ *
+ * Um `<a href>` simples não serve: o access token vai no cabeçalho
+ * `Authorization`, que uma navegação do navegador não manda. O link parecia
+ * funcionar e respondia 401 — e a "correção" tentadora seria abrir o endereço
+ * sem autenticação, o que colocaria o arquivo com o histórico de compras de
+ * alguém a um id de distância de qualquer pessoa.
+ */
+export async function baixarArquivo(caminho: string, nomeDoArquivo: string): Promise<void> {
+  const resposta = await fetch(`${BASE}${caminho}`, {
+    credentials: 'include',
+    headers: acessoAtual ? { Authorization: `Bearer ${acessoAtual}` } : {},
+  });
+
+  if (resposta.status === 401 && (await renovarSessao())) {
+    return baixarArquivo(caminho, nomeDoArquivo);
+  }
+
+  if (!resposta.ok) {
+    const corpo = (await resposta.json().catch(() => null)) as { code?: string } | null;
+    throw new ErroDaApi(corpo?.code ?? 'INTERNAL', mensagemDoErro(corpo?.code ?? 'INTERNAL'), resposta.status);
+  }
+
+  const endereco = URL.createObjectURL(await resposta.blob());
+  try {
+    const ancora = document.createElement('a');
+    ancora.href = endereco;
+    ancora.download = nomeDoArquivo;
+    ancora.click();
+  } finally {
+    // Sem isto o blob fica na memória da aba até fechar — e ele é o arquivo
+    // inteiro de dados da pessoa.
+    URL.revokeObjectURL(endereco);
+  }
+}
+
 export const api = {
   get: <T>(caminho: string) => chamar<T>(caminho),
   post: <T>(caminho: string, body?: unknown) => chamar<T>(caminho, { method: 'POST', body }),

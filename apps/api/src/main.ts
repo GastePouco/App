@@ -1,15 +1,30 @@
 import 'reflect-metadata';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { AppModule } from './app.module.js';
+import { configuracao } from './comum/configuracao.js';
 import { FiltroDeErros } from './comum/filtro-de-erros.js';
 import { idDaRequisicao } from './comum/id-da-requisicao.js';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule, { bufferLogs: false });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { bufferLogs: false });
+
+  /*
+   * Atrás de proxy, `req.ip` é o proxy — e aí **todo mundo divide o mesmo
+   * balde de rate limit**. O efeito não é teórico: uma pessoa errando a senha
+   * cinco vezes trancaria o login do país inteiro, e um atacante derruba o
+   * acesso de todos de propósito com trinta requisições.
+   *
+   * O número é a **quantidade de proxies** na frente, não `true`. Com `true`,
+   * o Express acredita no primeiro valor de `X-Forwarded-For`, que vem do
+   * cliente: aí qualquer um forja o próprio IP e o limite deixa de existir.
+   * No compose de produção são dois saltos (borda + nginx do web).
+   */
+  app.set('trust proxy', Number(process.env.TRUSTED_PROXIES ?? 2));
 
   // A API só é chamada pelo web; CORS aberto aqui significaria qualquer site
   // podendo usar a sessão de quem está logado (o refresh vai em cookie).
@@ -34,13 +49,20 @@ async function bootstrap(): Promise<void> {
   // Traduz qualquer exceção para { code, message } com message em português.
   app.useGlobalFilters(new FiltroDeErros());
 
-  const config = new DocumentBuilder()
+  /*
+   * Swagger fora de produção. A documentação é ótima para quem desenvolve e é
+   * um mapa da API para quem ataca: cada rota, cada campo aceito, cada formato.
+   * Quem precisar dela em produção sobe atrás de autenticação, de propósito.
+   */
+  if (!configuracao.ehProducao) {
+    const config = new DocumentBuilder()
     .setTitle('GasteMenos')
     .setDescription('API do GasteMenos. Valores em centavos; datas em UTC.')
     .setVersion('1.0')
-    .addBearerAuth()
-    .build();
-  SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, config));
+      .addBearerAuth()
+      .build();
+    SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, config));
+  }
 
   const porta = Number(process.env.PORT ?? 3000);
   await app.listen(porta);

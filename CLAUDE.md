@@ -16,7 +16,7 @@ Para rodar a suíte e2e inteira, suba a API com `RATE_LIMIT_TEST_FACTOR=20 pnpm 
 
 1. **Telas**: `referencia/telas/*.dc.html` (34 telas, 390×844). São o visual aprovado: copie espaçamentos, textos e hierarquia delas. O mapa tela → rota está em `docs/05-TELAS-E-ROTAS.md`.
 2. **Design system**: `design-system/` (tokens, CSS, preset do Tailwind, especificação dos componentes). Nunca escreva um hexadecimal, tamanho de fonte ou raio solto no código: use os tokens.
-3. **Regras de negócio**: `docs/06-NFCE-LEITURA.md`, `docs/07-GAMIFICACAO.md`, `docs/09-SEGURANCA-LGPD.md`.
+3. **Regras de negócio**: `docs/06-NFCE-LEITURA.md`, `docs/07-GAMIFICACAO.md`, `docs/09-SEGURANCA-LGPD.md`. Auditoria de segurança: `docs/16-SEGURANCA-AUDITORIA.md`.
 4. **Ordem de trabalho**: `docs/11-ROADMAP-E-PROMPTS.md`. Faça uma fase por vez e só avance quando os critérios de aceite da fase passarem.
 
 ## Stack (não trocar sem pedir)

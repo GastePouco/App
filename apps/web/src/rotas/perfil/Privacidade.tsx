@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Card, Switch, Toast } from '@gastemenos/ui';
 import { TelaDeAjuste } from './TelaDeAjuste.js';
-import { api } from '../../lib/api.js';
+import { api, baixarArquivo } from '../../lib/api.js';
 
 /** `referencia/telas/Notificacoes.dc.html` e `Privacidade.dc.html` */
 
@@ -236,12 +236,24 @@ export function Privacidade(): React.ReactElement {
               </Button>
 
               {exportacao ? (
-                <a
-                  href={`/v1/me/export/${exportacao}/download`}
-                  className="min-h-touch text-center text-body-m text-brand underline"
+                <Button
+                  variant="ghost"
+                  fullWidth
+                  onClick={() =>
+                    void baixarArquivo(
+                      `/me/export/${exportacao}/download`,
+                      'meus-dados-gastemenos.zip',
+                    ).catch((falha) =>
+                      setAviso(
+                        falha instanceof Error
+                          ? falha.message
+                          : 'O arquivo ainda não está pronto. Tente em instantes.',
+                      ),
+                    )
+                  }
                 >
                   Baixar quando estiver pronto
-                </a>
+                </Button>
               ) : null}
             </Card>
           </section>

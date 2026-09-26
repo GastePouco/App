@@ -20,6 +20,9 @@ import { SessoesService } from '../auth/sessoes.service.js';
  * 3. **Não dá para remover a última forma de entrar.** Desconectar o Google de
  *    uma conta que nunca teve senha é trancar a porta com a chave dentro.
  */
+/** Mesmo teto do AuthService: cinco erros e o código morre. */
+const MAXIMO_DE_TENTATIVAS = 5;
+
 @Injectable()
 export class DadosPessoaisService {
   constructor(
@@ -148,12 +151,32 @@ export class DadosPessoaisService {
       throw new HttpException(erro('CODE_EXPIRED'), HttpStatus.BAD_REQUEST);
     }
 
+    // Mesmo contador do código de e-mail: seis dígitos sem limite de tentativa
+    // é um milhão de combinações à disposição de quem tem paciência, e a troca
+    // de e-mail é justamente o caminho para tomar uma conta.
+    if (guardado.attempts >= MAXIMO_DE_TENTATIVAS) {
+      await this.prisma.verificationCode.delete({ where: { id: guardado.id } }).catch(() => undefined);
+      throw new HttpException(erro('TOO_MANY_ATTEMPTS'), HttpStatus.TOO_MANY_REQUESTS);
+    }
+
     const calculado = createHash('sha256').update(codigo).digest();
     const esperado = Buffer.from(guardado.codeHash, 'hex');
     const confere =
       calculado.length === esperado.length && timingSafeEqual(calculado, esperado);
 
-    if (!confere) throw new HttpException(erro('INVALID_CODE'), HttpStatus.BAD_REQUEST);
+    if (!confere) {
+      const depois = await this.prisma.verificationCode.update({
+        where: { id: guardado.id },
+        data: { attempts: { increment: 1 } },
+        select: { attempts: true },
+      });
+      if (depois.attempts >= MAXIMO_DE_TENTATIVAS) {
+        await this.prisma.verificationCode
+          .delete({ where: { id: guardado.id } })
+          .catch(() => undefined);
+      }
+      throw new HttpException(erro('INVALID_CODE'), HttpStatus.BAD_REQUEST);
+    }
 
     const antigo = await this.prisma.user.findUniqueOrThrow({
       where: { id: userId },

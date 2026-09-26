@@ -164,6 +164,10 @@ model VerificationCode {
   kind      VerificationKind
   codeHash  String
   target    String?
+  /// Tentativas erradas neste codigo. Seis digitos sao um milhao de
+  /// combinacoes; o limite por IP sozinho nao protege quem esta atras de
+  /// varios IPs, e o codigo precisa morrer depois de algumas tentativas.
+  attempts  Int              @default(0)
   expiresAt DateTime
   createdAt DateTime         @default(now())
 

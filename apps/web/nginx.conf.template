@@ -23,6 +23,17 @@ server {
   add_header X-Content-Type-Options "nosniff" always;
   add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 
+  # O app não é para ser embutido em lugar nenhum: iframe do app num site de
+  # terceiro é a base de um golpe de clique (a pessoa acha que clica num
+  # banner e clica em "encerrar conta").
+  add_header X-Frame-Options "DENY" always;
+
+  # CSP com o mínimo que o app usa: nada de script de fora, e as fontes só do
+  # Google Fonts, que é de onde elas vêm. `unsafe-inline` no style existe
+  # porque o Tailwind e os gráficos em SVG escrevem estilo direto no elemento;
+  # em script, não existe — e é lá que o XSS moraria.
+  add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'" always;
+
   location /v1/ {
     proxy_pass http://api/v1/;
     proxy_http_version 1.1;

@@ -698,3 +698,30 @@ Virou propriedade com o padrão de antes.
 E a mesma armadilha da fase 8 reapareceu: tabela com rolagem horizontal sem
 alcance de teclado, na tela de auditoria. Mesma correção — a rolagem num
 contêiner com `role="region"`, rótulo e `tabindex`.
+
+
+## Auditoria de segurança — 26/09/2026
+
+Revisão de toda a aplicação, com cada achado conferido no código ou testado
+contra o sistema rodando. O documento é `16-SEGURANCA-AUDITORIA.md`; aqui ficam
+os dois achados que ensinam algo além de si mesmos.
+
+**O limite por IP não existia.** Atrás de proxy, `req.ip` é o proxy — então o
+limite de login valia para o mundo inteiro somado, e trinta requisições erradas
+trancariam o acesso de todas as pessoas. Faltava `trust proxy`. E a correção tem
+uma armadilha própria: com `true` em vez do número de saltos, o Express passa a
+confiar no `X-Forwarded-For` que **o cliente manda**, e o limite deixa de existir
+por outro caminho.
+
+**"Baixar meus dados" nunca funcionou** — era um `<a href>` para um endpoint que
+exige `Authorization`, cabeçalho que navegação de navegador não envia. O perigo
+não era o 401: era a correção tentadora de abrir o endereço, o que deixaria o
+histórico de compras de alguém a um id de distância de qualquer pessoa.
+
+Também entraram: contador de tentativas nos códigos de 6 dígitos (cinco erros e
+o código morre), Swagger fora de produção, CSP e `X-Frame-Options` no web.
+
+E uma correção de documentação que vale como achado: `09-SEGURANCA-LGPD.md`
+prometia verificação em duas etapas que **não existe**. Documento que promete
+segurança inexistente é pior que documento omisso, porque alguém decide
+confiando nele.

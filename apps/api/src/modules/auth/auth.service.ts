@@ -34,6 +34,9 @@ interface DadosDoUsuario {
  * 3. **O código de confirmação é guardado como hash.** Ele é pequeno (6
  *    dígitos) e vive pouco, mas vazamento do banco não pode entregar contas.
  */
+/** Erros antes do código morrer. Cinco é folga para quem digita errado. */
+const MAXIMO_DE_TENTATIVAS = 5;
+
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
@@ -135,7 +138,12 @@ export class AuthService {
     if (!guardado) throw falha('INVALID_CODE');
     if (expirou(guardado.expiresAt)) throw falha('CODE_EXPIRED');
 
-    if (!this.conferirHash(codigo, guardado.codeHash)) throw falha('INVALID_CODE');
+    await this.conferirCodigoContandoTentativas(
+      guardado.id,
+      codigo,
+      guardado.codeHash,
+      guardado.attempts,
+    );
 
     const confirmado = await this.prisma.user.update({
       where: { id: usuario.id },
@@ -371,6 +379,41 @@ export class AuthService {
   }
 
   /** Comparação de tempo constante: evita medir acerto pelo tempo de resposta. */
+  /**
+   * Confere o código contando tentativas, e queima o código ao esgotá-las.
+   *
+   * Seis dígitos são um milhão de combinações — pouco, para quem tem paciência.
+   * O limite por IP sozinho não resolve: quem ataca distribui entre IPs, e um
+   * código sem contador aceita tentativa até expirar. Cinco erros e ele morre;
+   * a pessoa pede outro, que é barato para ela e caro para quem adivinha.
+   */
+  private async conferirCodigoContandoTentativas(
+    id: string,
+    codigo: string,
+    codeHash: string,
+    tentativas: number,
+  ): Promise<void> {
+    if (tentativas >= MAXIMO_DE_TENTATIVAS) {
+      await this.prisma.verificationCode.delete({ where: { id } }).catch(() => undefined);
+      throw falha('TOO_MANY_ATTEMPTS', HttpStatus.TOO_MANY_REQUESTS);
+    }
+
+    if (this.conferirHash(codigo, codeHash)) return;
+
+    const depois = await this.prisma.verificationCode.update({
+      where: { id },
+      data: { attempts: { increment: 1 } },
+      select: { attempts: true },
+    });
+
+    if (depois.attempts >= MAXIMO_DE_TENTATIVAS) {
+      await this.prisma.verificationCode.delete({ where: { id } }).catch(() => undefined);
+      this.logger.warn(`Código queimado por tentativas demais (${id}).`);
+    }
+
+    throw falha('INVALID_CODE');
+  }
+
   private conferirHash(valor: string, hashGuardado: string): boolean {
     const calculado = createHash('sha256').update(valor).digest();
     const guardado = Buffer.from(hashGuardado, 'hex');

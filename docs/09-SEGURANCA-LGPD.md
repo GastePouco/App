@@ -27,6 +27,9 @@
 
 ## Segurança
 
+> Auditoria completa em `16-SEGURANCA-AUDITORIA.md` (26/09/2026): o que foi
+> conferido, o que foi corrigido, o que foi aceito e o que ficou pendente.
+
 - Senhas com Argon2id; tokens de acesso de 15 min; refresh rotativo com detecção de reutilização (revoga a família).
   - **Exceção da renovação perdida.** Um refresh já queimado que reaparece
     **enquanto a sessão que o substituiu nunca foi usada** não é reutilização:
@@ -40,7 +43,10 @@
     `apps/api/test/sessoes.spec.ts`.
 - Cookies `httpOnly`, `Secure`, `SameSite=Lax`; CORS restrito ao domínio do web; CSP no web.
 - Rate limit (Nest Throttler + Redis) em login, cadastro, reenvio de código, leitura de nota (10 com pontos por dia) e busca.
-- Verificação em duas etapas opcional por SMS ou e-mail; aviso por e-mail em troca de senha, novo aparelho e pedido de exclusão.
+- Aviso por e-mail em troca de senha, novo aparelho e pedido de exclusão.
+- **Verificação em duas etapas: roadmap, não existe hoje.** O campo `twoFactorEnabled` está no schema e a implementação não — documento que promete segurança inexistente é pior que documento omisso, porque alguém decide confiando nele (auditoria de 26/09/2026, achado P1).
+- Códigos de verificação morrem depois de **cinco tentativas erradas**, além do limite por IP: seis dígitos são um milhão de combinações, e limite por IP não protege de quem distribui entre IPs.
+- `trust proxy` com a **quantidade de saltos**, nunca `true`: atrás do proxy, `req.ip` é o proxy, e sem isso o limite por IP vira um balde só para todo mundo — com `true`, o cliente forja o próprio IP.
 - Google OAuth com PKCE e `state`; ligar conta Google a uma conta existente só com o mesmo e-mail verificado.
   - O `state` e o verificador do PKCE ficam num **cookie httpOnly assinado com HMAC**, válido por 10 minutos e apagado no retorno (`estado-em-cookie.ts`). O padrão do `passport-oauth2` é `req.session`, o que exigiria `express-session` — armazenamento de sessão no servidor, compartilhado entre instâncias, para os segundos de um redirecionamento. A única sessão desta API é o cookie de refresh.
   - Sem `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET` a estratégia não é registrada, e `/v1/auth/google` responde **503 `GOOGLE_UNAVAILABLE`** com texto que diz o que fazer, em vez de 500.
