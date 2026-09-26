@@ -775,3 +775,19 @@ ainda não existem.
 
 O teste reproduz o caminho do Google sem depender do Google: cria a sessão pelo
 servidor, abre o app e exige que ele reconheça.
+
+
+### E um teste que contaminava o seed
+
+Rodando a suíte duas vezes seguidas, três testes de **outros arquivos** falharam
+— os números da lista e do orçamento da Camila, que são critério de aceite das
+telas. Não era regressão: era deriva de dado.
+
+O teste de fusão de produto do CRM pegava emprestada "a primeira nota `DONE`
+que aparecer", que é uma nota do seed, e pendurava um item nela. O item saía na
+limpeza, mas o estrago já estava feito noutro lugar — e a falha aparecia longe
+da causa, sem pista de por quê.
+
+Agora o teste cria a própria nota. É a mesma família do incidente da fase 6:
+teste que alcança dado compartilhado. Lá custou o banco inteiro; aqui custou uma
+hora de desconfiança do commit errado.

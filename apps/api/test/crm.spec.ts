@@ -206,7 +206,29 @@ describe('CRM', () => {
       const origem = await produto('CAFE TORR 500 G');
 
       const loja = await prisma.store.findFirstOrThrow();
-      const nota = await prisma.receipt.findFirstOrThrow({ where: { status: 'DONE' } });
+
+      /*
+       * Nota **do teste**, não a primeira nota `DONE` que aparecer.
+       *
+       * Pegar uma nota do seed emprestada contamina o dado que as outras suítes
+       * conferem: os números de gastos e da lista da Camila são o critério de
+       * aceite das telas, e um item a mais na nota dela quebra outro arquivo de
+       * teste — longe daqui, sem pista de por quê. É a mesma família do
+       * incidente da fase 6: teste que alcança dado compartilhado.
+       */
+      const nota = await prisma.receipt.create({
+        data: {
+          userId: pessoaId,
+          accessKey: `53260800000000000000650010000${Date.now().toString().slice(-9)}1`.slice(0, 44),
+          status: 'DONE',
+          source: 'key',
+          storeId: loja.id,
+          issuedAt: new Date(),
+          totalCents: 2140,
+        },
+        select: { id: true },
+      });
+
       const item = await prisma.receiptItem.create({
         data: {
           receiptId: nota.id,
