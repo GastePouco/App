@@ -27,7 +27,7 @@ Para rodar a suíte e2e inteira, suba a API com `RATE_LIMIT_TEST_FACTOR=20 pnpm 
 - `packages/ui`: componentes React do design system (porte em TSX de `design-system/bundle-referencia/`).
 - `packages/tokens`: `tokens.json` → `tokens.css` + preset do Tailwind.
 - `packages/shared`: schemas Zod e tipos compartilhados entre web e api.
-- `apps/oracle` (fase Solana, separada): ver `docs/10-MODULO-SOLANA.md`.
+- `apps/oracle` (fase Solana, separada): ver `docs/10-MODULO-SOLANA.md` — **revisão 2**: feed por SKU, índice da cesta por cidade e mercado de dados por x402, com repasse a quem escaneou. Duas fontes de nota que não se misturam: leitura no app (cria contribuinte) e acervo importado (dá profundidade, não conta como pessoa).
 - Testes: Vitest + Testing Library + `vitest-axe` no web; Jest + Supertest na api; Playwright para os fluxos principais.
 - Infra: Docker Compose para desenvolvimento; deploy em Coolify (um serviço web estático, um serviço api, Redis). Em produção o Postgres e os arquivos gerados ficam no **Supabase** — só como banco gerenciado e Storage, sem PostgREST e sem Supabase Auth: ver `docs/13-SUPABASE.md`.
 
