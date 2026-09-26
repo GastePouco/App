@@ -1,0 +1,35 @@
+# O contexto de build é o repositório inteiro (os Dockerfiles precisam do
+# lockfile e dos pacotes compartilhados), então o que fica de fora importa.
+#
+# `node_modules` não é só peso: com pnpm são links simbólicos para o store, e o
+# Docker recusa o contexto inteiro ao esbarrar num deles.
+
+node_modules
+**/node_modules
+
+# Saídas de build — a imagem gera as suas.
+dist
+**/dist
+**/.turbo
+apps/web/dist
+apps/api/dist
+packages/*/dist
+
+# Nada de segredo entra em imagem.
+.env
+.env.*
+!.env.example
+
+# Ruído de desenvolvimento e teste.
+.git
+.github
+**/test-results
+**/playwright-report
+**/coverage
+**/*.log
+exportacoes
+apps/web/lighthouse.json
+
+# Documentação e referência visual não fazem parte do que roda.
+docs
+referencia

@@ -96,6 +96,19 @@ export default defineConfig({
       },
     },
   },
+  // `vite preview` serve o build de produção — é nele que o Lighthouse mede, e
+  // é ele que precisa do mesmo proxy do desenvolvimento para falar com a API.
+  preview: {
+    host: '127.0.0.1',
+    port: 4173,
+    allowedHosts: hostsPermitidos,
+    proxy: {
+      '/v1': {
+        target: process.env.API_URL ?? 'http://127.0.0.1:3001',
+        changeOrigin: true,
+      },
+    },
+  },
   test: {
     environment: 'jsdom',
     globals: true,

@@ -8,7 +8,7 @@ Veja `docs/12-PROGRESSO.md` para o que já foi executado, o que falta e as
 decisões de ambiente tomadas no caminho. Atualize esse arquivo ao concluir uma
 fase.
 
-Resumo: fases 0, 1, 2, 4, 5, 6 e 7 executadas; fase 3 implementada mas **não validada contra uma nota real do DF** — leia a seção da fase 3 no progresso antes de confiar no parser.
+Resumo: fases 0, 1, 2, 4, 5, 6 e 7 executadas; fase 8 pronta e medida (falta subir no servidor — `docs/14-DEPLOY.md`); fase 3 implementada mas **não validada contra uma nota real do DF** — leia a seção da fase 3 no progresso antes de confiar no parser.
 
 Para rodar a suíte e2e inteira, suba a API com `RATE_LIMIT_TEST_FACTOR=20 pnpm dev`: os três projetos do Playwright saem do mesmo IP e o limite de produção derruba a segunda metade da suíte.
 

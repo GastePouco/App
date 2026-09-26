@@ -15,6 +15,7 @@ import {
   Toast,
 } from '@gastemenos/ui';
 import { api } from '../../lib/api.js';
+import { FalhouCarregar } from '../../componentes/Estado.js';
 
 /** `referencia/telas/Precos.dc.html` */
 
@@ -106,6 +107,9 @@ export function Precos(): React.ReactElement {
       </header>
 
       <main className="flex flex-col gap-6 px-5 pt-6">
+        {historico.isError ? (
+          <FalhouCarregar erro={historico.error} tentarDeNovo={() => void historico.refetch()} />
+        ) : null}
         <SegmentedControl
           label="Período do histórico"
           value={janela}

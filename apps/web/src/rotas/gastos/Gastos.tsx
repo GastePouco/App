@@ -11,6 +11,7 @@ import {
 } from '@gastemenos/ui';
 import { api } from '../../lib/api.js';
 import type { ResumoDeGastos } from '../inicio/Inicio.js';
+import { FalhouCarregar } from '../../componentes/Estado.js';
 
 /** `referencia/telas/Gastos.dc.html` */
 
@@ -76,6 +77,11 @@ export function Gastos(): React.ReactElement {
       </header>
 
       <main className="flex flex-col gap-6 px-5 pt-6">
+        {/* O resumo sustenta a tela: sem ele, gráfico e destaques não têm o que
+            comparar. Falhou, a pessoa vê o motivo e um caminho de volta. */}
+        {resumo.isError ? (
+          <FalhouCarregar erro={resumo.error} tentarDeNovo={() => void resumo.refetch()} />
+        ) : null}
         {/* Um filtro só, acima de tudo que ele controla. */}
         <SegmentedControl
           label="Período dos gastos"

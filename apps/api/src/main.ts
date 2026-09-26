@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { AppModule } from './app.module.js';
 import { FiltroDeErros } from './comum/filtro-de-erros.js';
+import { idDaRequisicao } from './comum/id-da-requisicao.js';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, { bufferLogs: false });
@@ -15,6 +16,8 @@ async function bootstrap(): Promise<void> {
   const origem = process.env.APP_URL ?? 'http://localhost:5173';
   app.enableCors({ origin: origem.split(','), credentials: true });
 
+  // Antes de tudo: o id precisa existir mesmo se o erro for do próprio helmet.
+  app.use(idDaRequisicao);
   app.use(helmet());
   app.use(cookieParser());
   app.setGlobalPrefix('v1');

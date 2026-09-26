@@ -12,7 +12,7 @@ Estado de cada fase de `11-ROADMAP-E-PROMPTS.md`. Atualize ao concluir uma fase.
 | 5 | Preços da região, lista e ofertas | ✅ **EXECUTADO** |
 | 6 | Jogo: níveis, selos, ranking, compartilhar | ✅ **EXECUTADO** |
 | 7 | Minha conta, notificações e ajuda | ✅ **EXECUTADO** |
-| 8 | Polimento, acessibilidade e lançamento | ⬜ PLANEJADO |
+| 8 | Polimento, acessibilidade e lançamento | 🟡 **PARCIAL** — tudo pronto e medido; falta subir no servidor |
 | 9 | Módulo Solana | ⬜ PLANEJADO |
 
 ## Como conferir o que já existe
@@ -609,3 +609,56 @@ diário. Depuração não é desculpa para guardar CPF.
 
 145 testes na API. O CRM completo (produtos, usuários, métricas e as telas) vem
 depois da fase 9.
+
+
+## Fase 8 — polimento, acessibilidade e lançamento (25/09/2026)
+
+Auditoria de axe em **27 rotas × 3 combinações** de tema, tamanho de texto e
+largura: zero violações. Lighthouse no build de produção: acessibilidade,
+boas práticas e SEO em **100**, desempenho em 98. As imagens de Docker sobem,
+migram e respondem — só falta apontar o Coolify. Detalhes em `14-DEPLOY.md`.
+
+### Três coisas que estavam quebradas e ninguém tinha percebido
+
+**Não havia PWA.** O `vite-plugin-pwa` estava configurado com
+`registerType: 'prompt'`, mas ninguém chamava `registerSW` — o service worker
+nunca era registrado. O manifest existia apontando para ícones que **não
+existiam**: `public/` estava vazia. Agora os ícones são gerados do logo por um
+script sem dependência nativa (`zlib` e aritmética; o traço sai de carimbar
+discos ao longo dos segmentos, que é o que dá as pontas arredondadas).
+
+**A tela de ler nota tinha texto invisível no tema escuro.** O fundo da câmera é
+escuro nos três temas, mas o texto usava `--ink` e os botões `--on-brand` — e os
+dois viram escuro em algum tema. Medido com axe: "Galeria" e "Digitar chave"
+abaixo de 4,5:1. Acrescentei o token **`on-camera`** (claro nos três temas) ao
+design system. É a terceira vez que o mesmo padrão aparece: componente que
+assume a cor da superfície onde está.
+
+**O comando de produção apontava para o arquivo errado.** `pnpm start` rodava
+`node dist/main.js`, e o compilador gera `dist/src/main.js` — ou seja, nunca
+funcionou. Só apareceu ao rodar a imagem de verdade, que é o argumento para
+construir a imagem antes do dia do deploy.
+
+### Estados que faltavam
+
+- **Erro** nas telas de dado (Início, Gastos, Preços, Lista, Ofertas, Ranking,
+  Conquistas, Notificações): antes falhavam em silêncio, com área em branco.
+- **Sem conexão**: faixa global com `aria-live`, que resolve todas as telas de
+  uma vez em vez de repetir a lógica em vinte lugares.
+- **Versão nova**: a atualização só entra quando a pessoa aceita — trocar o app
+  embaixo de quem está lendo uma nota perderia o que ela estava fazendo.
+- **Tela quebrada**: `errorElement` em todas as rotas, mais um 404 com saída.
+
+### Decisões
+
+- **Rolagem horizontal precisa de foco.** A trilha de níveis rolava sem alcance
+  de teclado. A primeira correção — `role="group"` no `<ol>` — quebrou a
+  semântica de lista, e o próprio axe pegou. A certa é a rolagem num contêiner
+  com `role="region"` e rótulo, mantendo o `ol` como lista.
+- **Nenhuma renovação de sessão para quem nunca entrou.** Toda primeira visita
+  começava com um 401 no console (e no monitoramento). Uma marca local, que não
+  é segredo nem sessão, evita o pedido — quem limpar o armazenamento perde o
+  atalho, não a sessão.
+- **Os testes e2e rodam contra o banco local, não o Supabase.** Com a API
+  apontada para lá, seis execuções em paralelo começaram a falhar por latência —
+  e teste que falha por rede ensina a ignorar teste vermelho.

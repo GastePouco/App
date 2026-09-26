@@ -65,7 +65,11 @@ test('perfil, ajustes, ajuda e notificações', async ({ page, request }) => {
 
   // ------------------------------------------------------------- dados
   await page.goto('/perfil/dados');
-  await expect(page.getByLabel('Nome', { exact: true })).toHaveValue('Pessoa de Teste');
+  // Timeout maior de propósito: com os três projetos em paralelo, a primeira
+  // carga de /me disputa a API com as outras execuções.
+  await expect(page.getByLabel('Nome', { exact: true })).toHaveValue('Pessoa de Teste', {
+    timeout: 15_000,
+  });
   // Salvar só acende com alteração.
   await expect(page.getByRole('button', { name: 'Salvar alterações' })).toBeDisabled();
   await page.getByLabel('Nome no ranking').fill('Pessoa Econômica');

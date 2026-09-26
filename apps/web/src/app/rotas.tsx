@@ -2,6 +2,7 @@ import type { ReactElement } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { ExigeSessao } from './sessao.js';
+import { TelaDeErro } from './TelaDeErro.js';
 import { Inicio } from '../rotas/inicio/Inicio.js';
 import { DevUI } from '../rotas/dev-ui/DevUI.js';
 import { BoasVindas } from '../rotas/boas-vindas/BoasVindas.js';
@@ -39,22 +40,27 @@ import { Ajuda } from '../rotas/ajuda/Ajuda.js';
  * resto e leva ao login guardando de onde veio.
  */
 
-/** Rota que só existe com sessão. */
+/**
+ * Rota que só existe com sessão.
+ *
+ * `errorElement` em toda rota: sem ele, um erro em qualquer tela deixa a página
+ * em branco, que é a pior resposta possível para quem está do outro lado.
+ */
 function comSessao(path: string, tela: ReactElement): RouteObject {
-  return { path, element: <ExigeSessao>{tela}</ExigeSessao> };
+  return { path, element: <ExigeSessao>{tela}</ExigeSessao>, errorElement: <TelaDeErro /> };
 }
 
 export const rotas: RouteObject[] = [
-  { path: '/', element: <Navigate to="/boas-vindas/1" replace /> },
+  { path: '/', element: <Navigate to="/boas-vindas/1" replace />, errorElement: <TelaDeErro /> },
 
   // Primeiro uso e acesso — sem sessão.
-  { path: '/boas-vindas/:passo', element: <BoasVindas /> },
-  { path: '/criar-conta', element: <CriarConta /> },
-  { path: '/confirmar-email', element: <ConfirmarEmail /> },
-  { path: '/entrar', element: <Entrar /> },
-  { path: '/entrar/google', element: <EntrarComGoogle /> },
-  { path: '/recuperar-senha', element: <RecuperarSenha /> },
-  { path: '/recuperar-senha/nova', element: <RecuperarSenha /> },
+  { errorElement: <TelaDeErro />, path: '/boas-vindas/:passo', element: <BoasVindas /> },
+  { errorElement: <TelaDeErro />, path: '/criar-conta', element: <CriarConta /> },
+  { errorElement: <TelaDeErro />, path: '/confirmar-email', element: <ConfirmarEmail /> },
+  { errorElement: <TelaDeErro />, path: '/entrar', element: <Entrar /> },
+  { errorElement: <TelaDeErro />, path: '/entrar/google', element: <EntrarComGoogle /> },
+  { errorElement: <TelaDeErro />, path: '/recuperar-senha', element: <RecuperarSenha /> },
+  { errorElement: <TelaDeErro />, path: '/recuperar-senha/nova', element: <RecuperarSenha /> },
 
   // Com sessão.
   comSessao('/perfil-de-consumo', <PerfilDeConsumo />),
@@ -87,4 +93,7 @@ export const rotas: RouteObject[] = [
   // Conferência do design system. `import.meta.env.DEV` some no build de
   // produção, então a rota não vai para o ar junto com o app.
   ...(import.meta.env.DEV ? [{ path: '/dev/ui', element: <DevUI /> }] : []),
+
+  // Endereço que não existe cai aqui, com saída — não numa tela em branco.
+  { path: '*', element: <TelaDeErro /> },
 ];

@@ -41,8 +41,39 @@ const BASE = '/v1';
 let acessoAtual: string | null = null;
 let renovacaoEmAndamento: Promise<boolean> | null = null;
 
+/**
+ * Marca no aparelho que esta pessoa já entrou aqui.
+ *
+ * Não é sessão nem segredo — o cookie de refresh é httpOnly e o javascript não
+ * o enxerga. É só para **não pedir renovação a quem nunca entrou**: sem isso,
+ * toda primeira visita começa com um 401 no console, que polui o monitoramento
+ * e some no meio dos erros que importam. Quem limpar o armazenamento perde o
+ * atalho, não a sessão: a renovação acontece do mesmo jeito ao abrir uma tela
+ * que exige login.
+ */
+const MARCA_DE_SESSAO = 'gastemenos:ja-entrou';
+
+export function jaEntrouNesteAparelho(): boolean {
+  try {
+    return localStorage.getItem(MARCA_DE_SESSAO) === '1';
+  } catch {
+    // Modo privado ou armazenamento bloqueado: tenta renovar, como antes.
+    return true;
+  }
+}
+
+function anotarSessao(entrou: boolean): void {
+  try {
+    if (entrou) localStorage.setItem(MARCA_DE_SESSAO, '1');
+    else localStorage.removeItem(MARCA_DE_SESSAO);
+  } catch {
+    // Sem armazenamento o app funciona igual, só sem o atalho.
+  }
+}
+
 export function guardarAcesso(token: string | null): void {
   acessoAtual = token;
+  anotarSessao(token !== null);
 }
 
 export function temAcesso(): boolean {

@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { BottomNav, Button, Card, Chip, Icon, LevelRing, ProgressBar } from '@gastemenos/ui';
 import { nomeDoNivel } from '@gastemenos/shared';
 import { api } from '../../lib/api.js';
+import { FalhouCarregar } from '../../componentes/Estado.js';
 
 /** `referencia/telas/Conquistas.dc.html` */
 
@@ -88,7 +89,17 @@ export function Conquistas(): React.ReactElement {
             <h2 id="trilha" className="mb-3 text-title-s text-ink">
               Sua trilha
             </h2>
-            <ol className="flex gap-2 overflow-x-auto pb-2">
+            {/* A rolagem fica no contêiner, não na lista: quem rola precisa
+                receber foco (senão o teclado não alcança os níveis fora da
+                tela), e o `ol` precisa continuar sendo lista para os `li`
+                serem anunciados como itens. */}
+            <div
+              tabIndex={0}
+              role="region"
+              aria-label="Trilha de níveis"
+              className="overflow-x-auto pb-2"
+            >
+            <ol className="flex gap-2">
               {[-1, 0, 1, 2].map((passo) => {
                 const nivel = situacao.data!.level + passo;
                 if (nivel < 1) return null;
@@ -109,6 +120,7 @@ export function Conquistas(): React.ReactElement {
                 );
               })}
             </ol>
+            </div>
           </section>
         ) : null}
 
@@ -132,7 +144,9 @@ export function Conquistas(): React.ReactElement {
             </Chip>
           </div>
 
-          {selos.isPending ? (
+          {selos.isError ? (
+            <FalhouCarregar erro={selos.error} tentarDeNovo={() => void selos.refetch()} />
+          ) : selos.isPending ? (
             <p role="status" className="text-body-m text-ink-muted">
               Carregando…
             </p>

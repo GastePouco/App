@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { formatarCentavos } from '@gastemenos/shared';
 import { BottomNav, Button, Card, Chip, SegmentedControl } from '@gastemenos/ui';
 import { api } from '../../lib/api.js';
+import { FalhouCarregar } from '../../componentes/Estado.js';
 
 /** `referencia/telas/Ranking.dc.html` */
 
@@ -119,7 +120,9 @@ export function Ranking(): React.ReactElement {
           onChange={(valor) => setCategoria(valor as Categoria)}
         />
 
-        {ranking.isPending ? (
+        {ranking.isError ? (
+            <FalhouCarregar erro={ranking.error} tentarDeNovo={() => void ranking.refetch()} />
+          ) : ranking.isPending ? (
           <p role="status" className="text-body-m text-ink-muted">
             Carregando o ranking…
           </p>

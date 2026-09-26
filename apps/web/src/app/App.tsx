@@ -5,6 +5,7 @@ import { del, get, set } from 'idb-keyval';
 import { Link, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { AppearanceProvider, ProvedorDeLink, type ComponenteDeLink } from '@gastemenos/ui';
 import { ProvedorDeSessao } from './sessao.js';
+import { AvisosDoApp } from './AvisosDoApp.js';
 import { rotas } from './rotas.js';
 
 /**
@@ -68,6 +69,7 @@ export function App(): React.ReactElement {
         >
           <ProvedorDeSessao>
             <RouterProvider router={roteador} />
+            <AvisosDoApp />
           </ProvedorDeSessao>
         </PersistQueryClientProvider>
       </ProvedorDeLink>

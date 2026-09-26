@@ -110,6 +110,9 @@ importers:
       passport-jwt:
         specifier: ^4.0.1
         version: 4.0.1
+      prisma:
+        specifier: ^6.2.1
+        version: 6.19.3(typescript@5.9.3)
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -159,9 +162,6 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.20.4)
-      prisma:
-        specifier: ^6.2.1
-        version: 6.19.3(typescript@5.9.3)
       supertest:
         specifier: ^7.0.0
         version: 7.3.0
@@ -271,6 +271,9 @@ importers:
       vitest-axe:
         specifier: ^0.1.0
         version: 0.1.0(vitest@2.1.9(@types/node@22.20.4)(jiti@1.21.7)(jsdom@25.0.1)(terser@5.51.2)(tsx@4.23.15))
+      workbox-window:
+        specifier: ^7.4.1
+        version: 7.4.1
 
   packages/shared:
     dependencies:

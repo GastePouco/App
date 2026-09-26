@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { api, guardarAcesso, renovarSessao } from '../lib/api.js';
+import { api, guardarAcesso, jaEntrouNesteAparelho, renovarSessao } from '../lib/api.js';
 
 /**
  * Quem está logado.
@@ -51,7 +51,9 @@ export function ProvedorDeSessao({ children }: { children: ReactNode }): React.R
   useEffect(() => {
     let vivo = true;
     void (async () => {
-      const renovou = await renovarSessao();
+      // Quem nunca entrou neste aparelho não tem cookie para trocar: pedir
+      // renovação aqui só rende um 401 no console de quem está chegando agora.
+      const renovou = jaEntrouNesteAparelho() ? await renovarSessao() : false;
       if (!vivo) return;
       if (renovou) await buscarUsuario();
       if (vivo) setCarregando(false);

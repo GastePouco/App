@@ -1,0 +1,21 @@
+# As telas de dado ficam atrás de login e são desenhadas no navegador — não há
+# o que um buscador indexe ali, e listar os caminhos deixa claro que não é
+# descuido.
+User-agent: *
+Allow: /$
+Allow: /boas-vindas
+Allow: /entrar
+Allow: /criar-conta
+Disallow: /inicio
+Disallow: /gastos
+Disallow: /notas
+Disallow: /produtos
+Disallow: /lista
+Disallow: /ofertas
+Disallow: /ranking
+Disallow: /conquistas
+Disallow: /compartilhar
+Disallow: /notificacoes
+Disallow: /perfil
+Disallow: /ler-nota
+Disallow: /v1/

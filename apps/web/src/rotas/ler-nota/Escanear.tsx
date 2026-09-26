@@ -99,10 +99,10 @@ export function Escanear(): React.ReactElement {
   }
 
   return (
-    <div className="mx-auto flex min-h-[100dvh] w-full max-w-[480px] flex-col bg-camera">
+    <div className="gm-sobre-camera mx-auto flex min-h-[100dvh] w-full max-w-[480px] flex-col bg-camera">
       <header className="flex items-center justify-between px-5 pt-6">
         <IconButton icon="back" label="Voltar" variant="ghost" onClick={() => navegar('/inicio')} />
-        <h1 tabIndex={-1} className="text-title-s text-on-brand outline-none">
+        <h1 tabIndex={-1} className="text-title-s text-on-camera outline-none">
           Ler nota fiscal
         </h1>
         <IconButton icon="help" label="Ajuda" variant="ghost" href="/ajuda" />
@@ -122,7 +122,7 @@ export function Escanear(): React.ReactElement {
             {leitor.estado !== 'lendo' ? (
               <p
                 role="status"
-                className="absolute inset-0 flex items-center justify-center px-6 text-center text-body-m text-on-brand"
+                className="absolute inset-0 flex items-center justify-center px-6 text-center text-body-m text-on-camera"
               >
                 {leitor.estado === 'iniciando' && 'Abrindo a câmera…'}
                 {leitor.estado === 'sem-permissao' &&
@@ -135,7 +135,7 @@ export function Escanear(): React.ReactElement {
             ) : null}
           </div>
 
-          <p className="mt-4 text-center text-body-m text-on-brand">
+          <p className="mt-4 text-center text-body-m text-on-camera">
             Aponte para o QR code no rodapé da nota.
           </p>
 
@@ -229,7 +229,7 @@ export function Escanear(): React.ReactElement {
       {modo === 'camera' ? (
         <div className="px-5 pb-8 pt-4">
           <Erro mensagem={erro} />
-          <p className="mt-4 text-center text-body-s text-on-brand opacity-80">
+          <p className="mt-4 text-center text-body-s text-on-camera opacity-80">
             <Icon name="help" size={16} className="mr-1 inline" />
             Não está conseguindo?{' '}
             <a href="/ajuda" className="underline">

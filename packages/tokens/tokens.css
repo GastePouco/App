@@ -23,6 +23,7 @@
   --focus: #6B5BE0;
   --scrim: rgba(11, 21, 18, 0.62);
   --camera: #0B1512;
+  --on-camera: #F5F3EC;
   --chart-1: #0E4D3A;
   --chart-2: #F26B3A;
   --chart-3: #6B5BE0;
@@ -78,6 +79,7 @@
   --focus: #B3A8FF;
   --scrim: rgba(0, 0, 0, 0.7);
   --camera: #0B1512;
+  --on-camera: #F5F3EC;
   --chart-1: #D4F36B;
   --chart-2: #FF9A6E;
   --chart-3: #8B7CF0;
@@ -111,6 +113,7 @@
   --focus: #0047FF;
   --scrim: rgba(0, 0, 0, 0.8);
   --camera: #000000;
+  --on-camera: #FFFFFF;
   --chart-1: #003D2B;
   --chart-2: #C2410C;
   --chart-3: #2A1F8F;
@@ -146,6 +149,7 @@
     --focus: #B3A8FF;
     --scrim: rgba(0, 0, 0, 0.7);
     --camera: #0B1512;
+    --on-camera: #F5F3EC;
     --chart-1: #D4F36B;
     --chart-2: #FF9A6E;
     --chart-3: #8B7CF0;

@@ -12,6 +12,7 @@ import {
   Toast,
 } from '@gastemenos/ui';
 import { api } from '../../lib/api.js';
+import { FalhouCarregar } from '../../componentes/Estado.js';
 
 /** `referencia/telas/Ofertas.dc.html` */
 
@@ -136,7 +137,9 @@ export function Ofertas(): React.ReactElement {
             Baixaram de preço
           </h2>
 
-          {ofertas.isPending ? (
+          {ofertas.isError ? (
+            <FalhouCarregar erro={ofertas.error} tentarDeNovo={() => void ofertas.refetch()} />
+          ) : ofertas.isPending ? (
             <p role="status" className="text-body-m text-ink-muted">
               Procurando ofertas…
             </p>

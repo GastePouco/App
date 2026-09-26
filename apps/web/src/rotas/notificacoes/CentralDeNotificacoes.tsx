@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { BottomNav, Card, Chip, Icon, IconButton } from '@gastemenos/ui';
 import { api } from '../../lib/api.js';
+import { FalhouCarregar } from '../../componentes/Estado.js';
 
 /** `referencia/telas/CentralNotificacoes.dc.html` */
 
@@ -109,7 +110,9 @@ export function CentralDeNotificacoes(): React.ReactElement {
           </button>
         ) : null}
 
-        {notificacoes.isPending ? (
+        {notificacoes.isError ? (
+            <FalhouCarregar erro={notificacoes.error} tentarDeNovo={() => void notificacoes.refetch()} />
+          ) : notificacoes.isPending ? (
           <p role="status" className="text-body-m text-ink-muted">
             Carregando…
           </p>

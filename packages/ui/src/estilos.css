@@ -32,6 +32,15 @@
 .gm-btn:disabled, .gm-btn[aria-disabled="true"] { background: var(--surface-sunken); color: var(--ink-muted); border-color: var(--line); cursor: not-allowed; }
 .gm-btn__easyicon { width: 52px; height: 52px; border-radius: 16px; background: var(--lime); color: var(--brand); display: inline-flex; align-items: center; justify-content: center; }
 .gm-btn--secondary .gm-btn__easyicon { background: transparent; color: var(--ink); width: auto; }
+
+/* Sobre a tela do leitor o fundo e escuro nos tres temas, entao --ink (escuro
+   no claro) e --on-brand (escuro no escuro) nao servem: os dois somem em algum
+   tema. O token on-camera e claro sempre. Medido com axe: sem isto, "Galeria" e
+   "Digitar chave" ficam abaixo de 4,5:1. */
+.gm-sobre-camera .gm-btn--secondary { color: var(--on-camera); border-color: var(--on-camera); }
+.gm-sobre-camera .gm-btn--secondary .gm-btn__easyicon { color: var(--on-camera); }
+.gm-sobre-camera .gm-btn--ghost { color: var(--on-camera); }
+.gm-sobre-camera .gm-iconbtn--ghost { color: var(--on-camera); }
 .gm-btn__icon { display: inline-flex; }
 
 /* IconButton */

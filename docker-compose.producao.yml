@@ -1,0 +1,79 @@
+# Produção (Coolify). O Postgres **não está aqui**: é o Supabase.
+#
+#   docker compose -f docker-compose.producao.yml up -d --build
+#
+# No Coolify, aponte para este arquivo e preencha as variáveis na interface —
+# nenhum segredo entra no repositório. As obrigatórias estão em `.env.example`;
+# `docs/14-DEPLOY.md` tem o passo a passo.
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      # Banco: as duas conexões do Supabase (ver docs/13-SUPABASE.md).
+      DATABASE_URL: ${DATABASE_URL}
+      DIRECT_URL: ${DIRECT_URL}
+      REDIS_URL: redis://redis:6379
+      APP_URL: ${APP_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      USER_HASH_SECRET: ${USER_HASH_SECRET}
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY}
+      SUPABASE_STORAGE_BUCKET: ${SUPABASE_STORAGE_BUCKET:-exportacoes}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      GOOGLE_CALLBACK_URL: ${GOOGLE_CALLBACK_URL:-}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-}
+      SMTP_URL: ${SMTP_URL:-}
+      MAIL_FROM: ${MAIL_FROM:-GasteMenos <nao-responda@gastemenos.com.br>}
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      # `/v1/saude` consulta o banco: container "no ar" sem banco é pior que
+      # container fora, porque o balanceador manda tráfego para ele.
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:3000/v1/saude').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    restart: unless-stopped
+    environment:
+      # O nginx repassa /v1 para cá: web e API na mesma origem, que é o que o
+      # cookie de refresh (SameSite=Lax) precisa.
+      API_HOST: api
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - '${WEB_PORT:-8080}:80'
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    # A fila de leitura de notas sobrevive a reinício: perder a fila significa
+    # perder notas que a pessoa já leu e acha que estão salvas.
+    command: ['redis-server', '--appendonly', 'yes']
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  redis-data:

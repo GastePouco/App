@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { formatarCentavos } from '@gastemenos/shared';
 import { BottomNav, Button, Card, Icon, StatTile, TextField } from '@gastemenos/ui';
 import { api } from '../../lib/api.js';
+import { FalhouCarregar } from '../../componentes/Estado.js';
 
 /** `referencia/telas/Lista.dc.html` */
 
@@ -137,7 +138,9 @@ export function Lista(): React.ReactElement {
             {`${itens.length} ${itens.length === 1 ? 'item' : 'itens'}`}
           </h2>
 
-          {lista.isPending ? (
+          {lista.isError ? (
+            <FalhouCarregar erro={lista.error} tentarDeNovo={() => void lista.refetch()} />
+          ) : lista.isPending ? (
             <p role="status" className="text-body-m text-ink-muted">
               Carregando…
             </p>

@@ -14,6 +14,7 @@ import {
 } from '@gastemenos/ui';
 import { api } from '../../lib/api.js';
 import { InicioFacil } from './InicioFacil.js';
+import { FalhouCarregar } from '../../componentes/Estado.js';
 
 /**
  * `referencia/telas/Main.dc.html`
@@ -148,7 +149,9 @@ export function Inicio(): React.ReactElement {
             </Link>
           </div>
 
-          {notas.isPending ? (
+          {notas.isError ? (
+            <FalhouCarregar erro={notas.error} tentarDeNovo={() => void notas.refetch()} />
+          ) : notas.isPending ? (
             <p role="status" className="text-body-s text-ink-muted">
               Carregando…
             </p>

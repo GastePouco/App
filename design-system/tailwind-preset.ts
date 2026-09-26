@@ -30,6 +30,7 @@ const preset: Partial<Config> = {
       "focus": 'var(--focus)',
       "scrim": 'var(--scrim)',
       "camera": 'var(--camera)',
+      "on-camera": 'var(--on-camera)',
       "chart-1": 'var(--chart-1)',
       "chart-2": 'var(--chart-2)',
       "chart-3": 'var(--chart-3)',

@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { MENSAGENS, erro } from '@gastemenos/shared';
+import { semDadoPessoal, type ComId } from './id-da-requisicao.js';
 
 /**
  * Toda resposta de erro sai como `{ code, message }`, com `message` em
@@ -29,7 +30,8 @@ export class FiltroDeErros implements ExceptionFilter {
   catch(excecao: unknown, host: ArgumentsHost): void {
     const contexto = host.switchToHttp();
     const resposta = contexto.getResponse<Response>();
-    const requisicao = contexto.getRequest<{ method?: string; url?: string }>();
+    const requisicao = contexto.getRequest<{ method?: string; url?: string } & ComId>();
+    const id = requisicao?.idDaRequisicao;
 
     if (excecao instanceof HttpException) {
       const status = excecao.getStatus();
@@ -39,11 +41,15 @@ export class FiltroDeErros implements ExceptionFilter {
     }
 
     this.logger.error(
-      `${requisicao?.method ?? '?'} ${requisicao?.url ?? '?'} falhou`,
+      `[${id ?? 'sem-id'}] ${requisicao?.method ?? '?'} ${semDadoPessoal(requisicao?.url ?? '?')} falhou`,
       excecao instanceof Error ? excecao.stack : String(excecao),
     );
 
-    resposta.status(HttpStatus.INTERNAL_SERVER_ERROR).json(erro('INTERNAL'));
+    // O id vai junto na resposta: é o que a pessoa consegue copiar da tela e
+    // mandar para o suporte, sem contar nada sobre a falha em si.
+    resposta
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .json({ ...erro('INTERNAL'), ...(id ? { requestId: id } : {}) });
   }
 
   private corpoDaExcecao(corpo: unknown, status: number): Record<string, unknown> {
