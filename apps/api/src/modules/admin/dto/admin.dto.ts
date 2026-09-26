@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   ArrayMaxSize,
+  IsIn,
   ArrayNotEmpty,
   IsArray,
   IsBoolean,
@@ -127,4 +128,35 @@ export class EditarOfertaDto {
   @IsOptional()
   @IsISO8601()
   endsAt?: string;
+}
+
+export class CorrigirProdutoDto {
+  @ApiPropertyOptional({ example: 'Café torrado e moído 500g' })
+  @IsOptional()
+  @IsString()
+  @Length(2, 120)
+  displayName?: string;
+
+  @ApiPropertyOptional({ example: 'mercearia' })
+  @IsOptional()
+  @IsString()
+  @Length(2, 40)
+  categorySlug?: string;
+
+  @ApiPropertyOptional({ description: 'GTIN/EAN, ou null para limpar', example: '7891000100103' })
+  @IsOptional()
+  @Matches(/^\d{8,14}$/, { message: 'O GTIN tem de 8 a 14 números.' })
+  gtin?: string | null;
+}
+
+export class FundirProdutoDto {
+  @ApiProperty({ description: 'O produto que será absorvido e deixará de existir' })
+  @IsString()
+  fromId!: string;
+}
+
+export class MudarPapelDto {
+  @ApiProperty({ enum: ['USER', 'ADMIN'] })
+  @IsIn(['USER', 'ADMIN'], { message: 'O papel é USER ou ADMIN.' })
+  role!: 'USER' | 'ADMIN';
 }

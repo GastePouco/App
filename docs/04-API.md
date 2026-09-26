@@ -131,6 +131,18 @@ Papel em `User.role`, lido do banco **a cada requisição** — tirar alguém do
 | GET | `/admin/receipts/failed` | sem chave de acesso e sem quem leu |
 | GET | `/admin/receipts/:id/page` | página guardada, sem CPF, 30 dias; a leitura fica registrada |
 
-Ainda planejado: `/admin/products/:id` (corrigir nome e categoria), usuários e métricas — ver o CRM em `12-PROGRESSO.md`.
+| GET | `/admin/metrics` | painel; nenhum número identifica pessoa |
+| GET | `/admin/products/review` | fila ordenada por observações de preço |
+| GET | `/admin/products/duplicates` | candidatos a fusão, decisão humana |
+| PATCH | `/admin/products/:id` | nome, categoria, GTIN |
+| POST | `/admin/products/:id/merge` | funde outro produto neste; **não tem desfazer** |
+| GET | `/admin/users?email=` | busca por e-mail **exato**; e-mail volta mascarado |
+| GET | `/admin/users/queue` | exclusão agendada e pausa vencida |
+| PATCH | `/admin/users/:id/role` | ninguém tira o próprio papel |
+| GET | `/admin/logs` | trilha de auditoria |
+
+O painel que consome tudo isso é `apps/admin` — ver `15-CRM.md`.
 
 Promover alguém: `npx tsx prisma/promover-admin.mts <e-mail>`. Não há conta de admin plantada em produção.
+
+`/me` devolve `role`: o painel precisa saber na abertura se aquela conta entra. Saber o próprio papel não expõe nada — quem decide o que ele permite é o servidor, a cada requisição.

@@ -662,3 +662,39 @@ construir a imagem antes do dia do deploy.
 - **Os testes e2e rodam contra o banco local, não o Supabase.** Com a API
   apontada para lá, seis execuções em paralelo começaram a falhar por latência —
   e teste que falha por rede ensina a ignorar teste vermelho.
+
+
+## CRM / painel administrativo — executado (26/09/2026)
+
+Seis telas em `apps/admin`, API com 13 testes de aceite (158 na API no total),
+axe limpo em todas, imagem Docker construída e testada. O detalhe está em
+`15-CRM.md`; aqui ficam as decisões que valem para além do CRM.
+
+**Aplicação separada, não rota dentro do app.** O código do painel não vai no
+pacote que o consumidor baixa, e o deploy fica separável — o painel pode ficar
+atrás de rede fechada sem prender o app público junto.
+
+**A fila de revisão é ordenada por impacto, não por data.** Corrigir o produto
+com 300 observações conserta 300 números; o com 2 conserta 2. Ordenar por data
+faria a pessoa gastar o dia no lugar errado.
+
+**Consultar uma conta fica registrado, não só alterar.** Saber quem *olhou* é
+metade da proteção. E a busca é por e-mail exato, com o endereço voltando
+mascarado: `contains` deixaria alguém digitar "@gmail" e receber metade da base.
+
+**Ninguém tira o próprio papel de admin.** Com uma conta só, isso trancaria todo
+mundo para fora, e destrancar exigiria acesso ao banco.
+
+### Dois achados no caminho
+
+`/me` não devolvia `role`, então o painel recusava o próprio admin com "essa
+conta não tem acesso" — bug que só apareceu ao abrir a tela no navegador, não
+nos testes de API.
+
+`WeeklyBars` tinha "semana que mais pesou" escrito no código. Reaproveitado para
+"notas por dia", o texto acessível passava a mentir sobre o que estava ali.
+Virou propriedade com o padrão de antes.
+
+E a mesma armadilha da fase 8 reapareceu: tabela com rolagem horizontal sem
+alcance de teclado, na tela de auditoria. Mesma correção — a rolagem num
+contêiner com `role="region"`, rótulo e `tabindex`.

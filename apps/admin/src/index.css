@@ -1,0 +1,14 @@
+@import '@gastemenos/tokens/tokens.css';
+@import '@gastemenos/ui/estilos.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-body);
+  }
+}

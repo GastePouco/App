@@ -1,0 +1,53 @@
+# Serve o painel administrativo e repassa /v1 para a API.
+#
+# O proxy existe para o web e a API ficarem na **mesma origem**: é isso que faz
+# o cookie de refresh (httpOnly, SameSite=Lax) funcionar sem precisar de
+# SameSite=None, que exigiria terceiros confiáveis e abriria CSRF.
+
+# `${API_HOST}` é trocado na subida pelo entrypoint do nginx (envsubst), por
+# isso este arquivo é um template. Sem isso o cifrão chegaria literal ao nginx.
+upstream api {
+  server ${API_HOST}:3000;
+}
+
+server {
+  listen 80;
+  server_name _;
+
+  root /usr/share/nginx/html;
+  index index.html;
+
+  # O nginx do Coolify já está atrás de HTTPS; estes cabeçalhos completam o
+  # básico que o app precisa. A CSP fica no proxy de borda, onde também valem
+  # os domínios de fonte.
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+  # Painel não é para ser indexado nem embutido em lugar nenhum.
+  add_header X-Robots-Tag "noindex, nofollow" always;
+  add_header X-Frame-Options "DENY" always;
+
+  location /v1/ {
+    proxy_pass http://api/v1/;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    # A leitura de nota espera o portal da SEFAZ; 60 s é folga sem ser eterno.
+    proxy_read_timeout 60s;
+  }
+
+  # Arquivos com hash no nome podem ser cacheados para sempre.
+  location /assets/ {
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+  }
+
+  # O painel não é PWA: não há service worker nem manifest aqui.
+
+  # Qualquer rota do app cai no index.html: o roteamento é do navegador.
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+}

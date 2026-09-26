@@ -61,6 +61,21 @@ services:
     ports:
       - '${WEB_PORT:-8080}:80'
 
+  # Painel administrativo. Serviço separado para poder ficar atrás de rede
+  # fechada (ou nem subir) sem prender o app público junto.
+  admin:
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+    restart: unless-stopped
+    environment:
+      API_HOST: api
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - '${ADMIN_PORT:-8081}:80'
+
   redis:
     image: redis:7-alpine
     restart: unless-stopped

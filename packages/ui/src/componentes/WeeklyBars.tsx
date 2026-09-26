@@ -13,6 +13,12 @@ export interface WeeklyBarsProps {
   formatarValor: (centavos: number) => string;
   /** Vira o resumo lido em voz alta e o rótulo do gráfico. */
   titulo: string;
+  /**
+   * Como chamar a maior barra na tabela. O padrão fala em semana porque o
+   * componente nasceu na tela de gastos; quem usa para outra coisa (dias, por
+   * exemplo) troca, senão o texto acessível mente sobre o que está ali.
+   */
+  destaqueDoMaior?: string;
   altura?: number;
   className?: string;
 }
@@ -32,6 +38,7 @@ export function WeeklyBars({
   barras,
   formatarValor,
   titulo,
+  destaqueDoMaior = 'semana que mais pesou',
   altura = 120,
   className,
 }: WeeklyBarsProps): React.ReactElement {
@@ -100,7 +107,7 @@ export function WeeklyBars({
           >
             <span>
               {barra.label}
-              {indice === indiceDoMaior ? ' · semana que mais pesou' : ''}
+              {indice === indiceDoMaior ? ` · ${destaqueDoMaior}` : ''}
             </span>
             <span className="tabular-nums text-ink">{formatarValor(barra.valor)}</span>
           </li>

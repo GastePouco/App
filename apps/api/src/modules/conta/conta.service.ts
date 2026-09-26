@@ -48,6 +48,7 @@ export class ContaService {
         avatarUrl: true,
         cep: true,
         inviteCode: true,
+        role: true,
         status: true,
         pausedUntil: true,
         deletionAt: true,
@@ -66,6 +67,10 @@ export class ContaService {
       name: usuario.name,
       email: usuario.email,
       rankingName: usuario.rankingName,
+      // O papel vem no próprio `/me` porque o painel precisa saber, na
+      // abertura, se esta conta entra. Saber o próprio papel não expõe nada:
+      // quem decide o que ele permite é o servidor, a cada requisição.
+      role: usuario.role,
       avatarUrl: usuario.avatarUrl,
       cep: usuario.cep,
       inviteCode: usuario.inviteCode,

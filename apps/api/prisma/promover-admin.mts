@@ -12,6 +12,7 @@
  * A mudança vale na requisição seguinte: o papel é lido do banco a cada
  * chamada, não do token (ver JwtEstrategia).
  */
+/* eslint-disable no-console -- script de linha de comando: a saída é a interface. */
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
