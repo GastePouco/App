@@ -56,6 +56,20 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        /*
+         * **Nada de servir o app no lugar da API.**
+         *
+         * O Workbox registra uma NavigationRoute que responde `index.html` a
+         * qualquer navegação de topo — é o que faz abrir /gastos direto na
+         * barra de endereço funcionar. Sem esta lista, ela engole também
+         * `/v1/auth/google`, que é uma navegação de topo de verdade: o login
+         * com Google começa com `window.location.href = '/v1/auth/google'` e
+         * volta do Google por outra navegação, no /callback.
+         *
+         * O sintoma é traiçoeiro: o servidor responde 302 corretamente e o
+         * navegador nem pergunta, porque o service worker respondeu antes.
+         */
+        navigateFallbackDenylist: [/^\/v1\//, /^\/docs/],
         runtimeCaching: [
           {
             // O Início precisa abrir sem rede mostrando o que já estava salvo

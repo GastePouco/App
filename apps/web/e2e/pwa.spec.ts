@@ -89,3 +89,25 @@ test('sem rede, a faixa avisa em vez de deixar a tela quebrada', async ({ page, 
     await context.setOffline(false);
   }
 });
+
+test('com o service worker no ar, a API continua sendo a API', async ({ page }) => {
+  await page.goto('/boas-vindas/1');
+
+  await page.waitForFunction(async () => {
+    const registro = await navigator.serviceWorker.getRegistration();
+    return Boolean(registro?.active);
+  }, null, { timeout: 20_000 });
+
+  /*
+   * Navegação de topo para uma rota da API, que é exatamente como o login com
+   * Google começa (`window.location.href = '/v1/auth/google'`) e como ele volta
+   * do Google. Sem `navigateFallbackDenylist`, o service worker responde o
+   * `index.html` antes de a requisição sair do aparelho — o servidor manda 302
+   * e o navegador nem pergunta. O sintoma é uma tela de 404 do roteador numa
+   * rota que funciona perfeitamente no servidor.
+   */
+  const resposta = await page.goto('/v1/saude');
+
+  expect(resposta?.headers()['content-type'] ?? '').toContain('application/json');
+  await expect(page.locator('body')).toContainText('"status":"ok"');
+});

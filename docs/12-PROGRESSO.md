@@ -725,3 +725,28 @@ E uma correção de documentação que vale como achado: `09-SEGURANCA-LGPD.md`
 prometia verificação em duas etapas que **não existe**. Documento que promete
 segurança inexistente é pior que documento omisso, porque alguém decide
 confiando nele.
+
+
+## O service worker respondia pela API (26/09/2026)
+
+`https://…/v1/auth/google` mostrava "404 Not Found" no navegador enquanto o
+servidor respondia **302 para o Google** — conferido nos três caminhos: túnel,
+proxy do Vite e API direta.
+
+A causa é do próprio PWA, entregue na fase 8. O Workbox registra uma
+`NavigationRoute` que responde `index.html` a **qualquer navegação de topo** —
+é o que faz abrir `/gastos` direto na barra de endereço funcionar. Sem lista de
+exceção, ela engolia `/v1/...` também.
+
+E `/v1/auth/google` é navegação de topo de verdade: o login com Google começa
+com `window.location.href` e **volta do Google** por outra navegação, no
+`/callback`. Ou seja: o login com Google estaria quebrado em produção assim que
+o service worker instalasse, com um sintoma que aponta para o lugar errado — o
+servidor responde certo e o navegador nem pergunta.
+
+`navigateFallbackDenylist: [/^\/v1\//, /^\/docs/]`, e um teste que navega para
+`/v1/saude` com o service worker ativo e exige JSON de volta.
+
+**Para quem já abriu o app antes desta correção**: o service worker antigo
+continua no navegador até ser substituído. Recarregar com Ctrl+Shift+R, ou
+DevTools → Application → Service Workers → Unregister.
