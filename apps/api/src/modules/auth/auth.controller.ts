@@ -33,6 +33,22 @@ import {
 
 const COOKIE_DE_REFRESH = 'gm_refresh';
 
+/**
+ * Cookie de aviso, **legível pelo javascript** e sem segredo nenhum: só diz
+ * "existe sessão neste aparelho".
+ *
+ * Ele existe porque o app precisa saber se vale a pena pedir renovação ao
+ * abrir. A marca ficava em `localStorage`, escrita quando o javascript
+ * guardava o token — e isso quebrou o login com Google: ali a sessão nasce no
+ * **servidor**, no callback, sem nenhum javascript do app ter rodado. A pessoa
+ * escolhia a conta, voltava, e caía na tela de login com o cookie de sessão
+ * no navegador.
+ *
+ * Como cookie, ele acompanha o refresh em qualquer caminho de entrada, some
+ * junto no logout e sobrevive a limpar o armazenamento local.
+ */
+const COOKIE_DE_AVISO = 'gm_sessao';
+
 /** Limite de produção, multiplicado só quando a suíte pede (ver configuracao). */
 function limite(requisicoes: number): number {
   return requisicoes * configuracao.fatorDeLimite;
@@ -55,17 +71,31 @@ export class AuthController {
    * importam (docs/09-SEGURANCA-LGPD.md).
    */
   private gravarCookie(resposta: Response, refresh: string): void {
+    const validade = configuracao.jwt.validadeDoRefreshEmDias * 24 * 60 * 60 * 1000;
+
     resposta.cookie(COOKIE_DE_REFRESH, refresh, {
       httpOnly: true,
       secure: configuracao.ehProducao,
       sameSite: 'lax',
       path: '/v1/auth',
-      maxAge: configuracao.jwt.validadeDoRefreshEmDias * 24 * 60 * 60 * 1000,
+      maxAge: validade,
+    });
+
+    // Sem `httpOnly` de propósito: é o único cookie que o app precisa ler, e
+    // não carrega segredo — só a informação de que existe sessão. `path: '/'`
+    // porque quem lê é a página, não a rota de autenticação.
+    resposta.cookie(COOKIE_DE_AVISO, '1', {
+      httpOnly: false,
+      secure: configuracao.ehProducao,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: validade,
     });
   }
 
   private limparCookie(resposta: Response): void {
     resposta.clearCookie(COOKIE_DE_REFRESH, { path: '/v1/auth' });
+    resposta.clearCookie(COOKIE_DE_AVISO, { path: '/' });
   }
 
   private responder(resposta: Response, tokens: ParDeTokens): { access: string } {

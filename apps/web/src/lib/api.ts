@@ -42,38 +42,31 @@ let acessoAtual: string | null = null;
 let renovacaoEmAndamento: Promise<boolean> | null = null;
 
 /**
- * Marca no aparelho que esta pessoa já entrou aqui.
+ * Existe sessão neste aparelho?
  *
- * Não é sessão nem segredo — o cookie de refresh é httpOnly e o javascript não
- * o enxerga. É só para **não pedir renovação a quem nunca entrou**: sem isso,
- * toda primeira visita começa com um 401 no console, que polui o monitoramento
- * e some no meio dos erros que importam. Quem limpar o armazenamento perde o
- * atalho, não a sessão: a renovação acontece do mesmo jeito ao abrir uma tela
- * que exige login.
+ * Quem responde é um cookie **sem segredo** que a API grava junto com o
+ * refresh (`gm_sessao`). Serve só para não pedir renovação a quem nunca
+ * entrou — sem isso, toda primeira visita começa com um 401 no console, que
+ * polui o monitoramento.
+ *
+ * Já foi uma marca em `localStorage`, escrita pelo javascript ao guardar o
+ * token, e isso **quebrou o login com Google**: ali a sessão nasce no servidor,
+ * no callback, sem nenhum javascript do app ter rodado antes. A pessoa
+ * escolhia a conta, voltava com o cookie de sessão válido no navegador — e caía
+ * na tela de login. Quem grava a marca tem de ser quem cria a sessão.
  */
-const MARCA_DE_SESSAO = 'gastemenos:ja-entrou';
-
 export function jaEntrouNesteAparelho(): boolean {
   try {
-    return localStorage.getItem(MARCA_DE_SESSAO) === '1';
+    return document.cookie.split('; ').some((c) => c.startsWith('gm_sessao='));
   } catch {
-    // Modo privado ou armazenamento bloqueado: tenta renovar, como antes.
+    // Sem acesso a cookie o app tenta renovar assim mesmo: melhor um 401 no
+    // console do que alguém preso fora da própria conta.
     return true;
-  }
-}
-
-function anotarSessao(entrou: boolean): void {
-  try {
-    if (entrou) localStorage.setItem(MARCA_DE_SESSAO, '1');
-    else localStorage.removeItem(MARCA_DE_SESSAO);
-  } catch {
-    // Sem armazenamento o app funciona igual, só sem o atalho.
   }
 }
 
 export function guardarAcesso(token: string | null): void {
   acessoAtual = token;
-  anotarSessao(token !== null);
 }
 
 export function temAcesso(): boolean {

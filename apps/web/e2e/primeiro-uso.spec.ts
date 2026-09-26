@@ -186,6 +186,29 @@ test.describe('acesso', () => {
     await conferirAcessibilidade(page, 'entrar com Google');
   });
 
+  /*
+   * Sessão criada **no servidor**, sem nenhum javascript do app ter rodado — é
+   * exatamente o que acontece na volta do Google: o callback grava o cookie e
+   * redireciona. Este teste existe porque uma otimização para evitar um 401 no
+   * console quebrou esse caminho: a marca de "já entrou" ficava em
+   * localStorage, escrita pelo javascript, e no login com Google ela nunca
+   * existia. A pessoa escolhia a conta e voltava para a tela de login.
+   */
+  test('sessão criada no servidor é reconhecida ao abrir o app', async ({ page, context }) => {
+    const entrou = await context.request.post('/v1/auth/login', {
+      data: { email: 'camila.alves@email.com', password: 'Economia2026' },
+    });
+    expect(entrou.ok()).toBeTruthy();
+
+    const cookies = await context.cookies();
+    expect(cookies.map((c) => c.name)).toEqual(expect.arrayContaining(['gm_refresh', 'gm_sessao']));
+
+    await page.goto('/inicio');
+
+    await expect(page).toHaveURL(/\/inicio$/);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Olá');
+  });
+
   test('rota protegida manda para o login', async ({ page }) => {
     await page.goto('/inicio');
     await expect(page).toHaveURL(/\/entrar$/);

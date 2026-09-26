@@ -750,3 +750,28 @@ servidor responde certo e o navegador nem pergunta.
 **Para quem já abriu o app antes desta correção**: o service worker antigo
 continua no navegador até ser substituído. Recarregar com Ctrl+Shift+R, ou
 DevTools → Application → Service Workers → Unregister.
+
+
+## O login com Google voltava para a tela de login (26/09/2026)
+
+A pessoa escolhia a conta no Google, voltava — e caía na tela de entrar, com o
+cookie de sessão válido no navegador.
+
+A causa foi uma otimização minha da fase 8. Para não começar toda primeira
+visita com um 401 no console, o app só pedia renovação quando existia uma marca
+de "já entrou" — marca que o **javascript** escrevia em `localStorage` ao
+guardar o token.
+
+No login com Google não existe esse momento: a sessão nasce no **servidor**, no
+callback, e o navegador chega no app já com o cookie e sem nenhum javascript do
+app ter rodado antes. Sem a marca, o app não pedia renovação, se considerava
+deslogado e mandava para o login.
+
+A correção é a regra que faltava: **quem grava a marca tem de ser quem cria a
+sessão**. Agora a API grava `gm_sessao=1` junto com o refresh — cookie sem
+segredo, legível pelo javascript, que some no logout e sobrevive a limpar o
+armazenamento local. Vale para qualquer caminho de entrada, inclusive os que
+ainda não existem.
+
+O teste reproduz o caminho do Google sem depender do Google: cria a sessão pelo
+servidor, abre o app e exige que ele reconheça.
