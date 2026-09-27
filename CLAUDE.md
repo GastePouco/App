@@ -4,6 +4,7 @@ GasteMenos é um PWA de controle de gastos no varejo. A pessoa lê o QR code da 
 
 ## Estado da implementação
 
+`docs/17-MANUAL.md` lista tudo o que a aplicação faz hoje e o que ainda não faz.
 Veja `docs/12-PROGRESSO.md` para o que já foi executado, o que falta e as
 decisões de ambiente tomadas no caminho. Atualize esse arquivo ao concluir uma
 fase.

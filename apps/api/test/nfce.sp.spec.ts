@@ -16,7 +16,7 @@ import { AdaptadorDeSp } from '../src/modules/notas/adaptadores/sp.adaptador.js'
  */
 describe('NFC-e de São Paulo, nota real', () => {
   const adaptador = new AdaptadorDeSp();
-  const chave = '35260893015006005344651130006084791234567897';
+  const chave = '35260800000000000191651130006084791000000028';
 
   const pagina = (arquivo: string): string =>
     readFileSync(join(__dirname, 'fixtures', 'nfce', 'sp', arquivo), 'utf8');

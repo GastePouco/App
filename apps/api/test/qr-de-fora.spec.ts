@@ -7,6 +7,11 @@ import { ErroDeLeitura } from '../src/modules/notas/adaptadores/adaptador.js';
  * fácil de forjar — basta um adesivo na gôndola. Buscar esse endereço sem
  * conferir transforma a API em procuradora de quem imprimiu o papel: servidor
  * alcança o que a internet não alcança (metadados da nuvem, rede interna).
+ *
+ * As chaves aqui são **sintéticas**, com CNPJ de exemplo da Receita e dígito
+ * verificador calculado de verdade — o teste exercita a validação real sem
+ * publicar a chave de uma compra de alguém. Chave real vale consulta no portal
+ * da SEFAZ, e a página de lá traz o CPF do consumidor quando ele foi informado.
  */
 describe('QR que vem de fora', () => {
   const df = new AdaptadorDoDf();
@@ -25,8 +30,8 @@ describe('QR que vem de fora', () => {
     // O QR aponta para dec.* e o portal redireciona para ww1.receita.*; as duas
     // pontas precisam estar na lista, senão a nota morre no meio do caminho.
     for (const url of [
-      'http://dec.fazenda.df.gov.br/ConsultarNFCe.aspx?p=53260800000000000191650010000000020000000009|3|1',
-      'https://ww1.receita.fazenda.df.gov.br/DecVisualizador/Nfce/Captcha?Chave=5326077455206800135365113000056288130295822',
+      'http://dec.fazenda.df.gov.br/ConsultarNFCe.aspx?p=53260900000000000191650010000000011000000011|3|1',
+      'https://ww1.receita.fazenda.df.gov.br/DecVisualizador/Nfce/Captcha?Chave=53260900000000000191650010000000011000000011',
     ]) {
       expect(() => conferirHost(url, df.hostsPermitidos, df.uf)).not.toThrow();
     }
@@ -52,7 +57,7 @@ describe('QR que vem de fora', () => {
   });
 
   it('no DF, sem QR não há endereço para consultar', () => {
-    const chave = '53260800000000000191650010000000010000000001';
+    const chave = '53260900000000000191650010000000011000000011';
 
     expect(df.urlDaConsulta(chave)).toBeNull();
     expect(df.urlDaConsulta(chave, 'http://www.fazenda.df.gov.br/nfce/qrcode?p=x')).toBe(
