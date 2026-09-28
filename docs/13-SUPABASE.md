@@ -1,6 +1,6 @@
 # Supabase como banco de produção
 
-> **Estado:** ✅ EXECUTADO. Projeto `vmxoyqvclhbqhpezsstg` (sa-east-1) com as 4
+> **Estado:** ✅ EXECUTADO. Projeto em sa-east-1 com as 4
 > migrations aplicadas, 29 tabelas, RLS ligada em todas, nenhum privilégio para
 > `anon`/`authenticated`, balde `exportacoes` privado e ida e volta de arquivo
 > verificada. Conferido de fora: a chave publicável recebe 401 (`42501`) em

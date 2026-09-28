@@ -199,6 +199,9 @@ describe('admin', () => {
   });
 
   describe('página guardada da nota que falhou', () => {
+    // Os números aqui são inventados de propósito. A primeira versão deste
+    // teste usava o CPF que veio no fixture do app antigo — um CPF de uma
+    // pessoa de verdade, num arquivo a caminho de um repositório público.
     it('o CPF sai antes de guardar', () => {
       const html = `<li><strong>CPF: </strong>111.111.111-11</li><li>CPF 12345678901</li>`;
       const limpo = semCpf(html);
