@@ -72,7 +72,9 @@ responde ao tema do evento sem metáfora.
 pagamento; com o cabeçalho válido, devolve o feed **mais a prova Merkle**.
 
 E a outra ponta, que é o que torna isto um mercado de dois lados: **quem
-escaneou recebe parte do que a consulta pagou**. Nenhum programa de fidelidade
+escaneou recebe parte do que a consulta pagou**. A forma desse repasse está
+planejada em `18-RECOMPENSAS.md`: recompensa por marco de notas lidas, gastável
+dentro do app e sacável em USDC. Nenhum programa de fidelidade
 faz isso — eles pagam com ponto que vale o que o varejista decidir. No MVP o
 crédito é acumulado off-chain e mostrado no app; o saque on-chain é roadmap
 declarado, não promessa escondida.
