@@ -106,6 +106,16 @@ Senha: mínimo 8 caracteres, um número e uma letra maiúscula; hash com Argon2i
 | POST | `/friends/join` | `{ inviteCode }` |
 | GET | `/friends` | amigos |
 
+## Recompensa por notas lidas
+
+Ver `18-RECOMPENSAS.md`. Nenhum `GET` credita nada: o crédito acontece no fim da
+leitura da nota e na varredura noturna.
+
+| Método | Rota | Descrição |
+| --- | --- | --- |
+| GET | `/rewards` | saldo, notas contadas, progresso até o próximo marco, loja, benefícios ativos e extrato |
+| POST | `/rewards/purchase` | `{ code }` — gasta o saldo num benefício; responde `repeated: true` quando é o mesmo pedido repetido dentro de um minuto |
+
 ## Notificações
 
 | Método | Rota | Descrição |

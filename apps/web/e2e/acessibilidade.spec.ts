@@ -35,6 +35,7 @@ const PRIVADAS = [
   '/ofertas',
   '/ranking',
   '/conquistas',
+  '/recompensas',
   '/compartilhar',
   '/notificacoes',
   '/ajuda',

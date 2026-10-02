@@ -18,6 +18,7 @@ import { OfertasModule } from './modules/ofertas/ofertas.module.js';
 import { AdminModule } from './modules/admin/admin.module.js';
 import { PrivacidadeModule } from './modules/privacidade/privacidade.module.js';
 import { NotificacoesModule } from './modules/notificacoes/notificacoes.module.js';
+import { RecompensasModule } from './modules/recompensas/recompensas.module.js';
 import { ScheduleModule } from '@nestjs/schedule';
 import { BullModule } from '@nestjs/bullmq';
 import { configuracao } from './comum/configuracao.js';
@@ -57,6 +58,7 @@ import { configuracao } from './comum/configuracao.js';
     PrivacidadeModule,
     AdminModule,
     NotificacoesModule,
+    RecompensasModule,
     // Atalhos de teste. Fora de produção, e o próprio controller confere de novo.
     ...(configuracao.ehProducao ? [] : [DevModule]),
   ],

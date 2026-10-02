@@ -209,6 +209,12 @@ export function Conquistas(): React.ReactElement {
           </ul>
         </section>
 
+        {/* Ponto e recompensa são coisas diferentes, e a tela diz isso: ponto
+            mede jogo, recompensa é dinheiro por dado (docs/18-RECOMPENSAS.md). */}
+        <Button fullWidth variant="secondary" icon="tag" href="/recompensas">
+          Ver meu saldo de recompensa
+        </Button>
+
         <Button fullWidth icon="share" href="/compartilhar">
           Compartilhar minhas conquistas
         </Button>

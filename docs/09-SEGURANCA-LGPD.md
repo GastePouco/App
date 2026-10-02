@@ -20,7 +20,7 @@
   - Implementado: a página só é guardada quando a leitura falha com `PARSE_FAILED`, **com o CPF removido antes de gravar** (`semCpf`), e o job diário apaga o arquivo passados 30 dias. Sem isso não haveria como corrigir o parser quando a SEFAZ muda o HTML — mas "depuração" não é desculpa para guardar CPF.
 - **Ações administrativas**: papel `ADMIN` em `User.role`, lido do banco a cada requisição, e toda alteração registrada em `AdminLog` (quem, o quê, quando). O registro **não tem chave estrangeira** para a conta: uma trilha que some quando o responsável encerra a conta não responde "quem apagou isso?", que é a única razão de ela existir.
 - **Anonimato dos preços**: `PriceObservation` usa `userHash` (HMAC do userId com segredo), não o userId. Agregados só são mostrados com 5+ notas de 3+ pessoas.
-- **Acesso aos dados**: "Baixar meus dados" gera um ZIP com JSON e CSV (conta, preferências, notas, itens, listas, pontos, selos) em até 24 h; link expira em 7 dias.
+- **Acesso aos dados**: "Baixar meus dados" gera um ZIP com JSON e CSV (conta, preferências, notas, itens, listas, pontos, selos, **saldo de recompensa com cada crédito e cada gasto**) em até 24 h; link expira em 7 dias.
 - **Exclusão**: "Encerrar conta" marca `PENDING_DELETION` com prazo de 30 dias (a pessoa pode voltar entrando de novo). No prazo, o job apaga a conta e tudo ligado a ela; observações de preço permanecem só com `userHash`, que deixa de poder ser ligado a alguém.
 - **Pausa**: some do ranking, notificações param, sequência congela; dados intactos.
 - **Transparência**: tela Privacidade e dados explica cada interruptor em linguagem simples; o selo "Patrocinado" é obrigatório em conteúdo pago.

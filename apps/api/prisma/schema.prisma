@@ -82,6 +82,7 @@ enum NotificationType {
   WEEKLY_SUMMARY
   SPONSORED
   ACCOUNT
+  REWARD
 }
 
 model User {
@@ -115,6 +116,8 @@ model User {
   receipts      Receipt[]
   lists         ShoppingList[]
   points        PointsLedger[]
+  rewards       RewardLedger[]
+  rewardBenefits RewardBenefit[]
   badges        UserBadge[]
   notifications Notification[]
   priceAlerts   PriceAlert[]
@@ -397,6 +400,45 @@ model PointsLedger {
 
   @@unique([userId, reason, refId])
   @@index([userId, createdAt])
+}
+
+/// Livro-razao da recompensa por notas lidas (docs/18-RECOMPENSAS.md).
+///
+/// Centavos de real e so insercao: credito positivo, gasto negativo, saldo e a
+/// soma. O `@@unique([userId, reason, refId])` e o que impede pagar o mesmo
+/// marco duas vezes quando o job noturno e a leitura de uma nota avaliam a
+/// elegibilidade ao mesmo tempo — igual ao livro de pontos.
+model RewardLedger {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amountCents Int
+  reason      String   // MILESTONE, PURCHASE, ADJUSTMENT
+  refId       String?
+  createdAt   DateTime @default(now())
+
+  @@unique([userId, reason, refId])
+  @@index([userId, createdAt])
+  @@index([reason, createdAt])
+}
+
+/// Beneficio comprado com o saldo. `endsAt` e a unica verdade sobre estar ativo;
+/// comprar de novo soma ao prazo que ainda falta em vez de desperdica-lo.
+///
+/// Uma linha por pessoa e codigo: o historico das compras fica no livro-razao,
+/// que e o lugar onde dinheiro e contado.
+model RewardBenefit {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  code      String   // SEM_PATROCINIO, SELO_APOIADOR
+  startsAt  DateTime @default(now())
+  endsAt    DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, code])
+  @@index([code, endsAt])
 }
 
 model Badge {

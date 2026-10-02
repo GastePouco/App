@@ -22,6 +22,7 @@ import { Lista } from '../rotas/lista/Lista.js';
 import { Ofertas } from '../rotas/ofertas/Ofertas.js';
 import { Ranking } from '../rotas/ranking/Ranking.js';
 import { Conquistas } from '../rotas/conquistas/Conquistas.js';
+import { Recompensas } from '../rotas/recompensas/Recompensas.js';
 import { Compartilhar } from '../rotas/compartilhar/Compartilhar.js';
 import { Perfil } from '../rotas/perfil/Perfil.js';
 import { Acessibilidade } from '../rotas/perfil/Acessibilidade.js';
@@ -74,6 +75,7 @@ export const rotas: RouteObject[] = [
   comSessao('/ofertas', <Ofertas />),
   comSessao('/ranking', <Ranking />),
   comSessao('/conquistas', <Conquistas />),
+  comSessao('/recompensas', <Recompensas />),
   comSessao('/compartilhar', <Compartilhar />),
   comSessao('/notificacoes', <CentralDeNotificacoes />),
   comSessao('/ajuda', <Ajuda />),

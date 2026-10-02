@@ -99,6 +99,20 @@ Contas do seed: `camila.alves@email.com` (a persona da demonstração) e
   nota.
 - Cartão de compartilhamento desenhado em canvas, 1080×1920.
 
+### Recompensa por notas lidas
+
+- **Saldo em reais** por marco de notas: a primeira recompensa em 25 notas, depois
+  a cada 50, R$ 2,00 por marco — tudo configurável por ambiente.
+- Conta **nota que virou dado** (entrou na base de preços): nota repetida, recusada
+  ou que falhou na leitura não entra, e a tela explica isso.
+- **Gasta dentro do app**, em dois benefícios que existem de verdade: tirar
+  ofertas patrocinadas por 30 dias (R$ 2,00) e selo de apoiador no ranking por 90
+  dias (R$ 1,00). Comprar de novo soma ao prazo que falta.
+- Teto de orçamento por mês; estourado, o marco é pago no ciclo seguinte.
+- Notificação avisa quem recebeu, sem passar por interruptor de preferência.
+- **Sacar para carteira (USDC) ainda não existe** — está escrito na tela e em
+  `18-RECOMPENSAS.md`. Nada aqui depende de ter carteira.
+
 ### Notificações
 
 - Central com filtros (todas, preços, jogo) e agrupamento por dia.
@@ -161,9 +175,16 @@ demonstração e falha no dia seguinte.
 
 ### Módulo Solana (fase 9)
 
-Nada implementado. A direção está em `10-MODULO-SOLANA.md`, revisão 2: feed de
-preço por SKU, índice da cesta por cidade, mercado de dados por x402 com repasse
-a quem escaneou. Apostas em ordem: Switchboard, atestado de compra, zkTLS.
+Nada on-chain implementado. A direção está em `10-MODULO-SOLANA.md`, revisão 2:
+feed de preço por SKU, índice da cesta por cidade, mercado de dados por x402 com
+repasse a quem escaneou. Apostas em ordem: Switchboard, atestado de compra,
+zkTLS.
+
+O **repasse** já tem a primeira metade pronta e sem blockchain: a recompensa por
+notas lidas (acima, em "Funciona hoje"). O que falta é a ponta on-chain —
+vincular carteira com prova por assinatura, saque em USDC com a taxa paga por nós
+e a raiz Merkle da elegibilidade publicada por ciclo (`18-RECOMPENSAS.md`,
+fases 2 a 5).
 
 ### Segurança e conta
 
@@ -189,14 +210,14 @@ a quem escaneou. Apostas em ordem: Switchboard, atestado de compra, zkTLS.
 
 ## O que é garantido, e tem teste
 
-- **Acessibilidade**: 27 rotas do app passam por axe nas três combinações de
+- **Acessibilidade**: 28 rotas do app passam por axe nas três combinações de
   tema, tamanho de texto e largura — zero violações. Lighthouse: acessibilidade,
   boas práticas e SEO em 100; desempenho 98.
 - **PWA**: instalável, com service worker e abrindo sem rede.
 - **Privacidade**: CPF nunca é guardado; preço entra na base por HMAC, sem
   ligação com a conta; exclusão em 30 dias com carência.
 - **Segurança**: auditoria completa em `16-SEGURANCA-AUDITORIA.md`.
-- **Números**: 162 testes na API, 81 de ponta a ponta, 106 nos pacotes.
+- **Números**: 180 testes na API, 81 de ponta a ponta, 117 nos pacotes.
 
 ## Onde ler mais
 

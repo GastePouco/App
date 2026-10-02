@@ -18,6 +18,12 @@ That module is **designed, not yet implemented** — see
 [`docs/10-MODULO-SOLANA.md`](docs/10-MODULO-SOLANA.md). This repository is the
 consumer product it stands on, and that product works today.
 
+One half of it already ships: the **payout to the person who scanned**. Reading
+receipts earns a balance in BRL at configurable milestones, spendable inside the
+app — no wallet, no fee, no blockchain, because the cheapest transfer is the one
+that never happens. Withdrawing it in USDC is phase 2, and the app says so in
+plain words instead of promising it ([`docs/18-RECOMPENSAS.md`](docs/18-RECOMPENSAS.md)).
+
 ---
 
 ## What works today
@@ -30,8 +36,9 @@ consumer product it stands on, and that product works today.
 | Shopping list: whole-list store comparison, repurchase hints | working |
 | Offers: community price drops and sponsored, always badged | working |
 | Game: points, 13 levels, 9 badges, weekly streak, monthly ranking, invites | working |
+| Rewards: balance in BRL per receipt milestone, spendable in-app (no chain yet) | working |
 | Account: data export (ZIP), pause, close with 30-day grace, LGPD consent | working |
-| Accessibility: 3 themes × 3 text sizes × 320px, screen-reader tables | **zero axe violations across 27 routes** |
+| Accessibility: 3 themes × 3 text sizes × 320px, screen-reader tables | **zero axe violations across 28 routes** |
 | PWA: installable, works offline, asks before updating | working |
 | Admin panel: metrics, catalogue review, failed-receipt triage, audit trail | working |
 
@@ -94,7 +101,7 @@ approved screens.
 ## Verify it yourself
 
 ```bash
-pnpm lint && pnpm typecheck && pnpm test   # 162 API tests · 106 in packages
+pnpm lint && pnpm typecheck && pnpm test   # 180 API tests · 117 in packages
 pnpm --filter @gastemenos/web test:e2e     # 81 end-to-end, axe on every route
 pnpm audit --audit-level high
 ```

@@ -24,6 +24,7 @@ const ICONE: Record<string, 'tag' | 'trophy' | 'flame' | 'bell' | 'shield'> = {
   SPONSORED: 'tag',
   RANKING: 'trophy',
   LEVEL_UP: 'trophy',
+  REWARD: 'tag',
   STREAK_RISK: 'flame',
   ACCOUNT: 'shield',
 };

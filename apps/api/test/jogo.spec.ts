@@ -8,6 +8,7 @@ import { RankingService } from '../src/modules/jogo/ranking.service.js';
 import { SelosService } from '../src/modules/jogo/selos.service.js';
 import { AmigosService } from '../src/modules/jogo/amigos.service.js';
 import { SequenciaService } from '../src/modules/jogo/sequencia.service.js';
+import { provedoresDeRecompensa } from './provedores.js';
 
 /**
  * Aceite da Fase 6: "ranking do seed igual à tela; limites anti-abuso
@@ -59,6 +60,7 @@ describe('jogo', () => {
     const modulo = await Test.createTestingModule({
       providers: [
         RankingService,
+        ...provedoresDeRecompensa(),
         SelosService,
         AmigosService,
         SequenciaService,
@@ -273,13 +275,27 @@ describe('jogo', () => {
       }
     });
 
+    /**
+     * "Carrinho Esperto" conta nota **do mês corrente**, e o seed tem as 15
+     * notas de setembro de 2026. A primeira versão deste teste exigia 15 fixo e
+     * passou a falhar sozinha em 1º de outubro — teste que depende do calendário
+     * acusa o relógio, não o código.
+     *
+     * A afirmação que interessa é outra: o progresso **sai dos dados**. Então
+     * ele é conferido contra a contagem de notas do mês feita aqui, no banco.
+     */
     it('o progresso é recalculado dos dados, não incrementado', async () => {
-      // 15 notas em setembro: é o que "Carrinho Esperto" pede.
+      const agora = new Date();
+      const inicioDoMes = new Date(Date.UTC(agora.getUTCFullYear(), agora.getUTCMonth(), 1));
+      const notasDoMes = await prisma.receipt.count({
+        where: { userId: camilaId, status: 'DONE', issuedAt: { gte: inicioDoMes } },
+      });
+
       const lista = await selos.listar(camilaId);
       const carrinho = lista.find((selo) => selo.id === 'carrinho_esperto');
 
       expect(carrinho).toBeDefined();
-      expect(carrinho!.progress).toBe(15);
+      expect(carrinho!.progress).toBe(Math.min(notasDoMes, carrinho!.target));
     });
 
     it('conferir de novo não concede o mesmo selo duas vezes', async () => {

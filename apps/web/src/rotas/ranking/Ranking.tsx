@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { formatarCentavos } from '@gastemenos/shared';
-import { BottomNav, Button, Card, Chip, SegmentedControl } from '@gastemenos/ui';
+import { BottomNav, Button, Card, Chip, Icon, SegmentedControl } from '@gastemenos/ui';
 import { api } from '../../lib/api.js';
 import { FalhouCarregar } from '../../componentes/Estado.js';
 
@@ -17,6 +17,24 @@ interface Linha {
   level: number;
   value: number;
   isMe: boolean;
+  /** Comprou o selo de apoiador com o saldo de recompensa. Só enfeite. */
+  supporter?: boolean;
+}
+
+/**
+ * Selo de apoiador.
+ *
+ * Leva texto, não só a estrela: quem usa leitor de tela precisa ouvir
+ * "apoiador" (docs/08-ACESSIBILIDADE.md), e quem não distingue a cor da
+ * estrela também. `title` serve ao mouse, o texto escondido serve ao resto.
+ */
+function SeloDeApoiador(): React.ReactElement {
+  return (
+    <span className="inline-flex items-center gap-1 text-points-ink" title="Apoiador">
+      <Icon name="star" size={14} />
+      <span className="sr-only">Apoiador</span>
+    </span>
+  );
 }
 
 interface RankingDaApi {
@@ -57,7 +75,10 @@ function Podio({
           <span className="flex h-12 w-12 items-center justify-center rounded-pill bg-brand-soft text-title-s text-success">
             {linha.name.slice(0, 1).toUpperCase()}
           </span>
-          <span className="text-center text-caption text-ink">{linha.name}</span>
+          <span className="flex items-center justify-center gap-1 text-center text-caption text-ink">
+            {linha.name}
+            {linha.supporter ? <SeloDeApoiador /> : null}
+          </span>
           <span className="text-center text-label text-ink">
             {formatarValor(categoria, linha.value)}
           </span>
@@ -156,8 +177,9 @@ export function Ranking(): React.ReactElement {
                       {`${linha.rank}º`}
                     </span>
                     <span className="flex flex-1 flex-col">
-                      <span className="text-body-m text-ink">
+                      <span className="flex items-center gap-1 text-body-m text-ink">
                         {linha.isMe ? `${linha.name} (você)` : linha.name}
+                        {linha.supporter ? <SeloDeApoiador /> : null}
                       </span>
                       <span className="text-caption text-ink-muted">{`Nível ${linha.level}`}</span>
                     </span>

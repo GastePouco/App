@@ -101,6 +101,7 @@ export function Perfil(): React.ReactElement {
             <ListRow icon="volume" title="Acessibilidade" subtitle="Letra, contraste, modo fácil" chevron href="/perfil/acessibilidade" />
             <ListRow icon="list" title="Perfil de consumo" subtitle="Refazer as 5 perguntas" chevron href="/perfil-de-consumo" />
             <ListRow icon="star" title="Conquistas" subtitle="Nível e selos" chevron href="/conquistas" />
+            <ListRow icon="tag" title="Recompensas" subtitle="Saldo por notas lidas" chevron href="/recompensas" />
             <ListRow icon="help" title="Ajuda" chevron href="/ajuda" />
           </div>
         </section>

@@ -60,14 +60,15 @@ Links entre telas extraídos dos protótipos (coluna Leva a) viram navegação r
 | Tela | Rota | O que faz | API | Leva a |
 | --- | --- | --- | --- | --- |
 | **Ranking**<br>`Ranking.dc.html` | `/ranking` | Amigos/Região × Mais economizou/Mais compras/Mais pontos, pódio, convite. | GET /game/ranking | Compartilhar (`/compartilhar`), Escanear (`/ler-nota`), Gastos (`/gastos`), Main (`/inicio`), Ofertas (`/ofertas`) |
-| **Conquistas e níveis**<br>`Conquistas.dc.html` | `/conquistas` | Trilha de níveis, selos com filtro, como ganhar pontos. | GET /game/status, /game/badges | Compartilhar (`/compartilhar`), Main (`/inicio`) |
+| **Conquistas e níveis**<br>`Conquistas.dc.html` | `/conquistas` | Trilha de níveis, selos com filtro, como ganhar pontos. | GET /game/status, /game/badges | Compartilhar (`/compartilhar`), Main (`/inicio`), Recompensas (`/recompensas`) |
+| **Recompensas**<br>*sem tela de referência* | `/recompensas` | Saldo em reais por marco de notas, progresso até o próximo, loja de benefícios, extrato, e o aviso de que o saque em USDC ainda não existe. Montada só com componentes e tokens existentes — a recompensa nasceu depois do pacote de design (`18-RECOMPENSAS.md`). | GET /rewards, POST /rewards/purchase | Conquistas (`/conquistas`), Perfil (`/perfil`) |
 | **Compartilhar conquista**<br>`Compartilhar.dc.html` | `/compartilhar` | Cartão 9:16 gerado em canvas; Stories, Mensagem, Copiar link. | GET /game/share-card | Ranking (`/ranking`) |
 
 ## Conta
 
 | Tela | Rota | O que faz | API | Leva a |
 | --- | --- | --- | --- | --- |
-| **Meu perfil**<br>`Perfil.dc.html` | `/perfil` | Resumo e lista de configurações; tema; sair; pausar; encerrar. | GET /me | Acessibilidade (`/perfil/acessibilidade`), Ajuda (`/ajuda`), Conquistas (`/conquistas`), DadosPessoais (`/perfil/dados`), EncerrarConta (`/perfil/encerrar`), Entrar (`/entrar`), Main (`/inicio`), Notificacoes (`/perfil/notificacoes`), PausarConta (`/perfil/pausar`), PerfilConsumo (`/perfil-de-consumo`), Privacidade (`/perfil/privacidade`), Seguranca (`/perfil/seguranca`) |
+| **Meu perfil**<br>`Perfil.dc.html` | `/perfil` | Resumo e lista de configurações; tema; sair; pausar; encerrar. | GET /me | Acessibilidade (`/perfil/acessibilidade`), Ajuda (`/ajuda`), Conquistas (`/conquistas`), Recompensas (`/recompensas`), DadosPessoais (`/perfil/dados`), EncerrarConta (`/perfil/encerrar`), Entrar (`/entrar`), Main (`/inicio`), Notificacoes (`/perfil/notificacoes`), PausarConta (`/perfil/pausar`), PerfilConsumo (`/perfil-de-consumo`), Privacidade (`/perfil/privacidade`), Seguranca (`/perfil/seguranca`) |
 | **Dados pessoais**<br>`DadosPessoais.dc.html` | `/perfil/dados` | Campos controlados; Salvar só com alteração; toast. | PATCH /me, POST /me/email-change | Perfil (`/perfil`), VerificarEmail (`/confirmar-email`) |
 | **Login e segurança**<br>`Seguranca.dc.html` | `/perfil/seguranca` | Formas de entrar, 2 etapas, aparelhos. | GET /me/sessions, /me/auth-accounts | AlterarSenha (`/perfil/seguranca/senha`), Perfil (`/perfil`) |
 | **Alterar senha**<br>`AlterarSenha.dc.html` | `/perfil/seguranca/senha` | Regras validadas ao digitar, confirmação igual. | POST /me/password | Perfil (`/perfil`), RecuperarSenha (`/recuperar-senha`), Seguranca (`/perfil/seguranca`) |

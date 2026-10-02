@@ -16,6 +16,7 @@ import { PontosService, type SubidaDeNivel } from '../jogo/pontos.service.js';
 import { SequenciaService } from '../jogo/sequencia.service.js';
 import { AmigosService } from '../jogo/amigos.service.js';
 import { SelosService } from '../jogo/selos.service.js';
+import { RecompensasService } from '../recompensas/recompensas.service.js';
 import { ProdutosService } from './produtos.service.js';
 import { ArmazenamentoService } from '../armazenamento/armazenamento.service.js';
 import { RegistroDeAdaptadores } from './adaptadores/registro.js';
@@ -44,6 +45,11 @@ export interface ResultadoDaLeitura {
   levelUp?: SubidaDeNivel | null;
   newBadges?: Array<{ id: string; name: string }>;
   savingsCents?: number;
+  /**
+   * Marco de recompensa batido com esta nota, quando houve
+   * (docs/18-RECOMPENSAS.md). A tela comemora com o valor em centavos.
+   */
+  reward?: { milestone: number; receipts: number; amountCents: number };
   /** Frase para "Ler em voz alta" (docs/06-NFCE-LEITURA.md). */
   speech?: string;
 }
@@ -61,6 +67,7 @@ export class NotasService {
     private readonly amigos: AmigosService,
     private readonly selos: SelosService,
     private readonly armazenamento: ArmazenamentoService,
+    private readonly recompensas: RecompensasService,
   ) {}
 
   /**
@@ -271,6 +278,13 @@ export class NotasService {
     // Selos novos entram na resposta: é o que a tela NotaLida comemora.
     const selosNovos = await this.selos.conferirEConceder(nota.userId);
 
+    // Recompensa por marco de notas (docs/18-RECOMPENSAS.md). Vem depois da
+    // transação de propósito: o marco conta nota que **virou observação de
+    // preço**, e a observação só existe depois do commit. Se o crédito falhar,
+    // a nota já está no histórico e o job noturno paga o marco — o contrário
+    // (creditar e perder a nota) seria pagar por dado que não entrou.
+    const marcos = await this.recompensas.avaliarMarcos(nota.userId);
+
     return {
       id: notaId,
       status: 'DONE',
@@ -278,6 +292,9 @@ export class NotasService {
       levelUp: subiuDeNivel,
       newBadges: selosNovos.map((selo) => ({ id: selo.id, name: selo.name })),
       savingsCents: economiaEmCentavos,
+      // Só o último marco: bater dois de uma vez é consequência de regra nova,
+      // não algo para a tela narrar em duas comemorações.
+      reward: marcos.length ? marcos[marcos.length - 1] : undefined,
       speech: this.frasePara(lida, pontosCreditados),
     };
   }

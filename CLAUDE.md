@@ -9,7 +9,7 @@ Veja `docs/12-PROGRESSO.md` para o que já foi executado, o que falta e as
 decisões de ambiente tomadas no caminho. Atualize esse arquivo ao concluir uma
 fase.
 
-Resumo: fases 0, 1, 2, 4, 5, 6 e 7 executadas; fase 8 pronta e medida (falta subir no servidor — `docs/14-DEPLOY.md`); fase 3 implementada mas **não validada contra uma nota real do DF** — leia a seção da fase 3 no progresso antes de confiar no parser.
+Resumo: fases 0, 1, 2, 4, 5, 6 e 7 executadas; **recompensa por notas lidas, fase 1, executada** (`docs/18-RECOMPENSAS.md`); fase 8 pronta e medida (falta subir no servidor — `docs/14-DEPLOY.md`); fase 3 implementada mas **não validada contra uma nota real do DF** — leia a seção da fase 3 no progresso antes de confiar no parser.
 
 Para rodar a suíte e2e inteira, suba a API com `RATE_LIMIT_TEST_FACTOR=20 pnpm dev`: os três projetos do Playwright saem do mesmo IP e o limite de produção derruba a segunda metade da suíte.
 
@@ -28,7 +28,7 @@ Para rodar a suíte e2e inteira, suba a API com `RATE_LIMIT_TEST_FACTOR=20 pnpm 
 - `packages/ui`: componentes React do design system (porte em TSX de `design-system/bundle-referencia/`).
 - `packages/tokens`: `tokens.json` → `tokens.css` + preset do Tailwind.
 - `packages/shared`: schemas Zod e tipos compartilhados entre web e api.
-- Recompensa por notas lidas (saldo no app, saque em USDC): `docs/18-RECOMPENSAS.md` — PLANEJAMENTO.
+- Recompensa por notas lidas: `docs/18-RECOMPENSAS.md` — **fase 1 EXECUTADA** (livro-razão em centavos de real, marco por notas que viraram dado, gasto no app em dois benefícios, tela `/recompensas`, módulo `apps/api/src/modules/recompensas/`); fases 2 a 5 (carteira, saque em USDC, raiz Merkle, relayer, mainnet) em PLANEJAMENTO. Ao mexer em marco, catálogo ou benefício, atualize esse documento.
 - `apps/admin`: painel administrativo (Vite + React), cliente da mesma API — ver `docs/15-CRM.md`.
 - `apps/oracle` (fase Solana, separada): ver `docs/10-MODULO-SOLANA.md` — **revisão 2**: feed por SKU, índice da cesta por cidade e mercado de dados por x402, com repasse a quem escaneou. Duas fontes de nota que não se misturam: leitura no app (cria contribuinte) e acervo importado (dá profundidade, não conta como pessoa).
 - Testes: Vitest + Testing Library + `vitest-axe` no web; Jest + Supertest na api; Playwright para os fluxos principais.

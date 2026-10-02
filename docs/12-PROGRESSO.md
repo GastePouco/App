@@ -791,3 +791,82 @@ da causa, sem pista de por quê.
 Agora o teste cria a própria nota. É a mesma família do incidente da fase 6:
 teste que alcança dado compartilhado. Lá custou o banco inteiro; aqui custou uma
 hora de desconfiança do commit errado.
+
+
+## Recompensa por notas lidas — fase 1 (02/10/2026)
+
+O pedido foi: pagar recompensa por notas lidas, resgatável ao atingir um limite
+configurável (200 no pedido), em SOL ou USDC, com a forma mais barata de
+transferir, e gastável dentro do app. O plano inteiro está em
+`18-RECOMPENSAS.md`. O que foi construído é a **fase 1**: saldo, elegibilidade,
+crédito e gasto no app. Nenhuma linha de blockchain.
+
+Quatro decisões mudaram o pedido, e as quatro estão escritas no documento:
+
+**A moeda do saldo virou centavo de real.** O rascunho dizia micro-USDC. O app
+inteiro conta dinheiro em centavos de real, e um saldo em dólar faria o número da
+tela mudar sozinho todo dia por causa do câmbio, sem nada ter acontecido. A
+conversão passa a ser no saque, com a cotação do dia mostrada antes de confirmar.
+
+**O limite padrão virou 25 notas, não 200.** A meta do produto é 4 notas por
+pessoa por mês; a 4/mês, 200 notas levam 50 meses. Recompensa que chega em
+quatro anos não muda comportamento nenhum — nem é percebida. O 200 continua
+disponível na configuração.
+
+**A loja tem dois itens, não cinco.** Três dos itens que o plano listava exigiam
+**inventar uma cota que não existe** — "mais alertas além da cota", "histórico
+além de 90 dias" — ou vender a comparação de preço, que é o produto. Vender a
+saída de um limite que a gente mesmo criaria é piorar o app de graça para ter o
+que vender de volta. Ficaram "sem ofertas patrocinadas por 30 dias" e "selo de
+apoiador no ranking por 90 dias", os dois com ponto de aplicação de verdade no
+código. A regra ficou escrita junto do catálogo: **item só existe se houver
+código que o honre**.
+
+**A chave de idempotência é o índice do marco, não a quantidade de notas.**
+`marco:1`, não `marco:25-notas`. Com a quantidade na chave, baixar o primeiro
+marco de 25 para 20 numa campanha nova repagaria todo mundo que já tinha
+recebido.
+
+E uma proteção que não é opcional quando o assunto é saldo: a compra trava a
+linha da pessoa (`FOR UPDATE`) antes de conferir o saldo. Sem a trava, dois
+pedidos simultâneos leem o mesmo saldo, os dois passam, e o saldo fica negativo —
+`read committed` não impede isso sozinho. Junto veio uma janela de idempotência
+de um minuto por item, para toque duplo no botão não cobrar duas vezes.
+
+
+### Dois testes que estavam quebrados antes, e um que eu quebrei
+
+A suíte da API tinha **cinco falhas** quando rodei pela primeira vez. Quatro eram
+minhas; uma era do calendário.
+
+**A minha:** criei um ajudante de teste que registra o `RecompensasService` junto
+com um dublê de notificação, para não repetir o dublê em quatro arquivos. Em
+`conta.spec.ts` esse dublê entrou **depois** do `NotificacoesService` de verdade
+e o sobrescreveu — quatro testes de notificação, todos corretos, passaram a
+falhar. Lá agora entra só o `RecompensasService`, e o ajudante diz isso no
+comentário: quem testa notificação não usa o ajudante.
+
+**A do calendário:** o selo "Carrinho Esperto" conta nota do **mês corrente**, e o
+seed tem as 15 notas de setembro de 2026. O teste exigia `progress === 15` e
+passou a falhar sozinho em 1º de outubro, sem ninguém mexer em nada. Teste que
+depende do relógio acusa o relógio, não o código. Agora ele confere o progresso
+contra a contagem de notas do mês feita no banco — a afirmação que interessava
+desde o começo era "o progresso sai dos dados".
+
+**E uma terceira, que apareceu depois:** o teste do ZIP de "baixar meus dados"
+ficava em `PENDING` com `TypeError: fetch failed`. Desde que o `.env` ganhou
+credenciais reais do Supabase, a exportação passou a subir para o Storage — e o
+teste, a depender de rede e de conta externa. `armazenamento.spec.ts` já tinha
+resolvido isso para si (apaga as variáveis do Supabase e usa disco local) com o
+motivo escrito; `conta.spec.ts` não. Agora tem.
+
+Fica a regra: **teste que depende de data de calendário ou de serviço externo
+não está testando o código.** Os três casos aqui só apareceram porque a suíte
+inteira foi rodada; nenhum deles tinha a ver com a recompensa.
+
+### O estado do seed, de graça
+
+A Camila do seed tem **23 notas que viraram dado** — duas a menos que o primeiro
+marco. Quer dizer que uma única nota real lida na demonstração dispara a
+recompensa na tela, sem preparar nada. Não foi planejado; foi conferido.
+

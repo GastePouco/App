@@ -16,6 +16,7 @@ import { AdaptadorDoDf } from '../src/modules/notas/adaptadores/df.adaptador.js'
 import { AdaptadorDeSp } from '../src/modules/notas/adaptadores/sp.adaptador.js';
 import { ArmazenamentoService } from '../src/modules/armazenamento/armazenamento.service.js';
 import { ErroDeLeitura } from '../src/modules/notas/adaptadores/adaptador.js';
+import { provedoresDeRecompensa } from './provedores.js';
 
 /**
  * Integração da leitura de nota contra o banco de verdade.
@@ -65,6 +66,7 @@ describe('leitura de nota (integração)', () => {
     const modulo = await Test.createTestingModule({
       providers: [
         NotasService,
+        ...provedoresDeRecompensa(),
         ProdutosService,
         PontosService,
         // A leitura de nota agora credita a semana, premia quem convidou e

@@ -1,3 +1,6 @@
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { Test } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaClient } from '@prisma/client';
@@ -12,6 +15,7 @@ import { PreferenciasService } from '../src/modules/conta/preferencias.service.j
 import { DadosPessoaisService } from '../src/modules/conta/dados-pessoais.service.js';
 import { RankingService } from '../src/modules/jogo/ranking.service.js';
 import { NotificacoesService } from '../src/modules/notificacoes/notificacoes.service.js';
+import { RecompensasService } from '../src/modules/recompensas/recompensas.service.js';
 
 /**
  * Aceite da Fase 7:
@@ -29,7 +33,20 @@ describe('conta, privacidade e notificações', () => {
   let ranking: RankingService;
   let pessoa: string;
 
+  const ambienteOriginal = { ...process.env };
+  let pastaDeTeste: string;
+
   beforeAll(async () => {
+    // O ZIP de "baixar meus dados" vai para o Supabase Storage quando há
+    // credenciais no `.env` — e passou a haver. O teste então dependia de rede e
+    // de uma conta externa: a exportação ficava em `PENDING` com "fetch failed"
+    // numa máquina sem acesso. Disco local aqui, como em armazenamento.spec.ts.
+    pastaDeTeste = await mkdtemp(join(tmpdir(), 'gastemenos-conta-'));
+    process.env.EXPORT_DIR = pastaDeTeste;
+    delete process.env.SUPABASE_URL;
+    delete process.env.SUPABASE_SECRET_KEY;
+    delete process.env.SUPABASE_SERVICE_ROLE_KEY;
+
     const modulo = await Test.createTestingModule({
       providers: [
         PrivacidadeService,
@@ -38,6 +55,10 @@ describe('conta, privacidade e notificações', () => {
         DadosPessoaisService,
         NotificacoesService,
         RankingService,
+        // Aqui entra o serviço de verdade, sem dublê de notificação: este
+        // arquivo testa notificação, e o dublê de `provedores.ts` sobrescreveria
+        // o serviço real — foi o que aconteceu na primeira tentativa.
+        RecompensasService,
         SessoesService,
         EmailService,
         JwtService,
@@ -74,6 +95,8 @@ describe('conta, privacidade e notificações', () => {
   });
 
   afterAll(async () => {
+    process.env = { ...ambienteOriginal };
+    await rm(pastaDeTeste, { recursive: true, force: true });
     await prisma.$disconnect();
   });
 
@@ -204,6 +227,9 @@ describe('conta, privacidade e notificações', () => {
           'itens.csv',
           'listas.json',
           'pontos.json',
+          // Saldo de recompensa é dinheiro da pessoa: sai no pacote sem ela
+          // precisar pedir à parte (docs/18-RECOMPENSAS.md).
+          'recompensa.json',
         ]),
       );
 

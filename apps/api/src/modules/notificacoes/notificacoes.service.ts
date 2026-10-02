@@ -11,7 +11,8 @@ export type TipoDeNotificacao =
   | 'STREAK_RISK'
   | 'WEEKLY_SUMMARY'
   | 'SPONSORED'
-  | 'ACCOUNT';
+  | 'ACCOUNT'
+  | 'REWARD';
 
 /** Qual interruptor manda em cada tipo (tela Notificações). */
 const INTERRUPTOR: Partial<Record<TipoDeNotificacao, string>> = {
@@ -79,7 +80,7 @@ export class NotificacoesService {
   async listar(userId: string, tipo?: 'all' | 'prices' | 'game', cursor?: string) {
     const porAba: Record<string, TipoDeNotificacao[]> = {
       prices: ['PRICE_DROP', 'LIST_OFFER', 'SPONSORED'],
-      game: ['RANKING', 'LEVEL_UP', 'STREAK_RISK'],
+      game: ['RANKING', 'LEVEL_UP', 'STREAK_RISK', 'REWARD'],
     };
 
     const filtro = tipo && tipo !== 'all' ? porAba[tipo] : undefined;

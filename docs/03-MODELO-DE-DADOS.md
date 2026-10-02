@@ -17,6 +17,8 @@ O schema completo está em `prisma/schema.prisma` (mova para `apps/api/prisma/` 
 | `PriceStat` | agregados por produto × região × período | alimenta histórico, média e loja mais barata |
 | `ShoppingList` / `ShoppingListItem` | lista de compras | `suggested` = veio da recompra |
 | `PointsLedger` | pontos | só inserção; `@@unique([userId, reason, refId])` impede crédito duplo |
+| `RewardLedger` | saldo de recompensa, em centavos de real | só inserção; crédito positivo, gasto negativo; `@@unique([userId, reason, refId])` impede pagar o mesmo marco duas vezes |
+| `RewardBenefit` | o que o saldo comprou | uma linha por pessoa e código; `endsAt` é a única verdade sobre estar ativo |
 | `Badge` / `UserBadge` | selos e progresso | seed com os 9 selos |
 | `Friendship` | amigos (convite/código) | par ordenado A<B |
 | `RankingSnapshot` | ranking do mês por escopo e categoria | recalculado por job |

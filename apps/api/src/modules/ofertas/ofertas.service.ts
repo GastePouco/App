@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { LIMITES, PONTOS, erro, regiaoDoGeohash } from '@gastemenos/shared';
 import { PrismaService } from '../../prisma/prisma.service.js';
 import { PontosService } from '../jogo/pontos.service.js';
+import { RecompensasService } from '../recompensas/recompensas.service.js';
 
 /**
  * Ofertas.
@@ -22,6 +23,7 @@ export class OfertasService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly pontos: PontosService,
+    private readonly recompensas: RecompensasService,
   ) {}
 
   async listar(
@@ -36,7 +38,13 @@ export class OfertasService {
     const regiao = usuario?.regionGeohash ? regiaoDoGeohash(usuario.regionGeohash) : [];
     const agora = new Date();
 
-    const patrocinadas = regiao.length
+    // Quem comprou "sem ofertas patrocinadas" com o saldo de recompensa não vê
+    // anúncio nenhum — nem com selo (docs/18-RECOMPENSAS.md). Some antes da
+    // consulta, não na hora de montar a resposta: oferta não mostrada não pode
+    // contar impressão, senão o parceiro paga por quem nunca viu.
+    const semPatrocinio = await this.recompensas.beneficioAtivo(userId, 'SEM_PATROCINIO');
+
+    const patrocinadas = regiao.length && !semPatrocinio
       ? await this.prisma.offer.findMany({
           where: {
             sponsored: true,

@@ -5,6 +5,7 @@ import { PontosService } from '../src/modules/jogo/pontos.service.js';
 import { PrecosService, ANONIMATO_MINIMO } from '../src/modules/precos/precos.service.js';
 import { ListaService } from '../src/modules/lista/lista.service.js';
 import { OfertasService } from '../src/modules/ofertas/ofertas.service.js';
+import { provedoresDeRecompensa } from './provedores.js';
 
 /**
  * Aceite da Fase 5:
@@ -41,6 +42,7 @@ describe('preços, lista e ofertas', () => {
         PrecosService,
         ListaService,
         OfertasService,
+        ...provedoresDeRecompensa(),
         PontosService,
         { provide: PrismaService, useValue: prisma },
       ],

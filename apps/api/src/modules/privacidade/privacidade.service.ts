@@ -83,6 +83,10 @@ export class PrivacidadeService {
         consents: { select: { kind: true, granted: true, createdAt: true } },
         points: { select: { amount: true, reason: true, createdAt: true } },
         badges: { select: { badgeId: true, progress: true, unlockedAt: true } },
+        // Saldo de recompensa é dinheiro da pessoa: sai junto, sem ela pedir
+        // (docs/09-SEGURANCA-LGPD.md e docs/18-RECOMPENSAS.md).
+        rewards: { select: { amountCents: true, reason: true, refId: true, createdAt: true } },
+        rewardBenefits: { select: { code: true, startsAt: true, endsAt: true } },
       },
     });
 
@@ -130,6 +134,7 @@ export class PrivacidadeService {
         'itens.csv ........ um item por linha, para analisar preços',
         'listas.json ...... suas listas de compras',
         'pontos.json ...... seu histórico de pontos e selos',
+        'recompensa.json .. seu saldo, cada crédito e cada gasto, e o que você trocou',
         '',
         'O que NÃO está aqui, e por quê:',
         '',
@@ -163,6 +168,19 @@ export class PrivacidadeService {
     zip.file(
       'pontos.json',
       JSON.stringify({ lancamentos: usuario.points, selos: usuario.badges }, null, 2),
+    );
+
+    zip.file(
+      'recompensa.json',
+      JSON.stringify(
+        {
+          saldoEmCentavos: usuario.rewards.reduce((total, linha) => total + linha.amountCents, 0),
+          lancamentos: usuario.rewards,
+          beneficios: usuario.rewardBenefits,
+        },
+        null,
+        2,
+      ),
     );
 
     zip.file(

@@ -1,7 +1,9 @@
 # Recompensa por notas lidas — planejamento
 
-> **Status:** PLANEJAMENTO (01/10/2026). Nada implementado.
-> Altera o escopo do módulo Solana — ver "O que isto faz com o plano anterior".
+> **Status:** **fase 1 EXECUTADA** (02/10/2026) — saldo, elegibilidade, crédito
+> por marco e gasto no app, tudo off-chain e funcionando. Fases 2 a 5 em
+> planejamento. Altera o escopo do módulo Solana — ver "O que isto faz com o
+> plano anterior".
 
 ## O que é
 
@@ -109,11 +111,27 @@ A regra que separa o que pode e o que não pode ser vendido:
 
 | Pode ser pago | Nunca |
 |---|---|
-| Tirar ofertas patrocinadas por 30 dias | Comparação de preço (é o produto) |
-| Mais alertas de preço além da cota | Qualquer recurso de acessibilidade |
-| Histórico completo além de 90 dias | Baixar seus dados (é direito, LGPD) |
-| Raio maior na comparação de mercados | Leitura de nota |
-| Selo cosmético no ranking | Posição no ranking |
+| **Tirar ofertas patrocinadas por 30 dias** — existe, R$ 2,00 | Comparação de preço (é o produto) |
+| **Selo de apoiador no ranking por 90 dias** — existe, R$ 1,00 | Qualquer recurso de acessibilidade |
+| | Baixar seus dados (é direito, LGPD) |
+| | Leitura de nota |
+| | Posição no ranking |
+
+A loja tem **dois** itens, e não os cinco que esta página listava. Três saíram, e
+o motivo é o mesmo nos três:
+
+- **"Mais alertas de preço além da cota"** — hoje **não existe cota de alertas**.
+  Vender a saída de um limite exigiria inventar o limite primeiro, ou seja,
+  piorar o app de graça para ter o que vender de volta. Fora.
+- **"Histórico completo além de 90 dias"** — mesma coisa: o histórico não é
+  cortado em 90 dias hoje.
+- **"Raio maior na comparação de mercados"** — comparação de preço é o produto, e
+  vender uma comparação melhor é vender o produto em pedaços.
+
+E a regra que ficou escrita no código, junto do catálogo: **todo item precisa de
+um ponto que o aplique**. Item em tabela de banco sem código que o honre é
+promessa que a pessoa paga e não recebe — por isso o catálogo mora em
+`packages/shared/src/recompensas.ts`, não numa tabela editável pelo CRM.
 
 Vender acessibilidade transformaria "modo fácil" e "letra grande" em privilégio
 de quem paga — e o app inteiro foi construído contra isso. Vender a exportação
@@ -123,16 +141,26 @@ de dados seria cobrar por um direito previsto em lei.
 
 ### Saldo
 
-Livro-razão em **micro-USDC inteiros** (6 casas, como o token), igual ao de
-pontos: cada linha é um crédito ou débito com motivo e chave de idempotência.
-Nunca um campo `saldo` mutável — saldo é a soma, e assim um crédito duplicado
-aparece em vez de sumir.
+Livro-razão em **centavos de real**, igual ao de pontos: cada linha é um crédito
+ou débito com motivo e chave de idempotência. Nunca um campo `saldo` mutável —
+saldo é a soma, e assim um crédito duplicado aparece em vez de sumir.
+
+> **Decisão da implementação:** o rascunho desta página dizia micro-USDC. Virou
+> **centavo de real**. O app inteiro conta dinheiro em centavos de real, e quem
+> lê nota de supermercado pensa em real — denominar o saldo em dólar faria o
+> número da tela mudar sozinho todo dia, por causa do câmbio, sem nada ter
+> acontecido. A conversão para USDC passa a acontecer **no saque** (fase 2), com
+> a cotação do dia e o valor convertido mostrado **antes** de confirmar. O risco
+> de câmbio fica com quem o entende, não com quem leu a nota.
 
 ```
-RewardLedger   userId, amountMicros, reason, refId, createdAt
-RewardClaim    userId, amountMicros, wallet, status, signature, createdAt
-UserWallet     userId, address, verifiedAt   (posse provada por assinatura)
+RewardLedger    userId, amountCents, reason (MILESTONE|PURCHASE|ADJUSTMENT),
+                refId, createdAt      @@unique([userId, reason, refId])
+RewardBenefit   userId, code, startsAt, endsAt   @@unique([userId, code])
 ```
+
+Fase 2 acrescenta `RewardClaim` (saque) e `UserWallet` (posse provada por
+assinatura). Não existem ainda, e não há coluna esperando por eles.
 
 ### Elegibilidade
 
@@ -201,7 +229,7 @@ usuário. Devnet não tem esse problema; mainnet não entra sem parecer.
 
 | Fase | O que entrega | Chain |
 |---|---|---|
-| 1 | Livro-razão, elegibilidade, crédito e **gasto no app** | nenhuma |
+| 1 ✅ | Livro-razão, elegibilidade, crédito e **gasto no app** | nenhuma |
 | 2 | Vincular carteira (prova por assinatura) e saque em USDC | devnet |
 | 3 | Raiz Merkle da elegibilidade publicada por ciclo | devnet |
 | 4 | Relayer pagando a taxa; mínimo e tetos ajustados pelo uso real | devnet |
@@ -229,11 +257,98 @@ fonte de receita vira subsídio, e o jurado pergunta de onde sai o dinheiro na
 primeira olhada. Minha recomendação é manter o oráculo como espinha e a
 recompensa como a ponta visível — não trocar.
 
-## Perguntas em aberto
+## O que a fase 1 entregou (02/10/2026)
 
-1. **200 notas ou 200 pontos?** Muda a primeira recompensa de quatro anos para
-   quatro notas.
-2. **Quanto vale a recompensa?** Sem isso não dá para fechar nem o orçamento nem
-   a regra "paga menos do que a nota rende".
-3. **Fase 1 agora, ou direto com carteira?** A fase 1 não precisa de nada de
-   blockchain e já muda o comportamento de uso.
+### Como o marco é contado e pago
+
+- **Conta nota que virou observação de preço.** Nota recusada, duplicada, que
+  falhou na leitura ou de loja sem região **não** entra. Quem lê 30 notas e vê 28
+  no contador lê o porquê na própria tela.
+- **A chave de idempotência é o índice do marco** (`marco:1`, `marco:2`), nunca a
+  quantidade de notas. Baixar o primeiro marco de 25 para 20 numa campanha nova
+  não repaga ninguém — o que uma chave do tipo `marco:25-notas` faria.
+- **O crédito acontece em dois lugares**, os dois idempotentes: no fim da leitura
+  da nota e na varredura noturna (`rewards:pending-milestones`, 03h20). Nenhum
+  `GET` credita nada — dinheiro que aparece porque alguém abriu uma tela é o tipo
+  de efeito colateral que ninguém encontra depois.
+- **Teto mensal é teto.** Estourado o orçamento, o marco não é perdido nem pago:
+  a varredura o credita quando o mês virar.
+- **Avisa quem recebeu.** Cada marco gera notificação do tipo `REWARD`, que não
+  passa por interruptor de preferência: não é marketing, é o aviso de que a
+  pessoa recebeu algo. Quem fechou o app depois de ler a nota descobre do mesmo
+  jeito.
+
+### Gastar
+
+- `FOR UPDATE` na linha da pessoa antes de conferir o saldo. Sem a trava, dois
+  pedidos simultâneos leem o mesmo saldo, os dois passam, e o saldo fica
+  negativo — `read committed` não impede isso sozinho.
+- **Janela de idempotência de um minuto por item.** Toque duplo no botão, ou
+  reenvio de uma requisição que o celular perdeu, não cobra duas vezes; a
+  resposta volta com `repeated: true` e a tela diz "nada foi cobrado de novo".
+- **Comprar de novo soma ao prazo que ainda falta**, em vez de desperdiçá-lo.
+
+### Onde o benefício é aplicado
+
+| Benefício | Ponto de aplicação |
+|---|---|
+| `SEM_PATROCINIO` | `OfertasService.listar` nem consulta oferta paga — e, por consequência, **não conta impressão**: parceiro não paga por quem não viu |
+| `SELO_APOIADOR` | `RankingService.calcular` marca `supporter` em lote (uma consulta, não uma por linha); a tela mostra estrela **com a palavra "Apoiador"** para leitor de tela, e o selo não entra na ordenação |
+
+### Superfície
+
+- `GET /v1/rewards` — saldo, notas contadas, progresso, loja, benefícios ativos e
+  extrato, numa resposta só: três requisições num celular em 3G são três chances
+  de meia tela.
+- `POST /v1/rewards/purchase` — `{ code }`, validado contra o catálogo do código.
+- Tela `/recompensas`, alcançável por Perfil e por Conquistas. **Sem referência
+  aprovada em `referencia/telas/`** — a recompensa nasceu depois do pacote de
+  design, e a tela foi montada só com componentes e tokens existentes para que a
+  revisão depois seja arranjo, não reescrita.
+- A tela diz, em voz alta, que **o saque em USDC ainda não existe**.
+
+### Configuração
+
+| Variável | Padrão | O que é |
+|---|---|---|
+| `REWARD_FIRST_MILESTONE` | 25 | notas (que viraram dado) do primeiro marco |
+| `REWARD_MILESTONE_STEP` | 50 | notas entre um marco e o seguinte |
+| `REWARD_MILESTONE_CENTS` | 200 | quanto cada marco credita |
+| `REWARD_MONTHLY_BUDGET_CENTS` | 50000 | teto de crédito por mês, somando todas as pessoas |
+
+Valor inválido (letra, zero, negativo) cai no padrão e **avisa no log**: um teto
+que virasse `NaN` em silêncio pagaria recompensa sem limite.
+
+### Testes
+
+`apps/api/test/recompensas.spec.ts` fixa o que custa caro quando sai errado:
+pagar duas vezes, pagar por nota que não virou dado, gastar saldo que não existe,
+teto que segura e depois paga, mudança de regra que não repaga, selo que não mexe
+na posição, e patrocinada que some sem contar impressão. As regras puras do
+marco têm teste à parte em `packages/shared/src/recompensas.test.ts` — incluindo
+um que recusa item de loja que venda acessibilidade, exportação ou comparação.
+
+## Decisões tomadas
+
+1. **200 notas ou 200 pontos?** → **Notas**, e o padrão virou **25**, com 200
+   disponível na configuração. A 4 notas/mês, 200 notas levam 50 meses; o
+   primeiro marco precisa ser alcançável para provar que o sistema paga.
+2. **Quanto vale a recompensa?** → **R$ 2,00 por marco**, configurável. É um
+   número de campanha, não de receita: a R$ 0,08 por nota ele está **acima** do
+   que uma nota rende hoje em consulta. Por isso entra com **teto mensal** e
+   tratado como marketing — e por isso o teto é código, não intenção.
+3. **Fase 1 agora, ou direto com carteira?** → **Fase 1 primeiro**, e foi o que
+   se construiu: recompensa que se gasta no app, sem carteira, sem taxa, sem
+   explicar blockchain para ninguém.
+
+## O que continua em aberto
+
+- **A fonte do dinheiro.** Enquanto não há receita de x402, é orçamento de
+  marketing com teto. A regra que não pode ser quebrada continua valendo: o valor
+  pago por nota tem de ficar **abaixo** do que aquela nota rende ao longo da vida
+  dela. Hoje não fica.
+- **Teto por pessoa por ciclo.** O teto de hoje é global (do mês), não por conta.
+  Sem CPF não dá para impedir várias contas, e o limite de dano é o orçamento.
+- **A fila de revisão de risco** (padrão suspeito antes de pagar) é da fase 2,
+  junto com o saque: enquanto o saldo só vale dentro do app, fraude rende
+  desconto em anúncio, não dinheiro.

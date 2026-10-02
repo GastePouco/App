@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { chaveDoMes } from '../../comum/tempo.js';
 import { PrismaService } from '../../prisma/prisma.service.js';
+import { RecompensasService } from '../recompensas/recompensas.service.js';
 
 /**
  * Ranking mensal.
@@ -30,6 +31,13 @@ export interface LinhaDoRanking {
   level: number;
   value: number;
   isMe: boolean;
+  /**
+   * Selo de apoiador comprado com o saldo de recompensa
+   * (docs/18-RECOMPENSAS.md). É enfeite: não entra na ordenação, não muda
+   * posição, e a tela o anuncia por escrito — cor sozinha não informa nada a
+   * quem usa leitor de tela.
+   */
+  supporter: boolean;
 }
 
 const ANONIMO = 'Economizador anônimo';
@@ -38,7 +46,10 @@ const ANONIMO = 'Economizador anônimo';
 export class RankingService {
   private readonly logger = new Logger(RankingService.name);
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly recompensas: RecompensasService,
+  ) {}
 
   async amigosDe(userId: string): Promise<string[]> {
     const amizades = await this.prisma.friendship.findMany({
@@ -143,6 +154,7 @@ export class RankingService {
     }
 
     const niveis = await this.niveisDe(ids);
+    const apoiadores = await this.recompensas.apoiadoresEntre(ids);
 
     const classificados = pessoas
       .map((pessoa) => ({
@@ -151,6 +163,7 @@ export class RankingService {
         level: niveis.get(pessoa.id) ?? 1,
         value: valores.get(pessoa.id) ?? 0,
         isMe: pessoa.id === userId,
+        supporter: apoiadores.has(pessoa.id),
       }))
       .sort((a, b) => b.value - a.value || a.name.localeCompare(b.name, 'pt-BR'))
       .map((linha, indice) => ({ ...linha, rank: indice + 1 }));

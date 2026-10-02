@@ -1,4 +1,5 @@
 import { Logger } from '@nestjs/common';
+import { RECOMPENSA_PADRAO, type RegraDaRecompensa } from '@gastemenos/shared';
 
 /**
  * Configuração lida do ambiente, conferida uma vez na subida.
@@ -23,6 +24,24 @@ function obrigatorio(nome: string, padraoDeDesenvolvimento?: string): string {
   }
 
   throw new Error(`A variável de ambiente ${nome} é obrigatória.`);
+}
+
+/**
+ * Inteiro positivo lido do ambiente.
+ *
+ * Valor inválido (letra, negativo, zero) cai no padrão e **avisa**: um teto
+ * mensal que virou `NaN` silenciosamente pagaria recompensa sem limite.
+ */
+function inteiroPositivo(nome: string, padrao: number): number {
+  const bruto = process.env[nome];
+  if (!bruto) return padrao;
+
+  const valor = Number(bruto);
+  if (!Number.isInteger(valor) || valor <= 0) {
+    logger.warn(`${nome}="${bruto}" não é inteiro positivo; usando ${padrao}.`);
+    return padrao;
+  }
+  return valor;
 }
 
 export const configuracao = {
@@ -66,6 +85,30 @@ export const configuracao = {
       throw new Error('RATE_LIMIT_TEST_FACTOR não pode ser usado em produção.');
     }
     return fator;
+  },
+
+  /**
+   * Recompensa por notas lidas (docs/18-RECOMPENSAS.md).
+   *
+   * Em getter e lido do ambiente porque campanha muda: o limite do primeiro
+   * marco, o valor e o teto mensal são parâmetros de operação, não de código —
+   * trocar campanha não pode exigir deploy. O padrão é o que vai ao ar.
+   */
+  recompensas: {
+    get regra(): RegraDaRecompensa {
+      return {
+        primeiroMarco: inteiroPositivo('REWARD_FIRST_MILESTONE', RECOMPENSA_PADRAO.primeiroMarco),
+        passo: inteiroPositivo('REWARD_MILESTONE_STEP', RECOMPENSA_PADRAO.passo),
+        valorDoMarcoCentavos: inteiroPositivo(
+          'REWARD_MILESTONE_CENTS',
+          RECOMPENSA_PADRAO.valorDoMarcoCentavos,
+        ),
+        orcamentoMensalCentavos: inteiroPositivo(
+          'REWARD_MONTHLY_BUDGET_CENTS',
+          RECOMPENSA_PADRAO.orcamentoMensalCentavos,
+        ),
+      };
+    },
   },
 
   google: {

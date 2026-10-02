@@ -47,6 +47,9 @@ export const MENSAGENS: Record<string, string> = {
   REGION_WITHOUT_DATA: 'Ainda juntando preços desta região. Cada nota lida ajuda.',
   RATE_LIMITED: 'Muitos pedidos seguidos. Espere um pouco.',
 
+  // Recompensa
+  REWARD_NO_BALANCE: 'Seu saldo ainda não cobre esse item. Ele continua te esperando aqui.',
+
   // Genérico
   INTERNAL: 'Algo deu errado do nosso lado. Tente de novo em instantes.',
   OFFLINE: 'Sem internet. Mostrando o que já estava salvo.',
