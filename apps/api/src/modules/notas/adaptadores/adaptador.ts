@@ -39,6 +39,15 @@ export interface NotaLida {
    * (docs/09-SEGURANCA-LGPD.md, "Minimização").
    */
   consumerCpfPresent: boolean;
+  /**
+   * HMAC do CPF que estava na página, quando havia um.
+   *
+   * O número **não sai do parser**: ele é transformado em hash ali mesmo, com o
+   * segredo do servidor, e é o hash que viaja. Serve para uma coisa só —
+   * comparar com o CPF vinculado à conta e confirmar que a nota é de quem a leu
+   * (docs/18-RECOMPENSAS.md). Não bate, não vira nada: o hash é descartado.
+   */
+  consumerCpfHash?: string;
 }
 
 /** Motivos de falha que a API traduz para as mensagens das telas. */

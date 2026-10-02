@@ -53,4 +53,14 @@
 - Logs sem dados pessoais (mascarar e-mail, nunca logar tokens, CPF ou HTML de nota).
 - Backups diários criptografados do Postgres, com retenção de 30 dias — em produção, o PITR do Supabase (`docs/13-SUPABASE.md`).
 - O schema do banco fica fechado para as chaves públicas do Supabase: RLS ligada em toda tabela, sem policy, e privilégios revogados de `anon`/`authenticated` (`apps/api/prisma/sql/blindar-schema.sql`). A API conecta como dona das tabelas.
+- **CPF**: entra por uma finalidade declarada — garantir **uma recompensa por
+  pessoa** (`18-RECOMPENSAS.md`) — e **nunca é guardado em claro**. O banco recebe
+  um HMAC com `CPF_HASH_SECRET`, segredo **separado** do `USER_HASH_SECRET`:
+  o espaço de CPFs válidos é pequeno (~10^9), então quem tem o segredo reverte
+  qualquer hash por força bruta, e vazar um hash não pode custar os dois dados. O
+  consentimento é registrado em `Consent` (`reward_cpf_v1`) ao vincular e ao
+  revogar; desvincular apaga o hash e a confirmação. O CPF que aparece na página
+  da SEFAZ é transformado em hash **dentro do parser** e comparado com o da conta:
+  bate, confirma que a compra foi daquela pessoa; não bate, é descartado. Em
+  nenhum dos caminhos o número é persistido.
 - O ZIP de "Baixar meus dados" **nunca ganha URL pública nem assinada**: sai pelo endpoint autenticado, que lê o arquivo com a chave de serviço no servidor. Link assinado circula em conversa e vale para quem o receber.

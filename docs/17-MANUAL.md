@@ -103,6 +103,12 @@ Contas do seed: `camila.alves@email.com` (a persona da demonstração) e
 
 - **Saldo em reais** por marco de notas: a primeira recompensa em 25 notas, depois
   a cada 50, R$ 2,00 por marco — tudo configurável por ambiente.
+- **Uma recompensa por pessoa**: para o valor sair é preciso e-mail confirmado,
+  questionário de consumo respondido, CEP e **CPF vinculado** (único por conta).
+  O CPF nunca é guardado — vai um código irreversível, e a tela diz isso. Celular
+  não é pedido: não usamos para nada.
+- Marco batido com cadastro incompleto **fica esperando**, com o valor à vista na
+  tela; completou, o job noturno credita.
 - Conta **nota que virou dado** (entrou na base de preços): nota repetida, recusada
   ou que falhou na leitura não entra, e a tela explica isso.
 - **Gasta dentro do app**, em dois benefícios que existem de verdade: tirar
@@ -110,6 +116,9 @@ Contas do seed: `camila.alves@email.com` (a persona da demonstração) e
   dias (R$ 1,00). Comprar de novo soma ao prazo que falta.
 - Teto de orçamento por mês; estourado, o marco é pago no ciclo seguinte.
 - Notificação avisa quem recebeu, sem passar por interruptor de preferência.
+- **Nota emitida no seu CPF confirma a conta**: a página da SEFAZ mostra o CPF do
+  consumidor, o app compara os hashes e registra a confirmação — sem guardar o
+  número. É o que vai liberar o saque na fase 2.
 - **Sacar para carteira (USDC) ainda não existe** — está escrito na tela e em
   `18-RECOMPENSAS.md`. Nada aqui depende de ter carteira.
 
@@ -217,7 +226,7 @@ fases 2 a 5).
 - **Privacidade**: CPF nunca é guardado; preço entra na base por HMAC, sem
   ligação com a conta; exclusão em 30 dias com carência.
 - **Segurança**: auditoria completa em `16-SEGURANCA-AUDITORIA.md`.
-- **Números**: 180 testes na API, 81 de ponta a ponta, 117 nos pacotes.
+- **Números**: 198 testes na API, 81 de ponta a ponta, 126 nos pacotes.
 
 ## Onde ler mais
 

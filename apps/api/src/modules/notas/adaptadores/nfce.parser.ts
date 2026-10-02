@@ -1,5 +1,7 @@
 import * as cheerio from 'cheerio';
 import { ErroDeLeitura, type ItemLido, type NotaLida } from './adaptador.js';
+import { createHmac } from 'node:crypto';
+import { configuracao } from '../../../comum/configuracao.js';
 
 /**
  * Leitura da página pública de consulta da NFC-e.
@@ -234,6 +236,27 @@ export function temCpfDoConsumidor(html: string): boolean {
   return /CPF\s*(?:\/\s*CNPJ)?\s*(?:do\s*)?consumidor/i.test(html) || /\d{3}\.\d{3}\.\d{3}-\d{2}/.test(html);
 }
 
+/**
+ * HMAC do CPF do consumidor, quando a página traz um.
+ *
+ * **O número não sai desta função.** Ele é lido, virado hash e esquecido: é o
+ * que permite confirmar que a nota é de quem a leu sem guardar o CPF de ninguém
+ * (docs/09-SEGURANCA-LGPD.md, "Minimização").
+ *
+ * Primeiro o formato pontuado, que é como a SEFAZ imprime; só depois onze
+ * dígitos colados **perto da palavra CPF**. Sem essa segunda âncora, qualquer
+ * número de onze algarismos na página — e há vários — entraria no lugar do CPF.
+ */
+export function hashDoCpfDoConsumidor(html: string, segredo: string): string | undefined {
+  const pontuado = /(\d{3})\.(\d{3})\.(\d{3})-(\d{2})/.exec(html);
+  const colado = /CPF[^<>\d]{0,20}(\d{11})/i.exec(html);
+
+  const digitos = pontuado ? pontuado.slice(1).join('') : colado?.[1];
+  if (!digitos || digitos.length !== 11) return undefined;
+
+  return createHmac('sha256', segredo).update(digitos).digest('hex');
+}
+
 export function interpretarPagina(html: string, chave: string, uf: string): NotaLida {
   const $ = cheerio.load(html);
 
@@ -253,8 +276,9 @@ export function interpretarPagina(html: string, chave: string, uf: string): Nota
   }
 
   const emissao = extrairEmissao(html);
+  const cpf = hashDoCpfDoConsumidor(html, configuracao.segredoDoHashDeCpf);
 
-  return {
+  const nota: NotaLida = {
     accessKey: chave,
     store: extrairLoja(html, $, uf),
     issuedAt: emissao ?? new Date().toISOString(),
@@ -263,4 +287,7 @@ export function interpretarPagina(html: string, chave: string, uf: string): Nota
     items: itens,
     consumerCpfPresent: temCpfDoConsumidor(html),
   };
+  if (cpf) nota.consumerCpfHash = cpf;
+
+  return nota;
 }

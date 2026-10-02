@@ -14,6 +14,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
+import { configuracao } from '../../comum/configuracao.js';
 import type { Response } from 'express';
 import { UsuarioAtual, type UsuarioAutenticado } from '../../comum/usuario-atual.js';
 import { JwtGuarda } from '../auth/guardas/jwt.guarda.js';
@@ -31,6 +33,7 @@ import {
   PerfilDeConsumoDto,
   TrocarEmailDto,
   TrocarSenhaDto,
+  VincularCpfDto,
 } from './dto/conta.dto.js';
 
 @ApiTags('conta')
@@ -55,12 +58,37 @@ export class ContaController {
   }
 
   @Patch('me')
-  @ApiOperation({ summary: 'Nome, nome no ranking, celular, CEP e CPF' })
+  @ApiOperation({ summary: 'Nome, nome no ranking, celular e CEP' })
   async atualizar(
     @UsuarioAtual() usuario: UsuarioAutenticado,
     @Body() dados: AtualizarDadosDto,
   ) {
     return this.dados.atualizar(usuario.id, dados);
+  }
+
+  /**
+   * CPF — só para a recompensa (docs/18-RECOMPENSAS.md).
+   *
+   * Limite apertado de propósito: a resposta distingue "CPF livre" de "CPF já
+   * está em outra conta", e sem limite isso viraria um jeito de sondar quem tem
+   * conta aqui. Cinco por minuto serve para quem está digitando o próprio e não
+   * serve para quem está varrendo uma lista.
+   */
+  @Put('me/cpf')
+  @Throttle({ default: { limit: 5 * configuracao.fatorDeLimite, ttl: 60_000 } })
+  @ApiOperation({ summary: 'Vincula o CPF (guardado como HMAC) para a recompensa' })
+  async vincularCpf(
+    @UsuarioAtual() usuario: UsuarioAutenticado,
+    @Body() corpo: VincularCpfDto,
+  ) {
+    return this.dados.vincularCpf(usuario.id, corpo.cpf);
+  }
+
+  @Delete('me/cpf')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Desvincula o CPF e perde a elegibilidade à recompensa' })
+  async desvincularCpf(@UsuarioAtual() usuario: UsuarioAutenticado): Promise<void> {
+    await this.dados.desvincularCpf(usuario.id);
   }
 
   @Get('me/profile')

@@ -15,6 +15,23 @@ import { NotificacoesService } from '../notificacoes/notificacoes.service.js';
 
 export type MotivoDeRecompensa = 'MILESTONE' | 'PURCHASE' | 'ADJUSTMENT';
 
+/**
+ * O que a pessoa precisa ter para a recompensa sair.
+ *
+ * `cpfConfirmadoPorNota` **não** é exigência da fase 1: muita gente não informa
+ * CPF no caixa, e exigir isso excluiria quem contribui de verdade. Ele é o sinal
+ * de confiança que a fase 2 vai pedir para o saque.
+ */
+export interface RequisitosDaRecompensa {
+  apto: boolean;
+  emailVerificado: boolean;
+  questionario: boolean;
+  cpf: boolean;
+  regiao: boolean;
+  contaAtiva: boolean;
+  cpfConfirmadoPorNota: boolean;
+}
+
 export interface MarcoCreditado {
   /** Índice do marco: 1 é o primeiro da vida da pessoa. */
   milestone: number;
@@ -41,7 +58,17 @@ const UM_DIA = 24 * 60 * 60 * 1000;
  *    recebe de novo. Chave de idempotência amarrada ao número de notas
  *    pagaria duas vezes a cada mudança de campanha.
  *
- * 3. **O teto mensal é teto, não aviso.** Estourado o orçamento, o marco não é
+ * 3. **Quem recebe é uma pessoa identificada.** E-mail confirmado, questionário
+ *    de consumo respondido, CEP e **CPF vinculado** — um CPF por conta. Sem isso
+ *    a recompensa paga contas, não pessoas, e abrir dez contas valeria dez
+ *    recompensas. O celular não entra na lista: não usamos para nada, e exigir
+ *    dado que não se usa é coletar por coletar.
+ *
+ *    O marco não é perdido por falta de cadastro — fica esperando, e o job
+ *    noturno paga quando a pessoa completa. É o que transforma a exigência em
+ *    convite em vez de punição.
+ *
+ * 4. **O teto mensal é teto, não aviso.** Estourado o orçamento, o marco não é
  *    perdido nem pago: fica para o ciclo seguinte, e o job noturno o credita
  *    quando o mês virar. Melhor dizer "no próximo mês" do que dever.
  *
@@ -56,6 +83,43 @@ export class RecompensasService {
     private readonly prisma: PrismaService,
     private readonly notificacoes: NotificacoesService,
   ) {}
+
+  /**
+   * Requisitos para receber (docs/18-RECOMPENSAS.md).
+   *
+   * Conta pausada ou a caminho do encerramento não acumula: dinheiro só anda
+   * para conta ativa.
+   */
+  async requisitos(userId: string): Promise<RequisitosDaRecompensa> {
+    const pessoa = await this.prisma.user.findUniqueOrThrow({
+      where: { id: userId },
+      select: {
+        emailVerifiedAt: true,
+        cep: true,
+        regionGeohash: true,
+        cpfHash: true,
+        cpfVerifiedAt: true,
+        status: true,
+        profile: { select: { userId: true } },
+      },
+    });
+
+    const emailVerificado = pessoa.emailVerifiedAt !== null;
+    const questionario = pessoa.profile !== null;
+    const cpf = pessoa.cpfHash !== null;
+    const regiao = Boolean(pessoa.cep ?? pessoa.regionGeohash);
+    const contaAtiva = pessoa.status === 'ACTIVE';
+
+    return {
+      apto: emailVerificado && questionario && cpf && regiao && contaAtiva,
+      emailVerificado,
+      questionario,
+      cpf,
+      regiao,
+      contaAtiva,
+      cpfConfirmadoPorNota: pessoa.cpfVerifiedAt !== null,
+    };
+  }
 
   /** Notas da pessoa que viraram observação de preço. */
   async notasQueViraramDado(userId: string): Promise<number> {
@@ -97,6 +161,19 @@ export class RecompensasService {
     const notas = await this.notasQueViraramDado(userId);
     const batidos = marcosBatidos(notas, regra);
     if (batidos === 0) return [];
+
+    // Cadastro incompleto não perde o marco: ele espera aqui. Quem completa
+    // recebe na nota seguinte ou na varredura da noite.
+    const requisitos = await this.requisitos(userId);
+    if (!requisitos.apto) {
+      this.logger.debug(
+        `Marco ${batidos} em espera: cadastro incompleto (${Object.entries(requisitos)
+          .filter(([chave, valor]) => chave !== 'apto' && valor === false)
+          .map(([chave]) => chave)
+          .join(', ')}).`,
+      );
+      return [];
+    }
 
     const pagos = new Set(
       (
@@ -200,7 +277,7 @@ export class RecompensasService {
     const regra = configuracao.recompensas.regra;
     const notas = await this.notasQueViraramDado(userId);
 
-    const [saldo, lancamentos, beneficios] = await Promise.all([
+    const [saldo, lancamentos, beneficios, requisitos, marcosPagos] = await Promise.all([
       this.saldoCentavos(userId),
       this.prisma.rewardLedger.findMany({
         where: { userId },
@@ -209,6 +286,8 @@ export class RecompensasService {
         select: { id: true, amountCents: true, reason: true, refId: true, createdAt: true },
       }),
       this.beneficiosAtivos(userId),
+      this.requisitos(userId),
+      this.prisma.rewardLedger.count({ where: { userId, reason: 'MILESTONE' } }),
     ]);
 
     const batidos = marcosBatidos(notas, regra);
@@ -222,6 +301,19 @@ export class RecompensasService {
       balanceCents: saldo,
       receiptsCounted: notas,
       milestonesReached: batidos,
+      /**
+       * Marco batido e ainda não pago — por cadastro incompleto ou por teto do
+       * mês. A tela mostra isto como "esperando você", nunca como perdido.
+       */
+      milestonesWaiting: Math.max(batidos - marcosPagos, 0),
+      requirements: {
+        eligible: requisitos.apto,
+        emailVerified: requisitos.emailVerificado,
+        profile: requisitos.questionario,
+        cpf: requisitos.cpf,
+        region: requisitos.regiao,
+        cpfConfirmedByReceipt: requisitos.cpfConfirmadoPorNota,
+      },
       nextMilestone: {
         index: proximo.indice,
         receipts: proximo.notas,

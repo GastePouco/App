@@ -68,6 +68,22 @@ export const configuracao = {
   },
 
   /**
+   * Segredo do hash do CPF — **separado** do hash de usuário, de propósito.
+   *
+   * O espaço de CPFs válidos é pequeno (cerca de 10^9): com o segredo na mão,
+   * qualquer hash volta a ser CPF por força bruta em pouco tempo. Então o
+   * segredo é o que protege o dado, e ele não pode ser o mesmo que protege as
+   * observações de preço: vazar um não pode custar os dois.
+   *
+   * Ele mora fora do banco (variável de ambiente / gerenciador de segredos).
+   * Trocá-lo invalida os CPFs já vinculados — as pessoas precisariam vincular
+   * de novo (docs/09-SEGURANCA-LGPD.md).
+   */
+  get segredoDoHashDeCpf(): string {
+    return obrigatorio('CPF_HASH_SECRET', 'cpf-local-de-desenvolvimento');
+  },
+
+  /**
    * Multiplicador dos limites de requisição, só para a suíte automatizada.
    *
    * Os três projetos do Playwright rodam do mesmo IP e o limite é por IP:

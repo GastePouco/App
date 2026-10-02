@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { formatarCentavos } from '@gastemenos/shared';
-import { BottomNav, Button, Card, Icon, ProgressBar, Toast } from '@gastemenos/ui';
+import { cpfValido, formatarCentavos, formatarCpf } from '@gastemenos/shared';
+import { BottomNav, Button, Card, Icon, ProgressBar, TextField, Toast } from '@gastemenos/ui';
 import { api } from '../../lib/api.js';
 import { FalhouCarregar } from '../../componentes/Estado.js';
 
@@ -20,6 +20,10 @@ import { FalhouCarregar } from '../../componentes/Estado.js';
  *   coisa que o app inteiro foi construído para não fazer;
  * - **o que conta é nota que virou dado.** Quem lê 30 notas e vê 28 no contador
  *   merece saber por quê antes de achar que o app engoliu duas.
+ *
+ * E a lista de requisitos é mostrada como **convite**, não como muro: o marco
+ * batido com cadastro incompleto fica esperando, e a tela diz isso com o número
+ * na mão. "Você tem R$ 2,00 esperando" move mais que "complete seu cadastro".
  */
 
 interface ItemDaLoja {
@@ -40,10 +44,21 @@ interface Lancamento {
   createdAt: string;
 }
 
+interface Requisitos {
+  eligible: boolean;
+  emailVerified: boolean;
+  profile: boolean;
+  cpf: boolean;
+  region: boolean;
+  cpfConfirmedByReceipt: boolean;
+}
+
 interface SituacaoDaRecompensa {
   balanceCents: number;
   receiptsCounted: number;
   milestonesReached: number;
+  milestonesWaiting: number;
+  requirements: Requisitos;
   nextMilestone: { index: number; receipts: number; missing: number; amountCents: number };
   progress: number;
   benefits: Array<{ code: string; endsAt: string }>;
@@ -52,6 +67,41 @@ interface SituacaoDaRecompensa {
 }
 
 const dia = (iso: string): string => new Date(iso).toLocaleDateString('pt-BR');
+
+/**
+ * Uma linha da lista de requisitos.
+ *
+ * Pronto leva a palavra "pronto", não só o ícone: significado nunca sai só da
+ * cor (docs/08-ACESSIBILIDADE.md). E o que falta leva o caminho para resolver,
+ * na mesma linha — lista de pendência sem saída é cobrança.
+ */
+function ItemDoRequisito({
+  pronto,
+  texto,
+  href,
+  acao,
+}: {
+  pronto: boolean;
+  texto: string;
+  href?: string;
+  acao?: string;
+}): React.ReactElement {
+  return (
+    <li className="flex items-center gap-2 text-body-m text-ink">
+      <Icon name={pronto ? 'check' : 'close'} size={16} />
+      <span className="flex-1">{texto}</span>
+      {pronto ? (
+        <span className="text-caption text-success">pronto</span>
+      ) : href && acao ? (
+        <Button variant="ghost" size="m" href={href}>
+          {acao}
+        </Button>
+      ) : (
+        <span className="text-caption text-ink-muted">falta</span>
+      )}
+    </li>
+  );
+}
 
 export function Recompensas(): React.ReactElement {
   const [aviso, setAviso] = useState<string | null>(null);
@@ -79,6 +129,40 @@ export function Recompensas(): React.ReactElement {
     },
     onError: (falha: Error) => setAviso(falha.message),
   });
+
+  const [cpf, setCpf] = useState('');
+  const [erroDoCpf, setErroDoCpf] = useState<string | null>(null);
+
+  const vincularCpf = useMutation({
+    mutationFn: (valor: string) => api.put<{ cpfMascarado: string }>('/me/cpf', { cpf: valor }),
+    onSuccess: async (resposta) => {
+      setCpf('');
+      setErroDoCpf(null);
+      setAviso(`CPF ${resposta.cpfMascarado} vinculado. Sua recompensa está liberada.`);
+      await clientes.invalidateQueries({ queryKey: ['recompensas'] });
+    },
+    onError: (falha: Error) => setErroDoCpf(falha.message),
+  });
+
+  const removerCpf = useMutation({
+    mutationFn: () => api.delete<void>('/me/cpf'),
+    onSuccess: async () => {
+      setAviso('CPF removido. A recompensa fica em espera até você vincular de novo.');
+      await clientes.invalidateQueries({ queryKey: ['recompensas'] });
+    },
+    onError: (falha: Error) => setAviso(falha.message),
+  });
+
+  function enviarCpf(evento: React.FormEvent): void {
+    evento.preventDefault();
+    // Confere o dígito antes de sair do aparelho: erro de digitação não precisa
+    // de ida ao servidor, e a API confere de novo de qualquer jeito.
+    if (!cpfValido(cpf)) {
+      setErroDoCpf('Confira o CPF: esses números não formam um CPF válido.');
+      return;
+    }
+    vincularCpf.mutate(cpf);
+  }
 
   const dados = situacao.data;
 
@@ -135,6 +219,103 @@ export function Recompensas(): React.ReactElement {
                 </p>
               </Card>
             </section>
+
+            {!dados.requirements.eligible ? (
+              <section aria-labelledby="requisitos">
+                <h2 id="requisitos" className="mb-3 text-title-s text-ink">
+                  Para receber
+                </h2>
+                <Card tone="soft" className="gap-3">
+                  {dados.milestonesWaiting > 0 ? (
+                    <p className="text-body-m text-ink">
+                      {`Você já bateu ${dados.milestonesWaiting} marco${
+                        dados.milestonesWaiting > 1 ? 's' : ''
+                      } e tem ${formatarCentavos(
+                        dados.milestonesWaiting * dados.nextMilestone.amountCents,
+                      )} esperando. Nada se perde: assim que estes itens estiverem prontos, o valor entra no seu saldo.`}
+                    </p>
+                  ) : (
+                    <p className="text-body-m text-ink">
+                      A recompensa é uma por pessoa. Para o valor poder sair, precisamos saber que a
+                      conta é de alguém de verdade:
+                    </p>
+                  )}
+
+                  <ul className="flex flex-col gap-2">
+                    <ItemDoRequisito
+                      pronto={dados.requirements.emailVerified}
+                      texto="E-mail confirmado"
+                      href="/confirmar-email"
+                      acao="Confirmar"
+                    />
+                    <ItemDoRequisito
+                      pronto={dados.requirements.profile}
+                      texto="Questionário de consumo respondido"
+                      href="/perfil-de-consumo"
+                      acao="Responder"
+                    />
+                    <ItemDoRequisito
+                      pronto={dados.requirements.region}
+                      texto="CEP, para saber a sua região"
+                      href="/perfil/dados"
+                      acao="Preencher"
+                    />
+                    <ItemDoRequisito pronto={dados.requirements.cpf} texto="CPF vinculado" />
+                  </ul>
+
+                  {!dados.requirements.cpf ? (
+                    <form className="flex flex-col gap-3" onSubmit={enviarCpf}>
+                      <TextField
+                        label="Seu CPF"
+                        inputMode="numeric"
+                        autoComplete="off"
+                        value={formatarCpf(cpf)}
+                        onChange={(evento) => {
+                          setCpf(evento.target.value);
+                          setErroDoCpf(null);
+                        }}
+                        {...(erroDoCpf ? { error: erroDoCpf } : {})}
+                        hint="Guardamos só um código irreversível, nunca o número. Serve para garantir uma recompensa por pessoa."
+                      />
+                      <Button type="submit" disabled={vincularCpf.isPending}>
+                        Vincular CPF
+                      </Button>
+                    </form>
+                  ) : null}
+
+                  <p className="text-caption text-ink-muted">
+                    Não pedimos celular: a gente não usa para nada aqui, e dado que não se usa não
+                    se pede.
+                  </p>
+                </Card>
+              </section>
+            ) : null}
+
+            {dados.requirements.cpf ? (
+              <section aria-labelledby="cpf">
+                <h2 id="cpf" className="mb-3 text-title-s text-ink">
+                  Seu CPF
+                </h2>
+                <Card className="gap-2">
+                  <p className="flex items-center gap-1 text-body-m text-ink">
+                    <Icon name="check" size={16} />
+                    CPF vinculado
+                  </p>
+                  <p className="text-caption text-ink-muted">
+                    {dados.requirements.cpfConfirmedByReceipt
+                      ? 'Uma nota que você leu trouxe esse mesmo CPF — então está provado que a compra foi sua, sem a gente ter guardado o número.'
+                      : 'Não mostramos o número de volta porque não o temos: guardamos só um código irreversível. Quando você ler uma nota emitida nesse CPF, ele fica confirmado.'}
+                  </p>
+                  <Button
+                    variant="ghost"
+                    disabled={removerCpf.isPending}
+                    onClick={() => removerCpf.mutate()}
+                  >
+                    Remover meu CPF
+                  </Button>
+                </Card>
+              </section>
+            ) : null}
 
             <section aria-labelledby="loja">
               <h2 id="loja" className="mb-3 text-title-s text-ink">

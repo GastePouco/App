@@ -1,5 +1,7 @@
 import { readFileSync } from 'node:fs';
+import { createHmac } from 'node:crypto';
 import { join } from 'node:path';
+import { configuracao } from '../src/comum/configuracao.js';
 import { AdaptadorDeSp } from '../src/modules/notas/adaptadores/sp.adaptador.js';
 
 /**
@@ -63,6 +65,24 @@ describe('NFC-e de São Paulo, nota real', () => {
 
       expect(lida.consumerCpfPresent).toBe(true);
       expect(JSON.stringify(lida)).not.toMatch(/\d{3}\.\d{3}\.\d{3}-\d{2}/);
+    });
+
+    /**
+     * O hash existe para confirmar que a nota e de quem a leu
+     * (docs/18-RECOMPENSAS.md). O que este teste protege e a outra metade: que o
+     * que sai seja o **hash do CPF que estava na pagina**, e nao o numero.
+     *
+     * Conferir "nenhum numero de 11 digitos no objeto" nao serve: o codigo do
+     * produto na nota tem 18 digitos, e a primeira versao deste teste falhou
+     * por isso. O que vale e comparar com o HMAC esperado.
+     */
+    it('o CPF sai como hash do numero que estava na pagina', () => {
+      const esperado = createHmac('sha256', configuracao.segredoDoHashDeCpf)
+        .update('00000000000')
+        .digest('hex');
+
+      expect(nota().consumerCpfHash).toBe(esperado);
+      expect(nota().consumerCpfHash).toMatch(/^[0-9a-f]{64}$/);
     });
   });
 

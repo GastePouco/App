@@ -870,3 +870,72 @@ A Camila do seed tem **23 notas que viraram dado** — duas a menos que o primei
 marco. Quer dizer que uma única nota real lida na demonstração dispara a
 recompensa na tela, sem preparar nada. Não foi planejado; foi conferido.
 
+
+## Uma recompensa por pessoa: o CPF (02/10/2026)
+
+A pergunta que levou a isto foi direta: *"e por CPF a recompensa? Então para ter
+recompensa a pessoa tem que ter cadastro completo, questionário de onboarding
+respondido, e-mail verificado"*. Era o furo que a própria página da fase 1
+apontava — teto por conta não é teto por pessoa.
+
+O portão ficou assim: **e-mail confirmado, questionário de consumo, CEP e CPF
+vinculado (único por conta)**. O celular ficou **fora**: não usamos para nada, e
+exigir dado que não se usa é coletar por coletar — minimização não é slogan.
+
+E o marco **não é perdido** por cadastro incompleto. Ele espera, e a tela mostra
+"você tem R$ 2,00 esperando" com a lista do que falta. A mesma mecânica do teto
+mensal, reaproveitada: exigência que apaga o que a pessoa já fez é punição;
+exigência que mostra o valor parado é convite.
+
+### O CPF já estava no schema, e era meio caminho feito errado
+
+`User.cpfHash` existia desde o começo, com o comentário "hash + sal do CPF na
+nota", preenchido por um campo opcional do `PATCH /me` — **sem validação de
+dígito, sem unicidade, sem consentimento registrado e sem nada que o lesse**. Ou
+seja: um dado sensível entrando pela porta de "atualizar meus dados" e não
+servindo para nada.
+
+Agora o CPF tem rota própria (`PUT`/`DELETE /me/cpf`, cinco por minuto),
+validação de dígito nos dois lados, unicidade no banco, consentimento
+(`reward_cpf_v1`) gravado ao vincular **e ao revogar**, e um segredo próprio:
+`CPF_HASH_SECRET`, separado do `USER_HASH_SECRET`. O motivo é aritmético — o
+espaço de CPFs válidos é de cerca de 10^9, então quem tiver o segredo reverte
+qualquer hash por força bruta. Vazar o hash das observações de preço não pode
+custar os CPFs também.
+
+### O que o CPF prova, e o que não prova
+
+Digitar CPF não prova nada: o dígito verificador pega erro de digitação, não
+má-fé. Quem verifica é a **nota fiscal**. A página da SEFAZ mostra o CPF do
+consumidor quando ele foi informado na compra — e o parser agora transforma esse
+número em HMAC **ali mesmo**, antes de qualquer coisa sair dele. Se o hash bate
+com o da conta, está provado que quem leu foi quem comprou, e isso grava
+`cpfVerifiedAt`. Se não bate, é descartado. Em nenhum caminho o número é
+guardado.
+
+Essa confirmação **não** é exigência da fase 1 — muita gente não pede CPF no
+caixa, e cobrar isso excluiria quem contribui de verdade. Ela é a prova que a
+fase 2 vai pedir para o **saque**: pagar dinheiro para fora pede prova, não
+palavra.
+
+### O preço que a unicidade cobra, escrito onde dá para discutir
+
+CPF único significa que tentar vincular um CPF que já está em outra conta é
+recusado — e quem tenta **descobre que existe conta com aquele CPF**. É um
+oráculo de enumeração, e está assumido de frente: a rota é autenticada, limitada
+a cinco por minuto, e quem sonda já precisa saber o CPF que está sondando. O
+outro lado da balança é pagar dez vezes à mesma pessoa, e esse é pior.
+
+### Um teste que falhou por um motivo instrutivo
+
+Escrevi "o objeto da nota não pode conter nenhum número de 11 dígitos" para
+provar que o CPF não escapa. Falhou: o **código do produto** na nota do Zaffari
+tem 18 dígitos. A asserção certa não é "não existe número comprido", é "o que
+saiu é o HMAC do CPF que estava na página" — comparado com o hash esperado,
+calculado no teste com o mesmo segredo.
+
+198 testes na API, 126 nos pacotes, axe limpo nas 28 rotas, e o fluxo do CPF
+conferido por HTTP de ponta a ponta: 400 no CPF inválido, 200 com o mascarado de
+volta, 409 na segunda conta, 204 na remoção, consentimento gravado nos dois
+sentidos.
+

@@ -49,6 +49,9 @@ export const MENSAGENS: Record<string, string> = {
 
   // Recompensa
   REWARD_NO_BALANCE: 'Seu saldo ainda não cobre esse item. Ele continua te esperando aqui.',
+  INVALID_CPF: 'Confira o CPF: esses números não formam um CPF válido.',
+  CPF_ALREADY_USED:
+    'Esse CPF já está em outra conta. A recompensa é uma por pessoa — entre com aquela conta ou fale com a gente.',
 
   // Genérico
   INTERNAL: 'Algo deu errado do nosso lado. Tente de novo em instantes.',

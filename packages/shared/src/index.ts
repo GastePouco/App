@@ -1,4 +1,5 @@
 export * from './chave-de-acesso.js';
+export * from './cpf.js';
 export * from './dinheiro.js';
 export * from './erros.js';
 export * from './geohash.js';

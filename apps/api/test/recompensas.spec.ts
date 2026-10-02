@@ -1,6 +1,8 @@
+import { createHmac } from 'node:crypto';
 import { Test } from '@nestjs/testing';
 import { PrismaClient } from '@prisma/client';
 import { apagarUsuariosDeTeste } from './limpeza.js';
+import { configuracao } from '../src/comum/configuracao.js';
 import { PrismaService } from '../src/prisma/prisma.service.js';
 import { PontosService } from '../src/modules/jogo/pontos.service.js';
 import { RankingService } from '../src/modules/jogo/ranking.service.js';
@@ -60,14 +62,30 @@ describe('recompensas', () => {
     avisos.mockClear();
     marca = `${Date.now()}.${Math.random().toString(36).slice(2, 7)}`;
 
+    // Nasce elegível: e-mail confirmado, região, questionário respondido e CPF
+    // vinculado. Os testes do portão tiram um item por vez — é assim que se vê
+    // qual exigência está realmente sendo cobrada.
     const pessoa = await prisma.user.create({
       data: {
         email: `recompensa.${marca}@exemplo.test`,
         name: 'Pessoa de Teste',
         rankingName: 'Teste',
         regionGeohash: '6vjyq',
+        cep: '70750505',
+        cpfHash: hashDeCpf(`000000000${(++sequencia % 100).toString().padStart(2, '0')}`),
         emailVerifiedAt: new Date(),
         inviteCode: `R${marca.toUpperCase().slice(-7)}`,
+        profile: {
+          create: {
+            householdSize: '2',
+            storeTypes: ['super'],
+            frequency: 'sem',
+            monthlySpendBand: 'b',
+            priorities: ['preco'],
+            persona: 'Família Planejadora',
+            budgetCents: 90000,
+          },
+        },
       },
       select: { id: true },
     });
@@ -106,6 +124,10 @@ describe('recompensas', () => {
     process.env = ambienteOriginal;
     await prisma.$disconnect();
   });
+
+  /** Mesmo HMAC que a API usa, para o teste não repetir o segredo. */
+  const hashDeCpf = (digitos: string): string =>
+    createHmac('sha256', configuracao.segredoDoHashDeCpf).update(digitos).digest('hex');
 
   /** Chave sintética com 44 dígitos: nenhuma nota de pessoa real nos testes. */
   let sequencia = 0;
@@ -273,6 +295,85 @@ describe('recompensas', () => {
     });
   });
 
+  describe('quem pode receber', () => {
+    async function noMarco(): Promise<void> {
+      await lerNota();
+      await lerNota();
+    }
+
+    it('sem CPF vinculado, o marco espera em vez de ser pago', async () => {
+      await prisma.user.update({ where: { id: pessoaId }, data: { cpfHash: null } });
+      await noMarco();
+
+      expect(await recompensas.avaliarMarcos(pessoaId)).toEqual([]);
+      expect(await recompensas.saldoCentavos(pessoaId)).toBe(0);
+
+      const situacao = await recompensas.situacao(pessoaId);
+      expect(situacao.requirements.eligible).toBe(false);
+      expect(situacao.requirements.cpf).toBe(false);
+      // O marco aparece como esperando, não como perdido.
+      expect(situacao.milestonesWaiting).toBe(1);
+    });
+
+    it('vincular o CPF depois libera o marco que estava esperando', async () => {
+      await prisma.user.update({ where: { id: pessoaId }, data: { cpfHash: null } });
+      await noMarco();
+      expect(await recompensas.avaliarMarcos(pessoaId)).toEqual([]);
+
+      await prisma.user.update({
+        where: { id: pessoaId },
+        data: { cpfHash: hashDeCpf(`111111111${(++sequencia % 100).toString().padStart(2, '0')}`) },
+      });
+
+      expect(await recompensas.avaliarMarcos(pessoaId)).toHaveLength(1);
+      expect(await recompensas.saldoCentavos(pessoaId)).toBe(200);
+    });
+
+    it('sem o questionário de consumo, não paga', async () => {
+      await prisma.consumptionProfile.delete({ where: { userId: pessoaId } });
+      await noMarco();
+
+      expect(await recompensas.avaliarMarcos(pessoaId)).toEqual([]);
+      expect((await recompensas.requisitos(pessoaId)).questionario).toBe(false);
+    });
+
+    it('sem e-mail confirmado, não paga', async () => {
+      await prisma.user.update({ where: { id: pessoaId }, data: { emailVerifiedAt: null } });
+      await noMarco();
+
+      expect(await recompensas.avaliarMarcos(pessoaId)).toEqual([]);
+    });
+
+    it('sem CEP nem região, não paga', async () => {
+      await prisma.user.update({
+        where: { id: pessoaId },
+        data: { cep: null, regionGeohash: null },
+      });
+      await noMarco();
+
+      expect(await recompensas.avaliarMarcos(pessoaId)).toEqual([]);
+    });
+
+    /** Dinheiro só anda para conta ativa. */
+    it('conta pausada ou a caminho do encerramento não acumula', async () => {
+      await noMarco();
+      await prisma.user.update({ where: { id: pessoaId }, data: { status: 'PAUSED' } });
+
+      expect(await recompensas.avaliarMarcos(pessoaId)).toEqual([]);
+
+      await prisma.user.update({ where: { id: pessoaId }, data: { status: 'ACTIVE' } });
+      expect(await recompensas.avaliarMarcos(pessoaId)).toHaveLength(1);
+    });
+
+    it('o CPF confirmado por nota é sinal de confiança, não exigência da fase 1', async () => {
+      await noMarco();
+
+      const requisitos = await recompensas.requisitos(pessoaId);
+      expect(requisitos.cpfConfirmadoPorNota).toBe(false);
+      expect(requisitos.apto).toBe(true);
+    });
+  });
+
   describe('gastar no app', () => {
     async function comSaldo(): Promise<void> {
       await lerNota();
@@ -431,6 +532,8 @@ describe('recompensas', () => {
 
       expect(situacao.balanceCents).toBe(100);
       expect(situacao.receiptsCounted).toBe(2);
+      expect(situacao.requirements.eligible).toBe(true);
+      expect(situacao.milestonesWaiting).toBe(0);
       expect(situacao.milestonesReached).toBe(1);
       expect(situacao.nextMilestone).toMatchObject({ index: 2, receipts: 5, missing: 3 });
       expect(situacao.history.map((linha) => linha.reason)).toEqual(['PURCHASE', 'MILESTONE']);

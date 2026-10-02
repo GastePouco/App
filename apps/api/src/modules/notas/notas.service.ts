@@ -145,7 +145,13 @@ export class NotasService {
   async concluir(notaId: string, lida: NotaLida): Promise<ResultadoDaLeitura> {
     const nota = await this.prisma.receipt.findUnique({
       where: { id: notaId },
-      select: { id: true, userId: true, pointsEligible: true, status: true },
+      select: {
+        id: true,
+        userId: true,
+        pointsEligible: true,
+        status: true,
+        user: { select: { cpfHash: true, cpfVerifiedAt: true } },
+      },
     });
     if (!nota) throw falha('NOT_FOUND', HttpStatus.NOT_FOUND);
 
@@ -277,6 +283,22 @@ export class NotasService {
 
     // Selos novos entram na resposta: é o que a tela NotaLida comemora.
     const selosNovos = await this.selos.conferirEConceder(nota.userId);
+
+    // A nota traz o CPF do consumidor quando ele foi informado na compra. Se o
+    // hash dele bate com o da conta, está provado que quem leu foi quem comprou
+    // — sem o número ter sido guardado em lugar nenhum. É o único jeito de
+    // confirmar CPF aqui dentro, e é o que vai sustentar o saque (fase 2).
+    if (
+      lida.consumerCpfHash &&
+      nota.user.cpfHash === lida.consumerCpfHash &&
+      !nota.user.cpfVerifiedAt
+    ) {
+      await this.prisma.user.update({
+        where: { id: nota.userId },
+        data: { cpfVerifiedAt: new Date() },
+      });
+      this.logger.log('CPF da conta confirmado por uma nota lida.');
+    }
 
     // Recompensa por marco de notas (docs/18-RECOMPENSAS.md). Vem depois da
     // transação de propósito: o marco conta nota que **virou observação de

@@ -37,6 +37,7 @@ plain words instead of promising it ([`docs/18-RECOMPENSAS.md`](docs/18-RECOMPEN
 | Offers: community price drops and sponsored, always badged | working |
 | Game: points, 13 levels, 9 badges, weekly streak, monthly ranking, invites | working |
 | Rewards: balance in BRL per receipt milestone, spendable in-app (no chain yet) | working |
+| One reward per person: CPF stored as an HMAC, unique, confirmed by the receipt | working |
 | Account: data export (ZIP), pause, close with 30-day grace, LGPD consent | working |
 | Accessibility: 3 themes × 3 text sizes × 320px, screen-reader tables | **zero axe violations across 28 routes** |
 | PWA: installable, works offline, asks before updating | working |
@@ -101,7 +102,7 @@ approved screens.
 ## Verify it yourself
 
 ```bash
-pnpm lint && pnpm typecheck && pnpm test   # 180 API tests · 117 in packages
+pnpm lint && pnpm typecheck && pnpm test   # 198 API tests · 126 in packages
 pnpm --filter @gastemenos/web test:e2e     # 81 end-to-end, axe on every route
 pnpm audit --audit-level high
 ```

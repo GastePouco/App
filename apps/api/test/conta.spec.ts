@@ -265,6 +265,99 @@ describe('conta, privacidade e notificações', () => {
     });
   });
 
+  /**
+   * CPF — entra por uma finalidade só (a recompensa) e nunca em claro.
+   *
+   * O CPF 529.982.247-25 é inventado, com dígito verificador calculado para o
+   * teste; nenhum CPF de pessoa real entra em arquivo deste repositório.
+   */
+  describe('CPF para a recompensa', () => {
+    const CPF = '529.982.247-25';
+    const OUTRO = '111.444.777-35';
+
+    it('vincula, devolve mascarado e guarda só o hash', async () => {
+      const resposta = await dadosPessoais.vincularCpf(pessoa, CPF);
+
+      expect(resposta.cpfMascarado).toBe('***.***.247-25');
+
+      const guardado = await prisma.user.findUniqueOrThrow({
+        where: { id: pessoa },
+        select: { cpfHash: true },
+      });
+      expect(guardado.cpfHash).toMatch(/^[0-9a-f]{64}$/);
+      expect(guardado.cpfHash).not.toContain('529');
+      expect(guardado.cpfHash).not.toContain('52998224725');
+    });
+
+    it('registra o consentimento ao vincular e ao remover', async () => {
+      await dadosPessoais.vincularCpf(pessoa, CPF);
+      await dadosPessoais.desvincularCpf(pessoa);
+
+      const consentimentos = await prisma.consent.findMany({
+        where: { userId: pessoa, kind: 'reward_cpf_v1' },
+        orderBy: { createdAt: 'asc' },
+        select: { granted: true },
+      });
+      expect(consentimentos.map((c) => c.granted)).toEqual([true, false]);
+    });
+
+    it('recusa CPF com dígito errado e sequência de um só algarismo', async () => {
+      await expect(dadosPessoais.vincularCpf(pessoa, '529.982.247-24')).rejects.toThrow();
+      await expect(dadosPessoais.vincularCpf(pessoa, '111.111.111-11')).rejects.toThrow();
+
+      const guardado = await prisma.user.findUniqueOrThrow({
+        where: { id: pessoa },
+        select: { cpfHash: true },
+      });
+      expect(guardado.cpfHash).toBeNull();
+    });
+
+    /** A recompensa é uma por pessoa: é isto que impede dez contas, dez prêmios. */
+    it('recusa um CPF que já está em outra conta', async () => {
+      const outra = await prisma.user.create({
+        data: {
+          email: `cpf.${Date.now()}.${Math.random().toString(36).slice(2, 7)}@exemplo.test`,
+          name: 'Outra Pessoa',
+          rankingName: 'Outra P.',
+          emailVerifiedAt: new Date(),
+          inviteCode: `O${Date.now().toString(36).toUpperCase().slice(-7)}`,
+        },
+        select: { id: true },
+      });
+
+      try {
+        await dadosPessoais.vincularCpf(outra.id, CPF);
+        await expect(dadosPessoais.vincularCpf(pessoa, CPF)).rejects.toThrow();
+
+        // E o outro CPF continua livre: a recusa é do número, não da conta.
+        await expect(dadosPessoais.vincularCpf(pessoa, OUTRO)).resolves.toBeDefined();
+      } finally {
+        await apagarUsuarioDeTeste(prisma, outra.id);
+      }
+    });
+
+    it('vincular de novo o mesmo CPF na mesma conta não é conflito', async () => {
+      await dadosPessoais.vincularCpf(pessoa, CPF);
+      await expect(dadosPessoais.vincularCpf(pessoa, CPF)).resolves.toBeDefined();
+    });
+
+    it('remover apaga o hash e a confirmação junto', async () => {
+      await dadosPessoais.vincularCpf(pessoa, CPF);
+      await prisma.user.update({ where: { id: pessoa }, data: { cpfVerifiedAt: new Date() } });
+
+      await dadosPessoais.desvincularCpf(pessoa);
+
+      const depois = await prisma.user.findUniqueOrThrow({
+        where: { id: pessoa },
+        select: { cpfHash: true, cpfVerifiedAt: true },
+      });
+      // A confirmação era daquele CPF: mantê-la sem o vínculo afirmaria uma
+      // prova que não existe mais.
+      expect(depois.cpfHash).toBeNull();
+      expect(depois.cpfVerifiedAt).toBeNull();
+    });
+  });
+
   describe('trocar de e-mail', () => {
     it('exige o código, e o e-mail só muda depois da confirmação', async () => {
       const novo = `novo.${Date.now()}@exemplo.test`;

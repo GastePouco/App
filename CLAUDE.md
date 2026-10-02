@@ -28,7 +28,7 @@ Para rodar a suíte e2e inteira, suba a API com `RATE_LIMIT_TEST_FACTOR=20 pnpm 
 - `packages/ui`: componentes React do design system (porte em TSX de `design-system/bundle-referencia/`).
 - `packages/tokens`: `tokens.json` → `tokens.css` + preset do Tailwind.
 - `packages/shared`: schemas Zod e tipos compartilhados entre web e api.
-- Recompensa por notas lidas: `docs/18-RECOMPENSAS.md` — **fase 1 EXECUTADA** (livro-razão em centavos de real, marco por notas que viraram dado, gasto no app em dois benefícios, tela `/recompensas`, módulo `apps/api/src/modules/recompensas/`); fases 2 a 5 (carteira, saque em USDC, raiz Merkle, relayer, mainnet) em PLANEJAMENTO. Ao mexer em marco, catálogo ou benefício, atualize esse documento.
+- Recompensa por notas lidas: `docs/18-RECOMPENSAS.md` — **fase 1 EXECUTADA** (livro-razão em centavos de real, marco por notas que viraram dado, gasto no app em dois benefícios, tela `/recompensas`, módulo `apps/api/src/modules/recompensas/`, **uma recompensa por pessoa com CPF em HMAC único, confirmado pela nota**); fases 2 a 5 (carteira, saque em USDC, raiz Merkle, relayer, mainnet) em PLANEJAMENTO. Ao mexer em marco, catálogo ou benefício, atualize esse documento.
 - `apps/admin`: painel administrativo (Vite + React), cliente da mesma API — ver `docs/15-CRM.md`.
 - `apps/oracle` (fase Solana, separada): ver `docs/10-MODULO-SOLANA.md` — **revisão 2**: feed por SKU, índice da cesta por cidade e mercado de dados por x402, com repasse a quem escaneou. Duas fontes de nota que não se misturam: leitura no app (cria contribuinte) e acervo importado (dá profundidade, não conta como pessoa).
 - Testes: Vitest + Testing Library + `vitest-axe` no web; Jest + Supertest na api; Playwright para os fluxos principais.

@@ -79,11 +79,10 @@ export class AtualizarDadosDto {
   @MaxLength(9)
   cep?: string;
 
-  @ApiPropertyOptional({ description: 'Guardado só como hash com sal; nunca em claro.' })
-  @IsOptional()
-  @IsString()
-  @MaxLength(14)
-  cpf?: string;
+  // O CPF saiu daqui: ele tem finalidade própria (recompensa por pessoa),
+  // validação de dígito, unicidade e consentimento registrado, e nada disso
+  // cabia num campo opcional de "atualizar meus dados". Agora é
+  // `PUT /me/cpf` — ver VincularCpfDto.
 }
 
 export class TrocarSenhaDto {
@@ -133,4 +132,18 @@ export class EncerrarContaDto {
   @IsString()
   @MaxLength(500)
   reason?: string;
+}
+
+/**
+ * CPF para a recompensa.
+ *
+ * A validação de dígito mora em `@gastemenos/shared` e é chamada no serviço: o
+ * DTO barra o formato, o serviço barra o número impossível, e a mensagem é a
+ * mesma dos dois lados.
+ */
+export class VincularCpfDto {
+  @ApiProperty({ example: '529.982.247-25' })
+  @IsString()
+  @MaxLength(14)
+  cpf!: string;
 }

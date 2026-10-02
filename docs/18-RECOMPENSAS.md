@@ -168,6 +168,52 @@ Conta **nota que virou dado**, não nota lida. Uma nota recusada, duplicada ou
 que falhou na leitura não entra. Isso alinha a recompensa ao que de fato tem
 valor — e corta de saída a farra de escanear qualquer papel.
 
+E quem recebe precisa ser **uma pessoa identificada**:
+
+| Exigência | Por quê |
+|---|---|
+| E-mail confirmado | é por onde a pessoa é avisada e recupera a conta |
+| Questionário de consumo respondido | é o cadastro que o app usa para orçamento e persona |
+| CEP (ou região) | sem região a nota não vira preço de lugar nenhum |
+| **CPF vinculado, um por conta** | é o que faz a recompensa ser por **pessoa**, não por conta |
+
+**O celular não entra na lista.** A gente não usa para nada hoje, e exigir dado
+que não se usa é coletar por coletar — o contrário de minimização.
+
+**Nada é perdido por cadastro incompleto.** O marco batido fica **esperando**:
+a tela mostra "você tem R$ 2,00 esperando" com a lista do que falta, e o job
+noturno credita assim que a pessoa completa. Exigência que apaga o que a pessoa
+já fez é punição; exigência que mostra o valor parado é convite.
+
+### O CPF, e o que ele resolve de verdade
+
+O CPF **não vai para o banco**. Vai um HMAC com segredo de servidor
+(`CPF_HASH_SECRET`), **separado** do segredo das observações de preço: o espaço
+de CPFs válidos é pequeno (~10^9), então quem tem o segredo reverte qualquer
+hash por força bruta — e vazar um hash não pode custar os dois dados.
+
+Três consequências que o desenho assume de frente:
+
+1. **Unicidade significa que o CPF em outra conta é recusado.** Quem tenta
+   descobre que existe uma conta com aquele CPF. É um oráculo, e é o preço de
+   impedir dez contas com dez recompensas: a rota é autenticada, limitada a
+   cinco por minuto, e quem sonda já precisa saber o CPF que está sondando.
+2. **Digitar CPF não prova nada** — o dígito verificador pega erro de digitação,
+   não má-fé. Quem verifica é a **nota fiscal**: a página da SEFAZ mostra o CPF do
+   consumidor quando ele foi informado na compra, e o parser transforma esse
+   número em hash ali mesmo. Se o hash bate com o da conta, está provado que quem
+   leu foi quem comprou — **sem o número ter sido guardado em lugar nenhum**.
+   Isso grava `User.cpfVerifiedAt`.
+3. **`cpfVerifiedAt` não é exigência da fase 1.** Muita gente não informa CPF no
+   caixa, e cobrar isso excluiria quem contribui de verdade. Ele é o sinal de
+   confiança que a **fase 2** vai pedir para o saque — ali, pagar dinheiro para
+   fora pede prova, não palavra.
+
+A pessoa pode **desvincular** quando quiser: o hash e a confirmação caem juntos
+(manter a data sem o vínculo afirmaria uma prova que não existe mais), o
+consentimento revogado fica registrado em `Consent`, e o que ela perde é a
+elegibilidade — não o app.
+
 ### O resgate
 
 1. Pessoa atinge o limite → crédito no livro-razão (job idempotente).
@@ -208,9 +254,15 @@ Defesas, em camadas:
   cai na **fila de revisão do CRM** antes de pagar — e pagamento revisado por
   gente é mais barato que fraude automatizada.
 
-E uma observação incômoda: **sem CPF não dá para impedir várias contas**. O teto
-por conta vira teto por conta, não por pessoa. O limite de dano é o orçamento
-mensal fechado.
+A observação incômoda que esta página trazia — "sem CPF não dá para impedir
+várias contas" — **deixou de valer**: o CPF é único por conta, e a recompensa só
+sai para quem vinculou o seu. Duas ressalvas honestas ficam:
+
+- **CPF válido é fácil de gerar.** Quem usar o CPF de terceiros passa pelo
+  cadastro; o que o segura é a confirmação pela nota (fase 2, para o saque) e a
+  fila de revisão.
+- **O limite de dano continua sendo o orçamento mensal fechado.** Ele é a única
+  defesa que não depende de a gente ter previsto o ataque.
 
 ## O que precisa de advogado antes da mainnet
 
@@ -301,6 +353,9 @@ recompensa como a ponta visível — não trocar.
   extrato, numa resposta só: três requisições num celular em 3G são três chances
   de meia tela.
 - `POST /v1/rewards/purchase` — `{ code }`, validado contra o catálogo do código.
+- `PUT /v1/me/cpf` — vincula (valida dígito, confere unicidade, registra
+  consentimento, devolve mascarado). Cinco por minuto.
+- `DELETE /v1/me/cpf` — desvincula e registra a revogação.
 - Tela `/recompensas`, alcançável por Perfil e por Conquistas. **Sem referência
   aprovada em `referencia/telas/`** — a recompensa nasceu depois do pacote de
   design, e a tela foi montada só com componentes e tokens existentes para que a
@@ -315,6 +370,7 @@ recompensa como a ponta visível — não trocar.
 | `REWARD_MILESTONE_STEP` | 50 | notas entre um marco e o seguinte |
 | `REWARD_MILESTONE_CENTS` | 200 | quanto cada marco credita |
 | `REWARD_MONTHLY_BUDGET_CENTS` | 50000 | teto de crédito por mês, somando todas as pessoas |
+| `CPF_HASH_SECRET` | — | segredo do HMAC do CPF; **obrigatório em produção**, separado do `USER_HASH_SECRET` |
 
 Valor inválido (letra, zero, negativo) cai no padrão e **avisa no log**: um teto
 que virasse `NaN` em silêncio pagaria recompensa sem limite.
@@ -324,7 +380,11 @@ que virasse `NaN` em silêncio pagaria recompensa sem limite.
 `apps/api/test/recompensas.spec.ts` fixa o que custa caro quando sai errado:
 pagar duas vezes, pagar por nota que não virou dado, gastar saldo que não existe,
 teto que segura e depois paga, mudança de regra que não repaga, selo que não mexe
-na posição, e patrocinada que some sem contar impressão. As regras puras do
+na posição, e patrocinada que some sem contar impressão. O portão tem um teste
+por exigência — tirar uma de cada vez é o que mostra qual está sendo cobrada —, o
+CPF tem os seus em `conta.spec.ts` (hash, mascaramento, dígito, unicidade,
+consentimento dos dois lados, remoção) e o encontro com a nota está em
+`notas.integracao.spec.ts`. As regras puras do
 marco têm teste à parte em `packages/shared/src/recompensas.test.ts` — incluindo
 um que recusa item de loja que venda acessibilidade, exportação ou comparação.
 
@@ -348,7 +408,7 @@ um que recusa item de loja que venda acessibilidade, exportação ou comparaçã
   pago por nota tem de ficar **abaixo** do que aquela nota rende ao longo da vida
   dela. Hoje não fica.
 - **Teto por pessoa por ciclo.** O teto de hoje é global (do mês), não por conta.
-  Sem CPF não dá para impedir várias contas, e o limite de dano é o orçamento.
+  Com CPF único, um teto por pessoa passa a ser possível — e ainda não existe.
 - **A fila de revisão de risco** (padrão suspeito antes de pagar) é da fase 2,
   junto com o saque: enquanto o saldo só vale dentro do app, fraude rende
   desconto em anúncio, não dinheiro.

@@ -115,6 +115,8 @@ leitura da nota e na varredura noturna.
 | --- | --- | --- |
 | GET | `/rewards` | saldo, notas contadas, progresso até o próximo marco, loja, benefícios ativos e extrato |
 | POST | `/rewards/purchase` | `{ code }` — gasta o saldo num benefício; responde `repeated: true` quando é o mesmo pedido repetido dentro de um minuto |
+| PUT | `/me/cpf` | `{ cpf }` — vincula para a recompensa; guarda HMAC, devolve mascarado. `INVALID_CPF` (400), `CPF_ALREADY_USED` (409). 5/min |
+| DELETE | `/me/cpf` | desvincula e registra a revogação do consentimento |
 
 ## Notificações
 

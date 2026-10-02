@@ -95,7 +95,12 @@ model User {
   phone            String?
   cep              String?
   regionGeohash    String?       @db.VarChar(5)
-  cpfHash          String?       // hash + sal do CPF na nota; nunca o CPF em claro
+  /// HMAC do CPF com segredo de servidor; nunca o CPF em claro. Único porque a
+  /// recompensa é uma por pessoa — ver docs/18-RECOMPENSAS.md.
+  cpfHash          String?       @unique
+  /// Quando uma nota lida trouxe esse mesmo CPF: prova que a conta é de quem
+  /// comprou, sem guardar o número. Pré-requisito do saque (fase 2).
+  cpfVerifiedAt    DateTime?
   avatarUrl        String?
   inviteCode       String        @unique
   invitedById      String?

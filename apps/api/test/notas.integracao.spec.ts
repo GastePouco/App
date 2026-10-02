@@ -1,9 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { createHmac } from 'node:crypto';
 import { Test } from '@nestjs/testing';
 import { PrismaClient } from '@prisma/client';
 import { apagarUsuarioDeTeste } from './limpeza.js';
 import { PONTOS, calcularDigitoVerificador } from '@gastemenos/shared';
+import { configuracao } from '../src/comum/configuracao.js';
 import { PrismaService } from '../src/prisma/prisma.service.js';
 import { PontosService } from '../src/modules/jogo/pontos.service.js';
 import { SequenciaService } from '../src/modules/jogo/sequencia.service.js';
@@ -256,6 +258,59 @@ describe('leitura de nota (integração)', () => {
     // Um produto só, não um por leitura.
     const quantos = await prisma.product.count({ where: { gtin: '7896006711056' } });
     expect(quantos).toBe(1);
+  });
+
+  /**
+   * O CPF na página é a única verificação de identidade disponível aqui dentro:
+   * a SEFAZ mostra o CPF do consumidor, e ou ele é o mesmo da conta, ou não é.
+   * O número não é guardado em nenhum dos dois casos — o que viaja é o HMAC.
+   *
+   * A fixture do DF traz `123.456.789-00` (inventado, dígito inválido de
+   * propósito: ninguém vai conferir isso num portal de verdade).
+   */
+  describe('CPF da nota contra o CPF da conta', () => {
+    const hashDeCpf = (digitos: string): string =>
+      createHmac('sha256', configuracao.segredoDoHashDeCpf).update(digitos).digest('hex');
+
+    it('o CPF da página confirma o da conta, sem guardar o número', async () => {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { cpfHash: hashDeCpf('12345678900') },
+      });
+
+      await lerAFixture();
+
+      const pessoa = await prisma.user.findUniqueOrThrow({
+        where: { id: userId },
+        select: { cpfVerifiedAt: true },
+      });
+      expect(pessoa.cpfVerifiedAt).not.toBeNull();
+    });
+
+    it('CPF diferente não confirma nada', async () => {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { cpfHash: hashDeCpf('52998224725') },
+      });
+
+      await lerAFixture();
+
+      const pessoa = await prisma.user.findUniqueOrThrow({
+        where: { id: userId },
+        select: { cpfVerifiedAt: true },
+      });
+      expect(pessoa.cpfVerifiedAt).toBeNull();
+    });
+
+    it('sem CPF na conta, a nota é lida igual', async () => {
+      const id = await lerAFixture();
+
+      const nota = await prisma.receipt.findUniqueOrThrow({
+        where: { id },
+        select: { status: true },
+      });
+      expect(nota.status).toBe('DONE');
+    });
   });
 
   it('marca a falha com o motivo que a tela sabe traduzir', async () => {

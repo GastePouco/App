@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import argon2 from 'argon2';
-import { createHash, randomInt, timingSafeEqual } from 'node:crypto';
-import { erro } from '@gastemenos/shared';
+import { createHash, createHmac, randomInt, timingSafeEqual } from 'node:crypto';
+import { cpfMascarado, cpfValido, erro, limparCpf } from '@gastemenos/shared';
 import { emMinutos, expirou } from '../../comum/tempo.js';
 import { configuracao } from '../../comum/configuracao.js';
 import { PrismaService } from '../../prisma/prisma.service.js';
@@ -33,7 +33,7 @@ export class DadosPessoaisService {
 
   async atualizar(
     userId: string,
-    dados: { name?: string; rankingName?: string; phone?: string; cep?: string; cpf?: string },
+    dados: { name?: string; rankingName?: string; phone?: string; cep?: string },
   ) {
     const mudanca: Record<string, unknown> = {};
 
@@ -41,18 +41,6 @@ export class DadosPessoaisService {
     if (dados.rankingName !== undefined) mudanca.rankingName = dados.rankingName.trim();
     if (dados.phone !== undefined) mudanca.phone = dados.phone.replace(/\D/g, '') || null;
     if (dados.cep !== undefined) mudanca.cep = dados.cep.replace(/\D/g, '') || null;
-
-    // O CPF nunca é guardado em claro. O hash com sal serve só para,
-    // no futuro, casar as notas emitidas no CPF da pessoa
-    // (docs/09-SEGURANCA-LGPD.md).
-    if (dados.cpf !== undefined) {
-      const limpo = dados.cpf.replace(/\D/g, '');
-      mudanca.cpfHash = limpo
-        ? createHash('sha256')
-            .update(`${configuracao.segredoDoHashDeUsuario}:${limpo}`)
-            .digest('hex')
-        : null;
-    }
 
     return this.prisma.user.update({
       where: { id: userId },
@@ -222,5 +210,66 @@ export class DadosPessoaisService {
     if (provider === 'PASSWORD') {
       await this.prisma.user.update({ where: { id: userId }, data: { passwordHash: null } });
     }
+  }
+
+  /**
+   * Vincula o CPF à conta — só para a recompensa (docs/18-RECOMPENSAS.md).
+   *
+   * Três coisas acontecem aqui, e nenhuma é decoração:
+   *
+   * 1. **O número nunca é guardado.** Vai para o banco um HMAC com segredo de
+   *    servidor, e o segredo é próprio do CPF: vazar o hash das observações de
+   *    preço não pode custar os CPFs.
+   * 2. **É único no sistema.** A recompensa é uma por pessoa, e sem isso o teto
+   *    por conta não significaria nada — abrir dez contas seria dez recompensas.
+   *    O preço dessa escolha está escrito: quem já tem o CPF em outra conta
+   *    descobre que ela existe. Com a rota autenticada e limitada, o risco de
+   *    alguém usar isso para sondar CPFs é menor que o de pagar dez vezes à
+   *    mesma pessoa.
+   * 3. **Fica registrado o consentimento.** O CPF entra para uma finalidade
+   *    declarada, e a pessoa pode desvincular quando quiser — o que ela perde é
+   *    a elegibilidade à recompensa, não o app.
+   */
+  async vincularCpf(userId: string, cpf: string): Promise<{ cpfMascarado: string }> {
+    if (!cpfValido(cpf)) throw new HttpException(erro('INVALID_CPF'), HttpStatus.BAD_REQUEST);
+
+    const limpo = limparCpf(cpf);
+    const hash = createHmac('sha256', configuracao.segredoDoHashDeCpf).update(limpo).digest('hex');
+
+    const deOutraConta = await this.prisma.user.findFirst({
+      where: { cpfHash: hash, NOT: { id: userId } },
+      select: { id: true },
+    });
+    if (deOutraConta) {
+      throw new HttpException(erro('CPF_ALREADY_USED'), HttpStatus.CONFLICT);
+    }
+
+    await this.prisma.$transaction([
+      this.prisma.user.update({ where: { id: userId }, data: { cpfHash: hash } }),
+      this.prisma.consent.create({
+        data: { userId, kind: 'reward_cpf_v1', granted: true },
+      }),
+    ]);
+
+    return { cpfMascarado: cpfMascarado(limpo) };
+  }
+
+  /**
+   * Desvincula o CPF.
+   *
+   * `cpfVerifiedAt` também cai: a confirmação era daquele CPF, e manter a data
+   * sem o vínculo seria afirmar uma prova que não existe mais. O consentimento
+   * revogado fica registrado — é o histórico que prova que ela pediu.
+   */
+  async desvincularCpf(userId: string): Promise<void> {
+    await this.prisma.$transaction([
+      this.prisma.user.update({
+        where: { id: userId },
+        data: { cpfHash: null, cpfVerifiedAt: null },
+      }),
+      this.prisma.consent.create({
+        data: { userId, kind: 'reward_cpf_v1', granted: false },
+      }),
+    ]);
   }
 }
