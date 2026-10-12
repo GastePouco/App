@@ -172,10 +172,14 @@ let anyone pull up a stranger's purchase on the government portal.
 
 ## Team and authorship
 
-Gaste Pouco is led by Carla Latansio. The application code in this repository
-was written by Iran Sousa (commits by `iransousa`), co-authored with Claude, and
-is licensed under MIT. The `solana/oracle` Solana publisher was added on 12 October
-2026.
+Gaste Pouco is led by **Carla Latansio**, who holds all rights to this code. She
+built the first version of the app (Expo + Supabase, September 2026), whose São
+Paulo receipt parser and test receipt are reused here, as declared above.
+
+Contributors: Iran Sousa wrote the application code in this monorepo (commits by
+`iransousa`), co-authored with Claude, and assigned his rights to Carla Latansio
+by written agreement. The `solana/oracle` publisher was added by Carla Latansio,
+co-authored with Claude, on 12 October 2026.
 
 ## License
 
