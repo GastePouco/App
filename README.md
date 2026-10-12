@@ -1,4 +1,6 @@
-# GasteMenos
+# Gaste Pouco
+
+<sub>Internal package names still use the working title `gastemenos`.</sub>
 
 **Brazilian shoppers scan the QR code on their grocery receipt. In return they
 get their spending, the real price history of every item, and an honest answer
@@ -12,11 +14,27 @@ one, by a stranger, against a government source.
 
 > Truflation gives you the number. We show you the receipt.
 
-That property is what the Solana module is built on: a price oracle whose every
-data point can be verified, sold per query to the agents that need local prices.
-That module is **designed, not yet implemented** — see
-[`docs/10-MODULO-SOLANA.md`](docs/10-MODULO-SOLANA.md). This repository is the
-consumer product it stands on, and that product works today.
+That property is what the Solana module is built on: a price record whose every
+data point can be verified, against a government source, by anyone.
+
+**What is built for Solana:** [`solana/oracle`](solana/oracle) takes every price
+observation that came from a receipt read in the app, builds a Merkle tree (one
+leaf per observation: product, region, price, day, SHA-256 of the receipt's
+access key — no user id, no CPF) and writes the root on-chain through the Memo
+Program, on devnet. The batch file with every leaf and its proof is published
+next to it. Change one price and the root no longer matches.
+
+- Batch built from the demo data: [`2026-01-15_2026-09-24_56942f0b`](solana/oracle/lotes/2026-01-15_2026-09-24_56942f0b.json) — 81 observations, root `56942f0b4d44cac9b1b093b787cddecf32845434eb9d0d786bacf886f5498f78`
+- Merkle tests pass (`cd solana/oracle && npm install && npm test`).
+- **Not yet published on devnet, stated plainly:** we could not obtain devnet SOL
+  before the deadline to pay the transaction fee. Publishing is one command:
+  `npm run publicar` in `solana/oracle`.
+
+Still on the roadmap, stated plainly: the per-SKU price feed accounts (Anchor),
+the pay-per-query API over x402, and withdrawal of rewards in USDC — see
+[`docs/10-MODULO-SOLANA.md`](docs/10-MODULO-SOLANA.md). The demo data uses
+synthetic access keys, so in this batch the SEFAZ portal check applies to real
+receipts read in production, not to the seed.
 
 One half of it already ships: the **payout to the person who scanned**. Reading
 receipts earns a balance in BRL at configurable milestones, spendable inside the
@@ -75,6 +93,7 @@ captcha and only the QR path works. That is recorded, with dates, in
 apps/web     PWA — React 18, Vite, Tailwind driven by design tokens, Workbox
 apps/admin   Admin panel — separate app, so its code never ships to consumers
 apps/api     NestJS 10 + Prisma 6 + PostgreSQL 16 + BullMQ/Redis
+solana/oracle Solana publisher — Merkle root of receipt-backed prices, Memo Program (devnet)
 packages/    shared (domain rules), ui (design system), tokens (generated)
 ```
 
@@ -150,6 +169,13 @@ credited where they are used:
 Everything else here was written during the hackathon window. Access keys in
 tests are **synthetic**, with a valid check digit: publishing a real key would
 let anyone pull up a stranger's purchase on the government portal.
+
+## Team and authorship
+
+Gaste Pouco is led by Carla Latansio. The application code in this repository
+was written by Iran Sousa (commits by `iransousa`), co-authored with Claude, and
+is licensed under MIT. The `solana/oracle` Solana publisher was added on 12 October
+2026.
 
 ## License
 
