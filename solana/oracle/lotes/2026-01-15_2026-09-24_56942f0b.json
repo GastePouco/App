@@ -1,0 +1,1629 @@
+{
+  "id": "2026-01-15_2026-09-24_56942f0b",
+  "raiz": "56942f0b4d44cac9b1b093b787cddecf32845434eb9d0d786bacf886f5498f78",
+  "memo": "{\"app\":\"gastepouco\",\"v\":1,\"lote\":\"2026-01-15_2026-09-24_56942f0b\",\"n\":81,\"raiz\":\"56942f0b4d44cac9b1b093b787cddecf32845434eb9d0d786bacf886f5498f78\"}",
+  "rede": "devnet",
+  "transacao": null,
+  "observacoes": [
+    {
+      "produto": "84df0e176b865ec4b68e985feab787ab4db5f409b74fd9c217deb6c5e4bcd384",
+      "nome": "Café torrado e moído 500g",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 2290,
+      "data": "2026-01-15",
+      "notaHash": "c34d2966661ccfc4c7becfa2e2e0340da7def75230d5411edeb5fc53be4b52e2",
+      "folha": "bfd142e2250b280c41ca3f817818fa4def523b42ed250511d97acba42a5865e8",
+      "prova": [
+        "40e036a8e11c64b71a7257abd512b4b05668d47d3d944083802f8c6a5029a5eb",
+        "fb0d6804f9c4cf196497ebda92f6701a0d466feaa72c37dcfceb97fc5c6b61b0",
+        "c926d8b42d7259d9433e9dcc4bf1d46ef6325edd1145abcacda95d81818f173d",
+        "f9e35f216eab82e075dbf3a4ab5d2918660ffb387fa5690ba2fa47cdab6747c9",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "84df0e176b865ec4b68e985feab787ab4db5f409b74fd9c217deb6c5e4bcd384",
+      "nome": "Café torrado e moído 500g",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 2290,
+      "data": "2026-02-15",
+      "notaHash": "74c0b5a3bcaa9bd1a0beb2aabf30c6aeb8df124d7e68ac281dde441926f0c422",
+      "folha": "40e036a8e11c64b71a7257abd512b4b05668d47d3d944083802f8c6a5029a5eb",
+      "prova": [
+        "bfd142e2250b280c41ca3f817818fa4def523b42ed250511d97acba42a5865e8",
+        "fb0d6804f9c4cf196497ebda92f6701a0d466feaa72c37dcfceb97fc5c6b61b0",
+        "c926d8b42d7259d9433e9dcc4bf1d46ef6325edd1145abcacda95d81818f173d",
+        "f9e35f216eab82e075dbf3a4ab5d2918660ffb387fa5690ba2fa47cdab6747c9",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "84df0e176b865ec4b68e985feab787ab4db5f409b74fd9c217deb6c5e4bcd384",
+      "nome": "Café torrado e moído 500g",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 2290,
+      "data": "2026-03-15",
+      "notaHash": "e00de882f07e7ed648ba940496494e782e188029b48ab0afc0db118893a18ebd",
+      "folha": "f1b5fc414ae8b114c2b2ee9346af902510de55cd84733b265d0089f386d6f299",
+      "prova": [
+        "cc68487ba555c44b6fc3fd262fa9c49513618f897a705ba14b4122b6ffac90dc",
+        "2040715f21600f8e106b7780adf51e882e2f100646f9db7417c355e75ce6c31b",
+        "c926d8b42d7259d9433e9dcc4bf1d46ef6325edd1145abcacda95d81818f173d",
+        "f9e35f216eab82e075dbf3a4ab5d2918660ffb387fa5690ba2fa47cdab6747c9",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "84df0e176b865ec4b68e985feab787ab4db5f409b74fd9c217deb6c5e4bcd384",
+      "nome": "Café torrado e moído 500g",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 2290,
+      "data": "2026-04-15",
+      "notaHash": "5b0bd40c6c3d31a15cb99d9392b36e4df395d648eb0f9c5e2f1919a50646046e",
+      "folha": "cc68487ba555c44b6fc3fd262fa9c49513618f897a705ba14b4122b6ffac90dc",
+      "prova": [
+        "f1b5fc414ae8b114c2b2ee9346af902510de55cd84733b265d0089f386d6f299",
+        "2040715f21600f8e106b7780adf51e882e2f100646f9db7417c355e75ce6c31b",
+        "c926d8b42d7259d9433e9dcc4bf1d46ef6325edd1145abcacda95d81818f173d",
+        "f9e35f216eab82e075dbf3a4ab5d2918660ffb387fa5690ba2fa47cdab6747c9",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "84df0e176b865ec4b68e985feab787ab4db5f409b74fd9c217deb6c5e4bcd384",
+      "nome": "Café torrado e moído 500g",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 2380,
+      "data": "2026-05-15",
+      "notaHash": "b058437371b9087a7e190b56c91bc59fe5e0825bd1eee25a6b68a6e3e3aca0fe",
+      "folha": "caf6a0b70f3a5a3de20fd42f7f1b614f8e2c5e0d20ad04d414cb20e5eb762320",
+      "prova": [
+        "95e9a9f4ced2ec6efd8b860fd050ca309b5015c91879d0a54cfc3e9cfe8263f7",
+        "07e6e14bff09bd2731b19035056b4d7f63fc9c11ac587ad85d376e9e93d31a6a",
+        "493c9df92d24d44117cd8eb1099172f0e4a94ed86cef6344187b3c0cdac0a69a",
+        "f9e35f216eab82e075dbf3a4ab5d2918660ffb387fa5690ba2fa47cdab6747c9",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "84df0e176b865ec4b68e985feab787ab4db5f409b74fd9c217deb6c5e4bcd384",
+      "nome": "Café torrado e moído 500g",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 2490,
+      "data": "2026-06-15",
+      "notaHash": "45ab72dd368ef70037436fe6f6c4268f74655a24544e7d72b4bcc7ea841181c5",
+      "folha": "95e9a9f4ced2ec6efd8b860fd050ca309b5015c91879d0a54cfc3e9cfe8263f7",
+      "prova": [
+        "caf6a0b70f3a5a3de20fd42f7f1b614f8e2c5e0d20ad04d414cb20e5eb762320",
+        "07e6e14bff09bd2731b19035056b4d7f63fc9c11ac587ad85d376e9e93d31a6a",
+        "493c9df92d24d44117cd8eb1099172f0e4a94ed86cef6344187b3c0cdac0a69a",
+        "f9e35f216eab82e075dbf3a4ab5d2918660ffb387fa5690ba2fa47cdab6747c9",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "84df0e176b865ec4b68e985feab787ab4db5f409b74fd9c217deb6c5e4bcd384",
+      "nome": "Café torrado e moído 500g",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 2340,
+      "data": "2026-07-15",
+      "notaHash": "47388ac1281d8f87a23945ee6cdc300797acdc5b26f0e0d4ce37edf1d1002080",
+      "folha": "a07dea73c996d846a619c1b96f5aee9b6a678b267154e21aafbd5230ac3c22d3",
+      "prova": [
+        "0bc26803fb9e015c753b400c5dacade101b1437bb7e26b7ef77283622daa8b9a",
+        "078e6dd3aceb858b76a290ed6ccb9daf3dfccc3788169e1c38a0b99f2335f62c",
+        "493c9df92d24d44117cd8eb1099172f0e4a94ed86cef6344187b3c0cdac0a69a",
+        "f9e35f216eab82e075dbf3a4ab5d2918660ffb387fa5690ba2fa47cdab6747c9",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "84df0e176b865ec4b68e985feab787ab4db5f409b74fd9c217deb6c5e4bcd384",
+      "nome": "Café torrado e moído 500g",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 2210,
+      "data": "2026-08-15",
+      "notaHash": "67a2e26c7e3cc32f27fab356903ffa139c13d568b8da1d1482eba69363770557",
+      "folha": "0bc26803fb9e015c753b400c5dacade101b1437bb7e26b7ef77283622daa8b9a",
+      "prova": [
+        "a07dea73c996d846a619c1b96f5aee9b6a678b267154e21aafbd5230ac3c22d3",
+        "078e6dd3aceb858b76a290ed6ccb9daf3dfccc3788169e1c38a0b99f2335f62c",
+        "493c9df92d24d44117cd8eb1099172f0e4a94ed86cef6344187b3c0cdac0a69a",
+        "f9e35f216eab82e075dbf3a4ab5d2918660ffb387fa5690ba2fa47cdab6747c9",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "84df0e176b865ec4b68e985feab787ab4db5f409b74fd9c217deb6c5e4bcd384",
+      "nome": "Café torrado e moído 500g",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 2140,
+      "data": "2026-09-02",
+      "notaHash": "51e70f112ae667e6d690117ee6c18da18e15fd0d58989aee94526837caaa3af5",
+      "folha": "86bb161eb6be2ebf06bb1f88c71f58811630f2347057e5cc1a45f6d5d43671da",
+      "prova": [
+        "70fb0a650b966c8a20fc522bd49a8f72d4e2138517be541d677dca6f40b25333",
+        "7daaf833e8d2882e87c7cb440a44fd185b276b18c4618ad73a3d032ededab0f4",
+        "7c8b24b6e05df8af22606f38b5ed62f094fb32a89db6a3b1040c9eb162d99d8b",
+        "53966be7d9519cea2d24780f04cdde8ae13cd3948f18e66cd4c129228e1b31ef",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "b3f7845348d5b44b0edf3ff065ba3d24879aebf25fbc57eef3ce7750feacd44f",
+      "nome": "Arroz tipo 1 5kg",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 2890,
+      "data": "2026-09-02",
+      "notaHash": "51e70f112ae667e6d690117ee6c18da18e15fd0d58989aee94526837caaa3af5",
+      "folha": "70fb0a650b966c8a20fc522bd49a8f72d4e2138517be541d677dca6f40b25333",
+      "prova": [
+        "86bb161eb6be2ebf06bb1f88c71f58811630f2347057e5cc1a45f6d5d43671da",
+        "7daaf833e8d2882e87c7cb440a44fd185b276b18c4618ad73a3d032ededab0f4",
+        "7c8b24b6e05df8af22606f38b5ed62f094fb32a89db6a3b1040c9eb162d99d8b",
+        "53966be7d9519cea2d24780f04cdde8ae13cd3948f18e66cd4c129228e1b31ef",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "35acabb64460e6ef2d240b88ce3fc2614aafd71599404a5627c9093d98da6e6c",
+      "nome": "Feijão carioca 1kg",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 849,
+      "data": "2026-09-02",
+      "notaHash": "51e70f112ae667e6d690117ee6c18da18e15fd0d58989aee94526837caaa3af5",
+      "folha": "d2985b9c9b22b1d7edd9bb1671514b768d678cfd800a093c8a9a272411116f5b",
+      "prova": [
+        "31579eebbf1a7404a81efcdd57787b2fec26bbf11b7cdea6a289784d9212d41b",
+        "f8bf7b705b56433fc3681f3964f7ecc5ab94031450a654e7ba99ed77676f9a20",
+        "7c8b24b6e05df8af22606f38b5ed62f094fb32a89db6a3b1040c9eb162d99d8b",
+        "53966be7d9519cea2d24780f04cdde8ae13cd3948f18e66cd4c129228e1b31ef",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "86187cd4a605fc66802bed9f245fb06929eb0a9f623dbba46a4a4b9ee947ab68",
+      "nome": "Refrigerante cola 2L",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 899,
+      "data": "2026-09-02",
+      "notaHash": "51e70f112ae667e6d690117ee6c18da18e15fd0d58989aee94526837caaa3af5",
+      "folha": "31579eebbf1a7404a81efcdd57787b2fec26bbf11b7cdea6a289784d9212d41b",
+      "prova": [
+        "d2985b9c9b22b1d7edd9bb1671514b768d678cfd800a093c8a9a272411116f5b",
+        "f8bf7b705b56433fc3681f3964f7ecc5ab94031450a654e7ba99ed77676f9a20",
+        "7c8b24b6e05df8af22606f38b5ed62f094fb32a89db6a3b1040c9eb162d99d8b",
+        "53966be7d9519cea2d24780f04cdde8ae13cd3948f18e66cd4c129228e1b31ef",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "2eeb117d7a1ad705337b8d8999311614053ddf1fdbee7d701fcb9ad1ca3aa167",
+      "nome": "Banana prata",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 598,
+      "data": "2026-09-02",
+      "notaHash": "51e70f112ae667e6d690117ee6c18da18e15fd0d58989aee94526837caaa3af5",
+      "folha": "c4eb3a7d14ff44f8fa05ee2ecd397bec44b6183be5a5f06ea80182f323c78ee9",
+      "prova": [
+        "40aab122b2fc8ec8fe60311a91b0de779d0113b1c6346c87cab3bcf09377afc7",
+        "aae9037384eb908f7fc1a628ab031727df36aba7cd3e28e4b02dea65726f71a1",
+        "5ecef5fb82890123345cb975660218111193e36dabcff731a3bda8898198339f",
+        "53966be7d9519cea2d24780f04cdde8ae13cd3948f18e66cd4c129228e1b31ef",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "cea70552116071b4ea769c41150f7f76c0e7673bfd6dc62453d507e41af9b529",
+      "nome": "Tomate",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 749,
+      "data": "2026-09-02",
+      "notaHash": "51e70f112ae667e6d690117ee6c18da18e15fd0d58989aee94526837caaa3af5",
+      "folha": "40aab122b2fc8ec8fe60311a91b0de779d0113b1c6346c87cab3bcf09377afc7",
+      "prova": [
+        "c4eb3a7d14ff44f8fa05ee2ecd397bec44b6183be5a5f06ea80182f323c78ee9",
+        "aae9037384eb908f7fc1a628ab031727df36aba7cd3e28e4b02dea65726f71a1",
+        "5ecef5fb82890123345cb975660218111193e36dabcff731a3bda8898198339f",
+        "53966be7d9519cea2d24780f04cdde8ae13cd3948f18e66cd4c129228e1b31ef",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "266dd249a55e6007cb204732847e695bbafde4a3d55e11f333f5d7f2f5b09b98",
+      "nome": "Detergente líquido 500ml",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 289,
+      "data": "2026-09-02",
+      "notaHash": "51e70f112ae667e6d690117ee6c18da18e15fd0d58989aee94526837caaa3af5",
+      "folha": "51a5bc62677fef794d28b6ba2dd954162dfe151a8c00ffc96bb68a60891c2587",
+      "prova": [
+        "b78091f2df865dc92e9e8cbd5df6c52ef626c7483843a720254f0be18632d171",
+        "3f889443efa109b7c831524bd65a787b4222d2cc0deb6451fb84e9608a692442",
+        "5ecef5fb82890123345cb975660218111193e36dabcff731a3bda8898198339f",
+        "53966be7d9519cea2d24780f04cdde8ae13cd3948f18e66cd4c129228e1b31ef",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "38fe55fd1faa212dcc7ab3a1964e6e79ef617832711ad66c99c70a9e8727f39b",
+      "nome": "Açúcar refinado 1kg",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 459,
+      "data": "2026-09-04",
+      "notaHash": "ab94f3da452f20867763abd001b19dbe8eb328b0ce8608e32e29d229faf628eb",
+      "folha": "b78091f2df865dc92e9e8cbd5df6c52ef626c7483843a720254f0be18632d171",
+      "prova": [
+        "51a5bc62677fef794d28b6ba2dd954162dfe151a8c00ffc96bb68a60891c2587",
+        "3f889443efa109b7c831524bd65a787b4222d2cc0deb6451fb84e9608a692442",
+        "5ecef5fb82890123345cb975660218111193e36dabcff731a3bda8898198339f",
+        "53966be7d9519cea2d24780f04cdde8ae13cd3948f18e66cd4c129228e1b31ef",
+        "e5635ca9b8cf8e0d2506bd294368828acba761fe6f32176347b1a9b8a8d3dc41",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "c372bb3d14499a146eba02502921f541e237592324f452f23c9e1ab8d3fdaae0",
+      "nome": "Óleo de soja 900ml",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 729,
+      "data": "2026-09-04",
+      "notaHash": "ab94f3da452f20867763abd001b19dbe8eb328b0ce8608e32e29d229faf628eb",
+      "folha": "4640f310b2c81d74cf4689c4ab203250639df2248db18b3af13f9cf498be0b68",
+      "prova": [
+        "3e42c5ab0b24bfd2e80b24696e0f4856d78e25c0303e16aa8000562d8042948b",
+        "c9fe4abffa9848c51fe238089b32acf823d6e68c80dff6483a82ba56efc88bf6",
+        "edef538e43281d4e2bd21cd4c36c61a4e7945f86c87734bb96da858493f317de",
+        "5ba0b4be6665f931a73cdfdf1a9794755eef6d9ca269b712b53873d09307474a",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "5f50c168797e58cfb85d6046380887505ce1880c89a27438c7c68ab2d84fecbf",
+      "nome": "Macarrão espaguete 500g",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 429,
+      "data": "2026-09-04",
+      "notaHash": "ab94f3da452f20867763abd001b19dbe8eb328b0ce8608e32e29d229faf628eb",
+      "folha": "3e42c5ab0b24bfd2e80b24696e0f4856d78e25c0303e16aa8000562d8042948b",
+      "prova": [
+        "4640f310b2c81d74cf4689c4ab203250639df2248db18b3af13f9cf498be0b68",
+        "c9fe4abffa9848c51fe238089b32acf823d6e68c80dff6483a82ba56efc88bf6",
+        "edef538e43281d4e2bd21cd4c36c61a4e7945f86c87734bb96da858493f317de",
+        "5ba0b4be6665f931a73cdfdf1a9794755eef6d9ca269b712b53873d09307474a",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "276d318864d28db1c24b48e8f6b5b7b03d21a26465611bf486dcac31d1bc3c2f",
+      "nome": "Suco de laranja 1L",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 799,
+      "data": "2026-09-04",
+      "notaHash": "ab94f3da452f20867763abd001b19dbe8eb328b0ce8608e32e29d229faf628eb",
+      "folha": "d21757be4d079a081e9484ef0b6fa1415bcf7b229447b15bef95cee964fc7bb5",
+      "prova": [
+        "5a51864f21164751a843c29dd77066cd00215257fa14560163daaa86ffaf76f7",
+        "cb963541ba4e1d648138bdcadc1c0b4b8a21c58880e59066b4b4f3258d791e12",
+        "edef538e43281d4e2bd21cd4c36c61a4e7945f86c87734bb96da858493f317de",
+        "5ba0b4be6665f931a73cdfdf1a9794755eef6d9ca269b712b53873d09307474a",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "f4610aa514477222afac2b77f971d069780ca2846f375849f3dfa3c0047ebbd1",
+      "nome": "Batata",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 449,
+      "data": "2026-09-04",
+      "notaHash": "ab94f3da452f20867763abd001b19dbe8eb328b0ce8608e32e29d229faf628eb",
+      "folha": "5a51864f21164751a843c29dd77066cd00215257fa14560163daaa86ffaf76f7",
+      "prova": [
+        "d21757be4d079a081e9484ef0b6fa1415bcf7b229447b15bef95cee964fc7bb5",
+        "cb963541ba4e1d648138bdcadc1c0b4b8a21c58880e59066b4b4f3258d791e12",
+        "edef538e43281d4e2bd21cd4c36c61a4e7945f86c87734bb96da858493f317de",
+        "5ba0b4be6665f931a73cdfdf1a9794755eef6d9ca269b712b53873d09307474a",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "e70db4d80423ddf827d7b202254498077b7382424f2445cbcfe05cbf6bdf86ff",
+      "nome": "Sabão em pó 1,6kg",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 1890,
+      "data": "2026-09-04",
+      "notaHash": "ab94f3da452f20867763abd001b19dbe8eb328b0ce8608e32e29d229faf628eb",
+      "folha": "4377201771d762f913b7d1305fc6f854fbef592b614b10be8d40c8a18567c933",
+      "prova": [
+        "9ad4e557f49f492a6bf4a34bb21a6b4ce08e6902fd29dcddfb69fcb9e32c48b7",
+        "e57f486e0b87acef61903e4399024055754bddee9cbf9af5b7d71c37a50c25e0",
+        "750de083f52e18dc6e8ac39bcb189eb88ca8e16b82e9f1111de783a5c8f47c10",
+        "5ba0b4be6665f931a73cdfdf1a9794755eef6d9ca269b712b53873d09307474a",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "6595352c3a9f215f8ff244e2a5cf7cb9327c4da679a3143467969415743b431c",
+      "nome": "Papel higiênico 12 rolos",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 2490,
+      "data": "2026-09-04",
+      "notaHash": "ab94f3da452f20867763abd001b19dbe8eb328b0ce8608e32e29d229faf628eb",
+      "folha": "9ad4e557f49f492a6bf4a34bb21a6b4ce08e6902fd29dcddfb69fcb9e32c48b7",
+      "prova": [
+        "4377201771d762f913b7d1305fc6f854fbef592b614b10be8d40c8a18567c933",
+        "e57f486e0b87acef61903e4399024055754bddee9cbf9af5b7d71c37a50c25e0",
+        "750de083f52e18dc6e8ac39bcb189eb88ca8e16b82e9f1111de783a5c8f47c10",
+        "5ba0b4be6665f931a73cdfdf1a9794755eef6d9ca269b712b53873d09307474a",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "1c11ed1e4b8ded39871c1b0e5a06e0171a5c791ff1df98ec6ef5f5c84cdf4c18",
+      "nome": "Farinha de trigo 1kg",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 519,
+      "data": "2026-09-06",
+      "notaHash": "113f3943302678ff205179ab86c95ca3a1f7921e827c0eaf94d659de5a6171b1",
+      "folha": "540f816b4aa4a9e3de1d1e5c058ed460d5112b5fc3f81c95c4e178c8a2fb3154",
+      "prova": [
+        "68423a865c877eed20aa67c24cfda58bf6012a80c87967bf23ff45e5ff755b53",
+        "47ad1db5aa0f16f09ec86f550f6f34ccb19a9b79516208b5f1a66fda95b010a2",
+        "750de083f52e18dc6e8ac39bcb189eb88ca8e16b82e9f1111de783a5c8f47c10",
+        "5ba0b4be6665f931a73cdfdf1a9794755eef6d9ca269b712b53873d09307474a",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "67e19fa3155215c8db7cfe971731436a270615c45bb4e750fddc384ff26620d7",
+      "nome": "Molho de tomate 340g",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 349,
+      "data": "2026-09-06",
+      "notaHash": "113f3943302678ff205179ab86c95ca3a1f7921e827c0eaf94d659de5a6171b1",
+      "folha": "68423a865c877eed20aa67c24cfda58bf6012a80c87967bf23ff45e5ff755b53",
+      "prova": [
+        "540f816b4aa4a9e3de1d1e5c058ed460d5112b5fc3f81c95c4e178c8a2fb3154",
+        "47ad1db5aa0f16f09ec86f550f6f34ccb19a9b79516208b5f1a66fda95b010a2",
+        "750de083f52e18dc6e8ac39bcb189eb88ca8e16b82e9f1111de783a5c8f47c10",
+        "5ba0b4be6665f931a73cdfdf1a9794755eef6d9ca269b712b53873d09307474a",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "0e053cc78dc2917f0f5d2300b32f70e0a61e0185db5ce1052768e51e2fdf3574",
+      "nome": "Água mineral 1,5L",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 299,
+      "data": "2026-09-06",
+      "notaHash": "113f3943302678ff205179ab86c95ca3a1f7921e827c0eaf94d659de5a6171b1",
+      "folha": "68c52009425e08fd67267e96fe0bf1d5e2d39ee44a7ccd44627a855edf7e6ff6",
+      "prova": [
+        "44bf6b8add64ff2ea8ef163957bfc2b2dbad91ee3c1b69200bcde07fe0d5d9f5",
+        "6fcfa2d7409e066a91d3e6336ce0efbb978d3ace2a1ef575dbc1ea4c26836dcf",
+        "0399a81305a85cf0f47d67ed569cbb7a732b2d51667e48f31405bea54223e351",
+        "3f2344aa7fd011dc1fa3e938a5b791bd4ebec8b70713ecb08d894ed8631d0e09",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "e2cfc235c2f966b94875215f84699bb3b64473b3e25d174ecae50d41f3275d63",
+      "nome": "Cebola",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 529,
+      "data": "2026-09-06",
+      "notaHash": "113f3943302678ff205179ab86c95ca3a1f7921e827c0eaf94d659de5a6171b1",
+      "folha": "44bf6b8add64ff2ea8ef163957bfc2b2dbad91ee3c1b69200bcde07fe0d5d9f5",
+      "prova": [
+        "68c52009425e08fd67267e96fe0bf1d5e2d39ee44a7ccd44627a855edf7e6ff6",
+        "6fcfa2d7409e066a91d3e6336ce0efbb978d3ace2a1ef575dbc1ea4c26836dcf",
+        "0399a81305a85cf0f47d67ed569cbb7a732b2d51667e48f31405bea54223e351",
+        "3f2344aa7fd011dc1fa3e938a5b791bd4ebec8b70713ecb08d894ed8631d0e09",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "d1792c33213859725560a0610437d72e2416d147d56ddf2560891f30c697c677",
+      "nome": "Maçã gala",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 898,
+      "data": "2026-09-06",
+      "notaHash": "113f3943302678ff205179ab86c95ca3a1f7921e827c0eaf94d659de5a6171b1",
+      "folha": "970689a92eea94f1b751ecc3514ca25f6ada442619a86519266d4f7d88cea36b",
+      "prova": [
+        "17154eb481247db7b96ede0402cf3170e0d2ec9c39a622d31599c91dfdb3ef26",
+        "5faa3d6eba7537191162274330d28aed34b90264a47970025e38e62ea756b90f",
+        "0399a81305a85cf0f47d67ed569cbb7a732b2d51667e48f31405bea54223e351",
+        "3f2344aa7fd011dc1fa3e938a5b791bd4ebec8b70713ecb08d894ed8631d0e09",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "10a0b9bad4b1001178c2b187341764f94286fe1b2b50bf1a3623917a637dd4e7",
+      "nome": "Sabonete 90g",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 249,
+      "data": "2026-09-06",
+      "notaHash": "113f3943302678ff205179ab86c95ca3a1f7921e827c0eaf94d659de5a6171b1",
+      "folha": "17154eb481247db7b96ede0402cf3170e0d2ec9c39a622d31599c91dfdb3ef26",
+      "prova": [
+        "970689a92eea94f1b751ecc3514ca25f6ada442619a86519266d4f7d88cea36b",
+        "5faa3d6eba7537191162274330d28aed34b90264a47970025e38e62ea756b90f",
+        "0399a81305a85cf0f47d67ed569cbb7a732b2d51667e48f31405bea54223e351",
+        "3f2344aa7fd011dc1fa3e938a5b791bd4ebec8b70713ecb08d894ed8631d0e09",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "44c66007f2a3c32f89a1d9e4fd1768a0650ed03ae5525939117f5d6c894e1c18",
+      "nome": "Biscoito recheado 130g",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 289,
+      "data": "2026-09-08",
+      "notaHash": "c36497511f1adc3c6e53b1688065b5fa64689f6c1ce1435117aedc40d709269c",
+      "folha": "db26292576478c5a11ab574246bc27028793b53fee05ff519fc38099dc81a872",
+      "prova": [
+        "852059cf59f087a61d926c19f2e3ca1afa2a093c924fc7bd037486d2d8ebb8cf",
+        "9558c5f7cbf3196b5b4cbc5d3d73ef0df378a2b73fe28c21dba55f13cea6f0bd",
+        "3c823e57acd0ba40b7dd0640d428f29066086723a451640988e341f41e6436dd",
+        "3f2344aa7fd011dc1fa3e938a5b791bd4ebec8b70713ecb08d894ed8631d0e09",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "4625ae00308f5d095a4bc2b387cae2107d859f0dbc76af7af3121b2d9c63f47e",
+      "nome": "Leite integral 1L",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 549,
+      "data": "2026-09-08",
+      "notaHash": "c36497511f1adc3c6e53b1688065b5fa64689f6c1ce1435117aedc40d709269c",
+      "folha": "852059cf59f087a61d926c19f2e3ca1afa2a093c924fc7bd037486d2d8ebb8cf",
+      "prova": [
+        "db26292576478c5a11ab574246bc27028793b53fee05ff519fc38099dc81a872",
+        "9558c5f7cbf3196b5b4cbc5d3d73ef0df378a2b73fe28c21dba55f13cea6f0bd",
+        "3c823e57acd0ba40b7dd0640d428f29066086723a451640988e341f41e6436dd",
+        "3f2344aa7fd011dc1fa3e938a5b791bd4ebec8b70713ecb08d894ed8631d0e09",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "d315f83e191a92837a1489f577b01fa658c70b2b225effded44970a62f00cf0b",
+      "nome": "Cerveja lata 350ml",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 449,
+      "data": "2026-09-08",
+      "notaHash": "c36497511f1adc3c6e53b1688065b5fa64689f6c1ce1435117aedc40d709269c",
+      "folha": "18f9a3be8a6e1102f5175bc6d6c42fbe93fe75137d54fc969d380b4d8990e526",
+      "prova": [
+        "e8d06bf54ca7c49f81f0cb30706f61e17dbe895555138f339de3b5697305c434",
+        "05250f1ad6e1b1ba0e8417f44111e7dffb72dcf4ea18eafcc73f9c2b80e3d0b5",
+        "3c823e57acd0ba40b7dd0640d428f29066086723a451640988e341f41e6436dd",
+        "3f2344aa7fd011dc1fa3e938a5b791bd4ebec8b70713ecb08d894ed8631d0e09",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "451e8baf5300cec81b840a5db2401adb15188c95deca199737c7ad0d187450a2",
+      "nome": "Laranja pera",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 399,
+      "data": "2026-09-08",
+      "notaHash": "c36497511f1adc3c6e53b1688065b5fa64689f6c1ce1435117aedc40d709269c",
+      "folha": "e8d06bf54ca7c49f81f0cb30706f61e17dbe895555138f339de3b5697305c434",
+      "prova": [
+        "18f9a3be8a6e1102f5175bc6d6c42fbe93fe75137d54fc969d380b4d8990e526",
+        "05250f1ad6e1b1ba0e8417f44111e7dffb72dcf4ea18eafcc73f9c2b80e3d0b5",
+        "3c823e57acd0ba40b7dd0640d428f29066086723a451640988e341f41e6436dd",
+        "3f2344aa7fd011dc1fa3e938a5b791bd4ebec8b70713ecb08d894ed8631d0e09",
+        "dd0c0a0cf6aaed897fb61b764dcdb97900f1c201ac04999507bc99a327f0ac6a",
+        "fcecf4680239c8cf4f24bcad0df653672e505267819084041620bccde8cfdd66",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "40570951519a9d8858ee58aea23a698c2e387462343a18dc3d21d03ed48d8664",
+      "nome": "Amaciante 2L",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 1490,
+      "data": "2026-09-08",
+      "notaHash": "c36497511f1adc3c6e53b1688065b5fa64689f6c1ce1435117aedc40d709269c",
+      "folha": "6757a55aa76d19fd0dbc49ce07ebab9bc8c3241ad36973179ea195d4a5d59cdc",
+      "prova": [
+        "0e915a585819fb50c5c7a650e4dd1a6b7a9d66712a3e8681fea83b1f4ecfb0e9",
+        "124156dbf8823b679812e38648af10dce617767698ce6085d6bf1a3e2727f1c3",
+        "d074ebeb5c7d6e25b2abdbce1722123c7cc28bbb27f91570d95630fdf0effb75",
+        "f5d1f5017a666e9b65aff1dc13efc34c60565b66f873a6777c690f67e6a35541",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "2cc86f649f71d24fd7216f54bfee532b0dd5bd09635779c50a0bf826c72e058a",
+      "nome": "Ovos brancos dúzia",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 1290,
+      "data": "2026-09-09",
+      "notaHash": "85fbbca9c66f849bf5f42e128dd40422f4802c1cb014f4143a25f169e32cbb5f",
+      "folha": "0e915a585819fb50c5c7a650e4dd1a6b7a9d66712a3e8681fea83b1f4ecfb0e9",
+      "prova": [
+        "6757a55aa76d19fd0dbc49ce07ebab9bc8c3241ad36973179ea195d4a5d59cdc",
+        "124156dbf8823b679812e38648af10dce617767698ce6085d6bf1a3e2727f1c3",
+        "d074ebeb5c7d6e25b2abdbce1722123c7cc28bbb27f91570d95630fdf0effb75",
+        "f5d1f5017a666e9b65aff1dc13efc34c60565b66f873a6777c690f67e6a35541",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "36ef90a96340214c715768de575e9d56190d7a151408163e55bc790cd68bf8d5",
+      "nome": "Sal refinado 1kg",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 299,
+      "data": "2026-09-09",
+      "notaHash": "85fbbca9c66f849bf5f42e128dd40422f4802c1cb014f4143a25f169e32cbb5f",
+      "folha": "3690ac49fc2cd7fc01b7ea81c0269001c37f51c0174712f0a09db0560c5365f6",
+      "prova": [
+        "c4a30578362f30cc36f37f2d782a7e34905249d09d113e399989596b8b8ab7d7",
+        "4e4bb33d00c4846a22764383cecb1868ab91184cc3851edd5a57954825f2be56",
+        "d074ebeb5c7d6e25b2abdbce1722123c7cc28bbb27f91570d95630fdf0effb75",
+        "f5d1f5017a666e9b65aff1dc13efc34c60565b66f873a6777c690f67e6a35541",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "b840a8caaa203f65e0091e7b9ad2a423c7d0ae297f4526ebf2636f4809139510",
+      "nome": "Cenoura",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 499,
+      "data": "2026-09-09",
+      "notaHash": "85fbbca9c66f849bf5f42e128dd40422f4802c1cb014f4143a25f169e32cbb5f",
+      "folha": "c4a30578362f30cc36f37f2d782a7e34905249d09d113e399989596b8b8ab7d7",
+      "prova": [
+        "3690ac49fc2cd7fc01b7ea81c0269001c37f51c0174712f0a09db0560c5365f6",
+        "4e4bb33d00c4846a22764383cecb1868ab91184cc3851edd5a57954825f2be56",
+        "d074ebeb5c7d6e25b2abdbce1722123c7cc28bbb27f91570d95630fdf0effb75",
+        "f5d1f5017a666e9b65aff1dc13efc34c60565b66f873a6777c690f67e6a35541",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "86cadc9173ea52215c6595c6b5924dbb4fb79f7eeccfbdeb678c2c5d6cf56a17",
+      "nome": "Alface crespa",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 349,
+      "data": "2026-09-09",
+      "notaHash": "85fbbca9c66f849bf5f42e128dd40422f4802c1cb014f4143a25f169e32cbb5f",
+      "folha": "23340b22a51f18b4e47364a9a5f5cf1a53ae2fb78f0606d65ae74e5abfc3aaeb",
+      "prova": [
+        "34aee2eee862449cd176c31c9b54ea65c8ef053889d26085ab9c7dd8ccaf174b",
+        "ae72dda39031208e7bcac1d2309fa88201a263cb51c5703945f48d9838b127c3",
+        "9607cc16a16f7d8cdfb0d8ce53e69b857d9180ac9e7887e1f9b91fb961b3fc91",
+        "f5d1f5017a666e9b65aff1dc13efc34c60565b66f873a6777c690f67e6a35541",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "0d9a002094eecf58b6f3d4851be68e6ef7e1a3af5a26a772a6af64c7d610e359",
+      "nome": "Creme dental 90g",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 599,
+      "data": "2026-09-09",
+      "notaHash": "85fbbca9c66f849bf5f42e128dd40422f4802c1cb014f4143a25f169e32cbb5f",
+      "folha": "34aee2eee862449cd176c31c9b54ea65c8ef053889d26085ab9c7dd8ccaf174b",
+      "prova": [
+        "23340b22a51f18b4e47364a9a5f5cf1a53ae2fb78f0606d65ae74e5abfc3aaeb",
+        "ae72dda39031208e7bcac1d2309fa88201a263cb51c5703945f48d9838b127c3",
+        "9607cc16a16f7d8cdfb0d8ce53e69b857d9180ac9e7887e1f9b91fb961b3fc91",
+        "f5d1f5017a666e9b65aff1dc13efc34c60565b66f873a6777c690f67e6a35541",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "f23923c52c8be79990c2338a803c3ef5f66e766222748c73ac2b4ec9fe550825",
+      "nome": "Café solúvel 200g",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 1890,
+      "data": "2026-09-11",
+      "notaHash": "a6bfe21fc53ee9b3fd8cef28a03e7d6f9d05c780d988e285b8e8a1bc05e45d7b",
+      "folha": "cd2bfaf5962267cd3f4a16ad6dfc757dde568958c920811425727abf0bd0951e",
+      "prova": [
+        "2bc9c9664127de41ef900a9dcae966347fe3ac76f196368367e73e9f2291aab2",
+        "7425920a190c6ca1593b66746e7e683a0007f805789cdc4353241b14b2680562",
+        "9607cc16a16f7d8cdfb0d8ce53e69b857d9180ac9e7887e1f9b91fb961b3fc91",
+        "f5d1f5017a666e9b65aff1dc13efc34c60565b66f873a6777c690f67e6a35541",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "8d5a0e7ffbe04026e53c3acba63480e21e285bd732b9045938830f7b04ffa705",
+      "nome": "Achocolatado em pó 400g",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 899,
+      "data": "2026-09-11",
+      "notaHash": "a6bfe21fc53ee9b3fd8cef28a03e7d6f9d05c780d988e285b8e8a1bc05e45d7b",
+      "folha": "2bc9c9664127de41ef900a9dcae966347fe3ac76f196368367e73e9f2291aab2",
+      "prova": [
+        "cd2bfaf5962267cd3f4a16ad6dfc757dde568958c920811425727abf0bd0951e",
+        "7425920a190c6ca1593b66746e7e683a0007f805789cdc4353241b14b2680562",
+        "9607cc16a16f7d8cdfb0d8ce53e69b857d9180ac9e7887e1f9b91fb961b3fc91",
+        "f5d1f5017a666e9b65aff1dc13efc34c60565b66f873a6777c690f67e6a35541",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "532dfc0f881f37afda72b95a409cc875a845a0fc8d037ff8aa91ad3ac3321e7d",
+      "nome": "Suco de uva integral 1L",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 1690,
+      "data": "2026-09-11",
+      "notaHash": "a6bfe21fc53ee9b3fd8cef28a03e7d6f9d05c780d988e285b8e8a1bc05e45d7b",
+      "folha": "d4d0f1f27d79e90eb2237888f6f610e003da3db0e497474c4e9237a962e8231e",
+      "prova": [
+        "0a23d1e39510c6ae1c236079957d4b766e8980e87b5cef94922aebf8344f48cc",
+        "59940a83a3e12c1d25f2dd5007b31d798c734f927bff04b0ad8fe165be80fd96",
+        "b2c0ba1b21a22aa261ae586e928e30512da88548d715abdce34a923d63787ae3",
+        "42e4d0abc9bfccb9d66e4d88b828c4a743f2a444f6d8262436c1b93c31a361f1",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "6fd6065cf0b45eb311c702363efee180cfea0abeac62b4ad0f4e4ae042b43058",
+      "nome": "Mamão formosa",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 699,
+      "data": "2026-09-11",
+      "notaHash": "a6bfe21fc53ee9b3fd8cef28a03e7d6f9d05c780d988e285b8e8a1bc05e45d7b",
+      "folha": "0a23d1e39510c6ae1c236079957d4b766e8980e87b5cef94922aebf8344f48cc",
+      "prova": [
+        "d4d0f1f27d79e90eb2237888f6f610e003da3db0e497474c4e9237a962e8231e",
+        "59940a83a3e12c1d25f2dd5007b31d798c734f927bff04b0ad8fe165be80fd96",
+        "b2c0ba1b21a22aa261ae586e928e30512da88548d715abdce34a923d63787ae3",
+        "42e4d0abc9bfccb9d66e4d88b828c4a743f2a444f6d8262436c1b93c31a361f1",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "4841bdc627a4adc4c10c368d39ed1e64b00459c68a9c5ea368e078d5eca94154",
+      "nome": "Desinfetante 2L",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 899,
+      "data": "2026-09-11",
+      "notaHash": "a6bfe21fc53ee9b3fd8cef28a03e7d6f9d05c780d988e285b8e8a1bc05e45d7b",
+      "folha": "818ba332305be786bec43a5a7791c0927214fa30a577a2762f00817db78ee194",
+      "prova": [
+        "8550664f0aa037945a8fa4cc407c375f43b8dc9b2eb221aa39882ff0e1152eda",
+        "ff7ff87cecf964bc5dae02a488d6af9505fdf72fbdd34ba899c0e828307a8672",
+        "b2c0ba1b21a22aa261ae586e928e30512da88548d715abdce34a923d63787ae3",
+        "42e4d0abc9bfccb9d66e4d88b828c4a743f2a444f6d8262436c1b93c31a361f1",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "5f951cb2f267fd8ea15da2bf99f9dd176af3b1f016216abc7f7ceb1fb8a729e0",
+      "nome": "Margarina 500g",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 799,
+      "data": "2026-09-13",
+      "notaHash": "d899cf6ee5c24501162315046740b60ca30836271e9932c53c63d7b93f96352b",
+      "folha": "8550664f0aa037945a8fa4cc407c375f43b8dc9b2eb221aa39882ff0e1152eda",
+      "prova": [
+        "818ba332305be786bec43a5a7791c0927214fa30a577a2762f00817db78ee194",
+        "ff7ff87cecf964bc5dae02a488d6af9505fdf72fbdd34ba899c0e828307a8672",
+        "b2c0ba1b21a22aa261ae586e928e30512da88548d715abdce34a923d63787ae3",
+        "42e4d0abc9bfccb9d66e4d88b828c4a743f2a444f6d8262436c1b93c31a361f1",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "60cbc0812345091c7ead2ba629c643b74397b7acaa877a3148427af4ebe9cbb3",
+      "nome": "Queijo mussarela fatiado 150g",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 1190,
+      "data": "2026-09-13",
+      "notaHash": "d899cf6ee5c24501162315046740b60ca30836271e9932c53c63d7b93f96352b",
+      "folha": "8184f018fb4132e1cdbe81f9ab22cc66d34b863bf60e7d2e022c540709539236",
+      "prova": [
+        "8e6034dbd192d9cad0bc633b9b6d5370b684d599471ba4468cce012c667cd77b",
+        "7cfa6d6793b5a790ce986aed99dc8670cc2c1e146aaf89922705fdec0943cf6e",
+        "ffc81dbc022e184fa81736a210b147323c80bf9078b364b74608ed9e70ac936b",
+        "42e4d0abc9bfccb9d66e4d88b828c4a743f2a444f6d8262436c1b93c31a361f1",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "0468db9cc8cf9f54e9287c5d1854fd5d79355407a3587eb00202a38ff3438b5b",
+      "nome": "Presunto fatiado 200g",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 1390,
+      "data": "2026-09-13",
+      "notaHash": "d899cf6ee5c24501162315046740b60ca30836271e9932c53c63d7b93f96352b",
+      "folha": "8e6034dbd192d9cad0bc633b9b6d5370b684d599471ba4468cce012c667cd77b",
+      "prova": [
+        "8184f018fb4132e1cdbe81f9ab22cc66d34b863bf60e7d2e022c540709539236",
+        "7cfa6d6793b5a790ce986aed99dc8670cc2c1e146aaf89922705fdec0943cf6e",
+        "ffc81dbc022e184fa81736a210b147323c80bf9078b364b74608ed9e70ac936b",
+        "42e4d0abc9bfccb9d66e4d88b828c4a743f2a444f6d8262436c1b93c31a361f1",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "7925875e190e5394f9bcbcb706c5afc7beaebf2d113b7577113c5dce7cd4609d",
+      "nome": "Limão taiti",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 599,
+      "data": "2026-09-13",
+      "notaHash": "d899cf6ee5c24501162315046740b60ca30836271e9932c53c63d7b93f96352b",
+      "folha": "579cb5b3c786c0c0b1f921b5d7f9a541c5c8240292d7f20c1f53658ed565daef",
+      "prova": [
+        "e70c7f73bdee5e511a9fd79e9d0534704c2394300f21eb5b2bfe718cb9d7dabb",
+        "be1255a3259e766e527b227dcb947da9d2066dd3e4cc66a782ec398edf686bfe",
+        "ffc81dbc022e184fa81736a210b147323c80bf9078b364b74608ed9e70ac936b",
+        "42e4d0abc9bfccb9d66e4d88b828c4a743f2a444f6d8262436c1b93c31a361f1",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "be69c691eedc46b482a65e0a8f9964b66e3bcd4ba61bd7fd83dd7761648b4494",
+      "nome": "Shampoo 350ml",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 1690,
+      "data": "2026-09-13",
+      "notaHash": "d899cf6ee5c24501162315046740b60ca30836271e9932c53c63d7b93f96352b",
+      "folha": "e70c7f73bdee5e511a9fd79e9d0534704c2394300f21eb5b2bfe718cb9d7dabb",
+      "prova": [
+        "579cb5b3c786c0c0b1f921b5d7f9a541c5c8240292d7f20c1f53658ed565daef",
+        "be1255a3259e766e527b227dcb947da9d2066dd3e4cc66a782ec398edf686bfe",
+        "ffc81dbc022e184fa81736a210b147323c80bf9078b364b74608ed9e70ac936b",
+        "42e4d0abc9bfccb9d66e4d88b828c4a743f2a444f6d8262436c1b93c31a361f1",
+        "f59306c987796e94b653e2451e2b237c88da5654246be350ca7c96467bc38e71",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "19560909075a3d9cc62083150bf2a64f60d05bd6859f6c226f4cbb88c1bb9b40",
+      "nome": "Condicionador 350ml",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 1690,
+      "data": "2026-09-13",
+      "notaHash": "d899cf6ee5c24501162315046740b60ca30836271e9932c53c63d7b93f96352b",
+      "folha": "594098ed2894508810891235024b93df77df230139e2772f647cff28b238765d",
+      "prova": [
+        "cdfdd3f612e451d0cf029c527e5542ded0fb19b53ae19ccab4cecf59382ff076",
+        "f6dc25cba3938aea41a5492f0fa031742913faab7afcea9b59a3cfe25e15d2de",
+        "874af2efbb4c0d87ea162b81fb507d7596ee6140c2bddd69b9efe123edfa5115",
+        "84b99c96d55d120a796c00b4f1ba5f7db8f9c8a2e21050bab4be1d10f7234a02",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "f42631153b50d1f646ba92125d285a29cc4494574b24edf3dd2b686d5d48a14f",
+      "nome": "Iogurte natural 170g",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 279,
+      "data": "2026-09-15",
+      "notaHash": "aa4e94e5d2eea5d95b46cda5c6cc7fde194581880496c72114bc51b04d18e38d",
+      "folha": "cdfdd3f612e451d0cf029c527e5542ded0fb19b53ae19ccab4cecf59382ff076",
+      "prova": [
+        "594098ed2894508810891235024b93df77df230139e2772f647cff28b238765d",
+        "f6dc25cba3938aea41a5492f0fa031742913faab7afcea9b59a3cfe25e15d2de",
+        "874af2efbb4c0d87ea162b81fb507d7596ee6140c2bddd69b9efe123edfa5115",
+        "84b99c96d55d120a796c00b4f1ba5f7db8f9c8a2e21050bab4be1d10f7234a02",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "f1f97dc7641eb11bf072eb5e2eac3accb6234fd1b6c860612e126f1e3639decc",
+      "nome": "Requeijão cremoso 200g",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 949,
+      "data": "2026-09-15",
+      "notaHash": "aa4e94e5d2eea5d95b46cda5c6cc7fde194581880496c72114bc51b04d18e38d",
+      "folha": "8e3d56dc7bb9a5572556206e3008664e0d42dc72c1bb3611e373cb49e92efcaa",
+      "prova": [
+        "e1e386887e300770dda82aba34ec401172100a80381880a01301b371dffd629d",
+        "858dadab4d66caa019bf6222276fe91a41ef8ab0ce1efea0811c91c5ca8123ae",
+        "874af2efbb4c0d87ea162b81fb507d7596ee6140c2bddd69b9efe123edfa5115",
+        "84b99c96d55d120a796c00b4f1ba5f7db8f9c8a2e21050bab4be1d10f7234a02",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "9336b99098038062647bf09523d241d835bf40c818ca415865494a41e00f4194",
+      "nome": "Refrigerante guaraná 2L",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 799,
+      "data": "2026-09-15",
+      "notaHash": "aa4e94e5d2eea5d95b46cda5c6cc7fde194581880496c72114bc51b04d18e38d",
+      "folha": "e1e386887e300770dda82aba34ec401172100a80381880a01301b371dffd629d",
+      "prova": [
+        "8e3d56dc7bb9a5572556206e3008664e0d42dc72c1bb3611e373cb49e92efcaa",
+        "858dadab4d66caa019bf6222276fe91a41ef8ab0ce1efea0811c91c5ca8123ae",
+        "874af2efbb4c0d87ea162b81fb507d7596ee6140c2bddd69b9efe123edfa5115",
+        "84b99c96d55d120a796c00b4f1ba5f7db8f9c8a2e21050bab4be1d10f7234a02",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "89619cc6b8a3fa6c38e7bd1661b4c70d10ed5049e6d27abb1bbd00673285a611",
+      "nome": "Abacaxi",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 899,
+      "data": "2026-09-15",
+      "notaHash": "aa4e94e5d2eea5d95b46cda5c6cc7fde194581880496c72114bc51b04d18e38d",
+      "folha": "03b8c6d7fc4d120e38e769fae22725acf2ae57e7dbe144f68aec708cc5d8bfb4",
+      "prova": [
+        "9d531ee27bb18c8568bd1c8c66ddb8e4cae508ae3b73e24e669d32ece494ac06",
+        "ebbc73d119ff56f75c53d1aee87c3f96cf2431fc12d03d252f0a8c9c9c2afd25",
+        "fc9a374380434d10749dc77c82017b2854550cf028765c46e42c706a2dff70cc",
+        "84b99c96d55d120a796c00b4f1ba5f7db8f9c8a2e21050bab4be1d10f7234a02",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "54b564304ab1581cdb138d8959521b1567fbb318af10c97dd4cb638293e60b20",
+      "nome": "Água sanitária 2L",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 699,
+      "data": "2026-09-15",
+      "notaHash": "aa4e94e5d2eea5d95b46cda5c6cc7fde194581880496c72114bc51b04d18e38d",
+      "folha": "9d531ee27bb18c8568bd1c8c66ddb8e4cae508ae3b73e24e669d32ece494ac06",
+      "prova": [
+        "03b8c6d7fc4d120e38e769fae22725acf2ae57e7dbe144f68aec708cc5d8bfb4",
+        "ebbc73d119ff56f75c53d1aee87c3f96cf2431fc12d03d252f0a8c9c9c2afd25",
+        "fc9a374380434d10749dc77c82017b2854550cf028765c46e42c706a2dff70cc",
+        "84b99c96d55d120a796c00b4f1ba5f7db8f9c8a2e21050bab4be1d10f7234a02",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "50b0b648827049e2f0518ece1bf6944d763c95e78553b010372109ecc3a499ba",
+      "nome": "Atum em lata 170g",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 1090,
+      "data": "2026-09-16",
+      "notaHash": "9fd8c5ade108461890c3b2c7693375efad42ccd78627a1a5f059456703c3d32e",
+      "folha": "005e694ca57f6ab2348b06bc334e85b2055a75bdd691ae9de68850869136a667",
+      "prova": [
+        "3c719591cd3bf3a63ce2129b8e2e3fbbc50ed1f00dc9ef5e5d84f316bc3d13ac",
+        "63c7550e96837651932bd392a90dee7ef197fd2b5ec758f2926590c8e364286b",
+        "fc9a374380434d10749dc77c82017b2854550cf028765c46e42c706a2dff70cc",
+        "84b99c96d55d120a796c00b4f1ba5f7db8f9c8a2e21050bab4be1d10f7234a02",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "48899fdeb092b65d0749a767fd3f0f3c957ce07d10c4f96907430568c73038ea",
+      "nome": "Milho verde lata 200g",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 399,
+      "data": "2026-09-16",
+      "notaHash": "9fd8c5ade108461890c3b2c7693375efad42ccd78627a1a5f059456703c3d32e",
+      "folha": "3c719591cd3bf3a63ce2129b8e2e3fbbc50ed1f00dc9ef5e5d84f316bc3d13ac",
+      "prova": [
+        "005e694ca57f6ab2348b06bc334e85b2055a75bdd691ae9de68850869136a667",
+        "63c7550e96837651932bd392a90dee7ef197fd2b5ec758f2926590c8e364286b",
+        "fc9a374380434d10749dc77c82017b2854550cf028765c46e42c706a2dff70cc",
+        "84b99c96d55d120a796c00b4f1ba5f7db8f9c8a2e21050bab4be1d10f7234a02",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "014372bf0ca859f374ea165b5af9c8d674f26b1cf2c6110d930d7bdc22f571c6",
+      "nome": "Melancia",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 299,
+      "data": "2026-09-16",
+      "notaHash": "9fd8c5ade108461890c3b2c7693375efad42ccd78627a1a5f059456703c3d32e",
+      "folha": "633e2189597c56f15b6c6525f9b191527f99005f592968b584c979c0fa60580d",
+      "prova": [
+        "49d1003111ec869a07135ff01f69f7b481a4e53d2ffe310d675fb4727e77d4d5",
+        "041091c20ea7afe852c385820f18eb3ea24e392f2650aa6dc5346cc7949374b9",
+        "58e98a40872b2bac716778630b56ada7fe763910478b9f11e9307bff16495527",
+        "caed6c20b10f37c6061258795889f5033365a9e3e87b6c50ff2c1f9aa6a6c9b0",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "d7c3a58f71dc83cfddafe92da06f382cfae630b18001a09401e8ff260fcda295",
+      "nome": "Esponja multiuso pacote 4",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 599,
+      "data": "2026-09-16",
+      "notaHash": "9fd8c5ade108461890c3b2c7693375efad42ccd78627a1a5f059456703c3d32e",
+      "folha": "49d1003111ec869a07135ff01f69f7b481a4e53d2ffe310d675fb4727e77d4d5",
+      "prova": [
+        "633e2189597c56f15b6c6525f9b191527f99005f592968b584c979c0fa60580d",
+        "041091c20ea7afe852c385820f18eb3ea24e392f2650aa6dc5346cc7949374b9",
+        "58e98a40872b2bac716778630b56ada7fe763910478b9f11e9307bff16495527",
+        "caed6c20b10f37c6061258795889f5033365a9e3e87b6c50ff2c1f9aa6a6c9b0",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "43f2abc52dde6cc35fca64b0b8a9b76ab2c146018aa0263ffadb630a6037eb58",
+      "nome": "Desodorante aerosol 150ml",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 1390,
+      "data": "2026-09-16",
+      "notaHash": "9fd8c5ade108461890c3b2c7693375efad42ccd78627a1a5f059456703c3d32e",
+      "folha": "538e7189a13f80b287c16402d757dfdfbde8372e2ea508e2cc2675ad531c5663",
+      "prova": [
+        "45d75bd1742ba0a238acd19fafb81453ef5d70075544f367d7f4d222247e2416",
+        "4f4fa17b38edc2e856e96af4adf202add88f895162e121a6ff912a5ec5ed07b3",
+        "58e98a40872b2bac716778630b56ada7fe763910478b9f11e9307bff16495527",
+        "caed6c20b10f37c6061258795889f5033365a9e3e87b6c50ff2c1f9aa6a6c9b0",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "4036e37098ecbfab80032d6b8cdbb27602fe57d1ec4941ac3f2f8a1efad4366d",
+      "nome": "Ervilha lata 200g",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 399,
+      "data": "2026-09-18",
+      "notaHash": "dc95bc86c56970ade4714a78e4292650d6f5089124aad252da180ff184c18c06",
+      "folha": "45d75bd1742ba0a238acd19fafb81453ef5d70075544f367d7f4d222247e2416",
+      "prova": [
+        "538e7189a13f80b287c16402d757dfdfbde8372e2ea508e2cc2675ad531c5663",
+        "4f4fa17b38edc2e856e96af4adf202add88f895162e121a6ff912a5ec5ed07b3",
+        "58e98a40872b2bac716778630b56ada7fe763910478b9f11e9307bff16495527",
+        "caed6c20b10f37c6061258795889f5033365a9e3e87b6c50ff2c1f9aa6a6c9b0",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "e70a3b4e2c3292f74b0c0610b3d45c2395bed13cb72717b7bfe3c7e910c2368b",
+      "nome": "Maionese 500g",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 1190,
+      "data": "2026-09-18",
+      "notaHash": "dc95bc86c56970ade4714a78e4292650d6f5089124aad252da180ff184c18c06",
+      "folha": "471270582bf2ec7e6eceea6494c44543dc970bebbb816bb576e599bc7d541bdb",
+      "prova": [
+        "9ca3ce52286d2cf4a9a88d0a77db153d9c31415b68df3ee7082dde958801a86e",
+        "269f8a30397995b2d256c05c7df06dc502b6497127e6f02881fd84556a5f1167",
+        "baa04545cbdf9c7a4c48a44177ba5bdc524efc75a10a9f9b235fec70af535550",
+        "caed6c20b10f37c6061258795889f5033365a9e3e87b6c50ff2c1f9aa6a6c9b0",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "33135f0bdea89b80fd4b70d9aaed5466f013bf7a8158b68587cfaf61cd4a9a45",
+      "nome": "Água de coco 1L",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 990,
+      "data": "2026-09-18",
+      "notaHash": "dc95bc86c56970ade4714a78e4292650d6f5089124aad252da180ff184c18c06",
+      "folha": "9ca3ce52286d2cf4a9a88d0a77db153d9c31415b68df3ee7082dde958801a86e",
+      "prova": [
+        "471270582bf2ec7e6eceea6494c44543dc970bebbb816bb576e599bc7d541bdb",
+        "269f8a30397995b2d256c05c7df06dc502b6497127e6f02881fd84556a5f1167",
+        "baa04545cbdf9c7a4c48a44177ba5bdc524efc75a10a9f9b235fec70af535550",
+        "caed6c20b10f37c6061258795889f5033365a9e3e87b6c50ff2c1f9aa6a6c9b0",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "afc522d81b62e36ba0b5e0d5b496c36a6e00bf5fa727fb5e3763f4596108b2ba",
+      "nome": "Brócolis",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 649,
+      "data": "2026-09-18",
+      "notaHash": "dc95bc86c56970ade4714a78e4292650d6f5089124aad252da180ff184c18c06",
+      "folha": "c206fc863c92dd45303e0d420dbc8ad91571a814e532dc36ed4094af8bc7695a",
+      "prova": [
+        "814d18150b6829e9d35b6513242d288322a0d3aee1e97b3e565ade30f9a49ab5",
+        "37562954672facf9d850e7a61f0b7f554c6ba0602444e42203de0a783de7d9a8",
+        "baa04545cbdf9c7a4c48a44177ba5bdc524efc75a10a9f9b235fec70af535550",
+        "caed6c20b10f37c6061258795889f5033365a9e3e87b6c50ff2c1f9aa6a6c9b0",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "15a436a39810729e0b53549fecd8e875e68b92b4414e7957e1c6d5a7e46d03d5",
+      "nome": "Vinagre 750ml",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 399,
+      "data": "2026-09-20",
+      "notaHash": "3b5ec5c2b9d1c7582f950bbf6750c74217b39e6785c2a81ccf27e9869f5d5f7d",
+      "folha": "814d18150b6829e9d35b6513242d288322a0d3aee1e97b3e565ade30f9a49ab5",
+      "prova": [
+        "c206fc863c92dd45303e0d420dbc8ad91571a814e532dc36ed4094af8bc7695a",
+        "37562954672facf9d850e7a61f0b7f554c6ba0602444e42203de0a783de7d9a8",
+        "baa04545cbdf9c7a4c48a44177ba5bdc524efc75a10a9f9b235fec70af535550",
+        "caed6c20b10f37c6061258795889f5033365a9e3e87b6c50ff2c1f9aa6a6c9b0",
+        "8c86fb013884e5461f2d34a5877b7a37c590fec59a4c4acb2c64be07d9d129ec",
+        "331bc9fbb75ec91638496c499cabf343ca1228db7d59d17b6f93b9d1b9ff7651",
+        "290c01b63b79860ad2f9a9c4264803fdd90c920c5156db62a83b569e724f10c5"
+      ]
+    },
+    {
+      "produto": "9f6d196ee61ad818fe17d56f59db13c0962d3caabac12bcaa2956ff1e46972a1",
+      "nome": "Azeite extra virgem 500ml",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 2990,
+      "data": "2026-09-20",
+      "notaHash": "3b5ec5c2b9d1c7582f950bbf6750c74217b39e6785c2a81ccf27e9869f5d5f7d",
+      "folha": "50ef08922dd5aef50d31f343d8270b4f2695096fdc20941c858dcfe5c140b2c1",
+      "prova": [
+        "7c0d9ce2d53095666c4be7e20ddb971bbf45ea3e929b74d7226fc50b13bd50e0",
+        "b2057c52ed4df86dc957c8a9f7dfea1e5de94dfd36ce5153a567e04bf1291921",
+        "cb5e07843293a1df481e885ee7dad132af6ca288ef5ab627d8b61dcd2f4fd419",
+        "95929005e9be536b249186fdced55ae982a725d1d326a634880a066ce2f578e6",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "27e3831a23da6784b069967255959483341240d829fbe4b9b0b0422dfc7d9189",
+      "nome": "Couve",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 399,
+      "data": "2026-09-20",
+      "notaHash": "3b5ec5c2b9d1c7582f950bbf6750c74217b39e6785c2a81ccf27e9869f5d5f7d",
+      "folha": "7c0d9ce2d53095666c4be7e20ddb971bbf45ea3e929b74d7226fc50b13bd50e0",
+      "prova": [
+        "50ef08922dd5aef50d31f343d8270b4f2695096fdc20941c858dcfe5c140b2c1",
+        "b2057c52ed4df86dc957c8a9f7dfea1e5de94dfd36ce5153a567e04bf1291921",
+        "cb5e07843293a1df481e885ee7dad132af6ca288ef5ab627d8b61dcd2f4fd419",
+        "95929005e9be536b249186fdced55ae982a725d1d326a634880a066ce2f578e6",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "5a181517eb00dded93516e8523d5e726ffea9853d20b0d5b764b9f175b7bab9f",
+      "nome": "Saco de lixo 50L pacote",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 799,
+      "data": "2026-09-20",
+      "notaHash": "3b5ec5c2b9d1c7582f950bbf6750c74217b39e6785c2a81ccf27e9869f5d5f7d",
+      "folha": "7f60fbd05a4dbb40e9b6337780ba478ee62f192055b17103914bc3121ae51668",
+      "prova": [
+        "907b9aa37a4f1c76068ee628e51ae28747469c3a87ffd76ecbbeb80bd539db9a",
+        "bfccf9cab598942420aae205bce4f0e93f4f70536f8503b2923886161076b210",
+        "cb5e07843293a1df481e885ee7dad132af6ca288ef5ab627d8b61dcd2f4fd419",
+        "95929005e9be536b249186fdced55ae982a725d1d326a634880a066ce2f578e6",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "f74eb3be5f59ad2be4ec51f9f0cf11db19ede1429ff2cb44c2848024411be1f5",
+      "nome": "Leite condensado 395g",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 1054,
+      "data": "2026-09-21",
+      "notaHash": "5794ae915c22782873c7dcce563f6fe6d46e576d1c4889a05404fd896491a4c1",
+      "folha": "907b9aa37a4f1c76068ee628e51ae28747469c3a87ffd76ecbbeb80bd539db9a",
+      "prova": [
+        "7f60fbd05a4dbb40e9b6337780ba478ee62f192055b17103914bc3121ae51668",
+        "bfccf9cab598942420aae205bce4f0e93f4f70536f8503b2923886161076b210",
+        "cb5e07843293a1df481e885ee7dad132af6ca288ef5ab627d8b61dcd2f4fd419",
+        "95929005e9be536b249186fdced55ae982a725d1d326a634880a066ce2f578e6",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "7623c3cbeb84db01ec4930065d8731eb1c3acb2b83d35a74029bc3375e3d2450",
+      "nome": "Chá gelado 1,5L",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 699,
+      "data": "2026-09-21",
+      "notaHash": "5794ae915c22782873c7dcce563f6fe6d46e576d1c4889a05404fd896491a4c1",
+      "folha": "1ace4992ee45c0006c00bd6ca6a709b4ba23d39e210f3d0b620ee149decb576e",
+      "prova": [
+        "5a8c31a1c90ce22b6622e52b204590163f875c148ee1b63a4a5d15db17cb3661",
+        "c01aee905a053ccc142ede2ba48a55a1a0340b2b128698bbc9ef0ec8368a530e",
+        "1ecf559e6face1afc5f4f4c09ac07d1d5cbfaa5b0cfd9769a3d1ab6cecb4304b",
+        "95929005e9be536b249186fdced55ae982a725d1d326a634880a066ce2f578e6",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "f6a7a9574717a01487c0a01f1233a643cb99618c24c505535c4201b6d7210cb0",
+      "nome": "Pimentão verde",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 799,
+      "data": "2026-09-21",
+      "notaHash": "5794ae915c22782873c7dcce563f6fe6d46e576d1c4889a05404fd896491a4c1",
+      "folha": "5a8c31a1c90ce22b6622e52b204590163f875c148ee1b63a4a5d15db17cb3661",
+      "prova": [
+        "1ace4992ee45c0006c00bd6ca6a709b4ba23d39e210f3d0b620ee149decb576e",
+        "c01aee905a053ccc142ede2ba48a55a1a0340b2b128698bbc9ef0ec8368a530e",
+        "1ecf559e6face1afc5f4f4c09ac07d1d5cbfaa5b0cfd9769a3d1ab6cecb4304b",
+        "95929005e9be536b249186fdced55ae982a725d1d326a634880a066ce2f578e6",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "f6d9313e158e61732a6ef230a86330721929eb305dcf13a64ee71d617fc65eb9",
+      "nome": "Escova de dente",
+      "loja": "Padaria Pão Dourado",
+      "cnpj": "35841927000144",
+      "geohash": "6vjyq",
+      "precoCentavos": 799,
+      "data": "2026-09-21",
+      "notaHash": "5794ae915c22782873c7dcce563f6fe6d46e576d1c4889a05404fd896491a4c1",
+      "folha": "f4301c6986d0a3d544cc9957864427dce7ce73fbf673fbdcd2e983c394ad7bdb",
+      "prova": [
+        "040158fc1952f8534d51a2173666b89bd7b2195af8a9a7a7af15947cf1f809f0",
+        "f103222dc582a0809a27a6007d700dc9c4813dd978ce59cf9ad6a092bc63be53",
+        "1ecf559e6face1afc5f4f4c09ac07d1d5cbfaa5b0cfd9769a3d1ab6cecb4304b",
+        "95929005e9be536b249186fdced55ae982a725d1d326a634880a066ce2f578e6",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "13227b0331209f9c837298895d91bd8d9468943bcd2784e8051ca331f933b39d",
+      "nome": "Energético 250ml",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 793,
+      "data": "2026-09-22",
+      "notaHash": "6bc6b7680d83d38685ca9288ef84b510f61ea99ab5108da0c27f6fdacd53557c",
+      "folha": "040158fc1952f8534d51a2173666b89bd7b2195af8a9a7a7af15947cf1f809f0",
+      "prova": [
+        "f4301c6986d0a3d544cc9957864427dce7ce73fbf673fbdcd2e983c394ad7bdb",
+        "f103222dc582a0809a27a6007d700dc9c4813dd978ce59cf9ad6a092bc63be53",
+        "1ecf559e6face1afc5f4f4c09ac07d1d5cbfaa5b0cfd9769a3d1ab6cecb4304b",
+        "95929005e9be536b249186fdced55ae982a725d1d326a634880a066ce2f578e6",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "851e017df7eb6fdee62367cbbb76e7543513e2ed4964fda7bfcc5bfd9641a59c",
+      "nome": "Abobrinha",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 549,
+      "data": "2026-09-22",
+      "notaHash": "6bc6b7680d83d38685ca9288ef84b510f61ea99ab5108da0c27f6fdacd53557c",
+      "folha": "f3776ae8d2849559efdc3b2af30c77c057b3b72a8fd3a4f4510b6b82e7d1c36d",
+      "prova": [
+        "252258533715367d023f120f53d6b842d063a97ec6a22a6799778f7f03aadc55",
+        "ee9862494aaf58a725d117721cdc4ac10a701349d56ce2f86fefbfe67d42cefb",
+        "2c81e514c922464c65a11aebe96b19f9c62f56fac6a9b987448f8e9486d646f3",
+        "1eb18faf3f4d0e4feb478b4c22143a074e82ab8caae1d644d1a6d9f38129308b",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "1368860a7e72d744e8a37dc858f7de10c14f5f188df04f91a9f9c4ccc59cc9ef",
+      "nome": "Limpador multiuso 500ml",
+      "loja": "Supermercado Vila Nova",
+      "cnpj": "08376451000129",
+      "geohash": "6vjyq",
+      "precoCentavos": 649,
+      "data": "2026-09-22",
+      "notaHash": "6bc6b7680d83d38685ca9288ef84b510f61ea99ab5108da0c27f6fdacd53557c",
+      "folha": "252258533715367d023f120f53d6b842d063a97ec6a22a6799778f7f03aadc55",
+      "prova": [
+        "f3776ae8d2849559efdc3b2af30c77c057b3b72a8fd3a4f4510b6b82e7d1c36d",
+        "ee9862494aaf58a725d117721cdc4ac10a701349d56ce2f86fefbfe67d42cefb",
+        "2c81e514c922464c65a11aebe96b19f9c62f56fac6a9b987448f8e9486d646f3",
+        "1eb18faf3f4d0e4feb478b4c22143a074e82ab8caae1d644d1a6d9f38129308b",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "05b44f4aa0e1b1de75c4ed641fb9c3c6b42b9186c59c78411bb1e2d34f26977e",
+      "nome": "Manga",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 649,
+      "data": "2026-09-23",
+      "notaHash": "8f169b0dca934333f89239d810f7277a2739505a24ca1981a9f1cbb3819bf0a7",
+      "folha": "1a20e3f9fb61e6bd689d0543a04448988caea0bddbc018aca0790d87994454ce",
+      "prova": [
+        "a9f380b8dcb80732ac1f50bbde8c18f896d6779877e19cb530f4fea605c3ebaf",
+        "9668be4be7d7daab6f748a7610a88bd8aa59fef249b922c92ce3d9db285f6254",
+        "2c81e514c922464c65a11aebe96b19f9c62f56fac6a9b987448f8e9486d646f3",
+        "1eb18faf3f4d0e4feb478b4c22143a074e82ab8caae1d644d1a6d9f38129308b",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "06a83b6c14ff9486953c7d5b0ffa45e6f0bd08b00ca032607250180667dc80ae",
+      "nome": "Uva itália",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 1290,
+      "data": "2026-09-23",
+      "notaHash": "8f169b0dca934333f89239d810f7277a2739505a24ca1981a9f1cbb3819bf0a7",
+      "folha": "a9f380b8dcb80732ac1f50bbde8c18f896d6779877e19cb530f4fea605c3ebaf",
+      "prova": [
+        "1a20e3f9fb61e6bd689d0543a04448988caea0bddbc018aca0790d87994454ce",
+        "9668be4be7d7daab6f748a7610a88bd8aa59fef249b922c92ce3d9db285f6254",
+        "2c81e514c922464c65a11aebe96b19f9c62f56fac6a9b987448f8e9486d646f3",
+        "1eb18faf3f4d0e4feb478b4c22143a074e82ab8caae1d644d1a6d9f38129308b",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "12cf62340cf884100c2d7a05f9cd0fad021dda0875aa4533dcfd5827f7257483",
+      "nome": "Sabão em barra 5un",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 999,
+      "data": "2026-09-23",
+      "notaHash": "8f169b0dca934333f89239d810f7277a2739505a24ca1981a9f1cbb3819bf0a7",
+      "folha": "6ebeb80fec9551ef00e780dc3e4ea395caa79854e14f7ca0c9ca4a1b9bc57f74",
+      "prova": [
+        "08111c82ac14cb4bc8d9e3ab42c718d7968f77d3ebce09f28229c7da925fda6a",
+        "72df78185b28dfe14bd41ae5672557899674dfe0c3576356ead93f8e4a817416",
+        "c3ea9ed435b33f10c219827857c313f71ba2008ff288258636bdf46354d85d2b",
+        "1eb18faf3f4d0e4feb478b4c22143a074e82ab8caae1d644d1a6d9f38129308b",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "f5bfaa5683228a9928352b37eb6edbf6bc56c130968d66f41a30f03dada335d4",
+      "nome": "Fio dental 50m",
+      "loja": "Atacarejo Planalto",
+      "cnpj": "19274836000158",
+      "geohash": "6vjyj",
+      "precoCentavos": 899,
+      "data": "2026-09-23",
+      "notaHash": "8f169b0dca934333f89239d810f7277a2739505a24ca1981a9f1cbb3819bf0a7",
+      "folha": "08111c82ac14cb4bc8d9e3ab42c718d7968f77d3ebce09f28229c7da925fda6a",
+      "prova": [
+        "6ebeb80fec9551ef00e780dc3e4ea395caa79854e14f7ca0c9ca4a1b9bc57f74",
+        "72df78185b28dfe14bd41ae5672557899674dfe0c3576356ead93f8e4a817416",
+        "c3ea9ed435b33f10c219827857c313f71ba2008ff288258636bdf46354d85d2b",
+        "1eb18faf3f4d0e4feb478b4c22143a074e82ab8caae1d644d1a6d9f38129308b",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "43f034ee6cf3ff5621acbe6746f2e5f59e37d760700a1656b57517ea375e95e0",
+      "nome": "Salsinha e cebolinha",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 356,
+      "data": "2026-09-24",
+      "notaHash": "73e228b289f42477190ad585909fb05ee674687bcddcd8707d35020c818ea500",
+      "folha": "92d9b48ab1bfa5d7a32cfdf8b0891dc953fc7f2cdba7049640121d4573b06100",
+      "prova": [
+        "9be6a59b19c8b3bbca78ea359fed122b98688067400ddd7fdc8513bb343739c2",
+        "f0f8f3d22caae8be1fbf81fc6931af51cc2b20c6fd2a7ba6c7ea768fb8431647",
+        "c3ea9ed435b33f10c219827857c313f71ba2008ff288258636bdf46354d85d2b",
+        "1eb18faf3f4d0e4feb478b4c22143a074e82ab8caae1d644d1a6d9f38129308b",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "66cf7769ce545684af7671d5fb72bb8bbf34d48da03689fd585f679fa093478d",
+      "nome": "Lustra-móveis 200ml",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 1201,
+      "data": "2026-09-24",
+      "notaHash": "73e228b289f42477190ad585909fb05ee674687bcddcd8707d35020c818ea500",
+      "folha": "9be6a59b19c8b3bbca78ea359fed122b98688067400ddd7fdc8513bb343739c2",
+      "prova": [
+        "92d9b48ab1bfa5d7a32cfdf8b0891dc953fc7f2cdba7049640121d4573b06100",
+        "f0f8f3d22caae8be1fbf81fc6931af51cc2b20c6fd2a7ba6c7ea768fb8431647",
+        "c3ea9ed435b33f10c219827857c313f71ba2008ff288258636bdf46354d85d2b",
+        "1eb18faf3f4d0e4feb478b4c22143a074e82ab8caae1d644d1a6d9f38129308b",
+        "12203c386e67bba5ea2c1a392f39b62408610a3f18ab68f2847f710dc6076370",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    },
+    {
+      "produto": "e650bac86cbd4fc21d617aadbb9e5f2aa8758fe7f142e073eee638733cdd76f2",
+      "nome": "Absorvente pacote 8un",
+      "loja": "Mercado Bom Dia",
+      "cnpj": "27593014000162",
+      "geohash": "6vjyq",
+      "precoCentavos": 1083,
+      "data": "2026-09-24",
+      "notaHash": "73e228b289f42477190ad585909fb05ee674687bcddcd8707d35020c818ea500",
+      "folha": "244224e187e29f53ecd62c430f3913547c96b1b68a0fd63ef6b0729f8e49cab4",
+      "prova": [
+        "244224e187e29f53ecd62c430f3913547c96b1b68a0fd63ef6b0729f8e49cab4",
+        "79e8eeeb07f32ac6c26f95ee3c365bf0c9af883d2e4203206fbfdfcb1a070691",
+        "708ad9583597adf09f323348ace4f8fd39c07c3f4c54d7ea854658dd3b05d32e",
+        "f4bc82c1107382fed894aa8f963371c0bce1a72c76cce09068dd66a10ac667b4",
+        "fe2593a1a0cb805cafcae97ee54935538cc40fed8c1b418037e06202898158fd",
+        "75723cb4fe173c6bbd217d9b637a2956ee176ac99a3054c496832a5e6fe8d5f7",
+        "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
+      ]
+    }
+  ]
+}
