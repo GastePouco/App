@@ -25,4 +25,7 @@ if (lote.transacao) {
   console.log(naRede ? 'Raiz confere com a transação na Solana.' : 'Raiz NÃO encontrada na transação.');
   ok &&= !!naRede;
 }
-process.exit(ok ? 0 : 1);
+// `process.exit` com a conexão RPC ainda aberta faz o libuv imprimir um
+// "Assertion failed" no Windows — depois da linha de sucesso, o que numa
+// demonstração parece erro. O código de saída basta.
+process.exitCode = ok ? 0 : 1;

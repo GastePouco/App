@@ -3,7 +3,7 @@
   "raiz": "56942f0b4d44cac9b1b093b787cddecf32845434eb9d0d786bacf886f5498f78",
   "memo": "{\"app\":\"gastepouco\",\"v\":1,\"lote\":\"2026-01-15_2026-09-24_56942f0b\",\"n\":81,\"raiz\":\"56942f0b4d44cac9b1b093b787cddecf32845434eb9d0d786bacf886f5498f78\"}",
   "rede": "devnet",
-  "transacao": null,
+  "transacao": "2r6a6heMnG5y4cwtY2BTyW4rCxxZYF3YCmK2uqPyVC5J2JMfVhxQHFZotj4KthGUYaF7HcSf7Sz2x8EKWiJsuCkR",
   "observacoes": [
     {
       "produto": "84df0e176b865ec4b68e985feab787ab4db5f409b74fd9c217deb6c5e4bcd384",
@@ -1625,5 +1625,7 @@
         "c79d93ae24d35487c081cba80f4f2a1cd554e7683efc0e44531f17b010caf25f"
       ]
     }
-  ]
+  ],
+  "publicadoEm": "2026-10-13T03:10:12.611Z",
+  "publicadoPor": "HcHc5oktNnaWaot4zqhLFR7RXx7tFit7EzhtGGXNYDRJ"
 }
